@@ -1,5 +1,8 @@
 ## 时间轴控件
 
+![Download](https://img.shields.io/npm/dm/@ezuikit/control-date-picker.svg) ![Version](https://img.shields.io/npm/v/@ezuikit/control-date-picker.svg) 
+<!-- ![License](https://img.shields.io/npm/l/@ezuikit/control-date-picker.svg)  -->
+
 ## Usage
 
 ```bash

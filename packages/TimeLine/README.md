@@ -1,5 +1,8 @@
 ## 时间轴控件
 
+![Download](https://img.shields.io/npm/dm/@ezuikit/control-time-line.svg) ![Version](https://img.shields.io/npm/v/@ezuikit/control-time-line.svg) 
+<!-- ![License](https://img.shields.io/npm/l/@ezuikit/control-time-line.svg)  -->
+
 ## Usage
 
 ```bash

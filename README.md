@@ -1,5 +1,7 @@
 # EZUIKit-player-controls
 
+![Build Demos](https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls/workflows/build/badge.svg)
+
 该项目用来存储 ezuikit 播放器相关的 UI 控件。
 
 ## Use
