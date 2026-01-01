@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-date-picker",
-  "version": "1.0.5-beta.1",
+  "version": "1.0.5-beta.2",
   "description": "date picker control for ezviz",
   "title": "date-picker",
   "main": "dist/index.js",
