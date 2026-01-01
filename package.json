@@ -2,11 +2,14 @@
   "name": "EZUIKit-player-controls",
   "version": "0.0.0",
   "description": "ezuikit player controls",
-  "scripts": {},
+  "scripts": {
+    "build:example": "pnpm --filter \"@examples/*\" run build"
+  },
   "files": [],
   "keywords": [],
   "author": "Ezviz-OpenBiz",
   "license": "MIT",
+  
   "devDependencies": {
     "rimraf": "^6.1.2",
     "lerna": "8.2.4"
