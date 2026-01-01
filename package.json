@@ -18,7 +18,7 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-    "repository": {
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git"
   },
