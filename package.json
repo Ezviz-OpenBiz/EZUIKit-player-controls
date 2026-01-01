@@ -1,0 +1,29 @@
+{
+  "name": "EZUIKit-player-controls",
+  "version": "0.0.0",
+  "description": "ezuikit player controls",
+  "scripts": {},
+  "files": [],
+  "keywords": [],
+  "author": "Ezviz-OpenBiz",
+  "license": "MIT",
+  "devDependencies": {
+    "rimraf": "^6.1.2",
+    "lerna": "8.2.4"
+  },
+  "engines": {
+    "node": ">=18.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+    "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls/issues"
+  },
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme"
+}
