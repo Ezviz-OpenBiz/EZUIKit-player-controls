@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-time-line",
-  "version": "1.0.7-beta.1",
+  "version": "1.0.7",
   "description": "time line control for ezviz",
   "title": "time-line",
   "main": "dist/index.js",
