@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-date-picker",
-  "version": "1.0.5-beta.2",
+  "version": "1.0.5",
   "description": "date picker control for ezviz",
   "title": "date-picker",
   "main": "dist/index.js",
@@ -18,7 +18,7 @@
   "author": "Ezviz-OpenBiz",
   "license": "",
   "dependencies": {
-    "@ezuikit/utils-tools": "2.0.1",
+    "@ezuikit/utils-tools": "2.0.2",
     "deepmerge": "^4.3.1",
     "@skax/picker": "1.1.7",
     "@ezuikit/utils-i18n": "2.0.0",

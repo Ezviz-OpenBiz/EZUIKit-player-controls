@@ -18,7 +18,7 @@
   "author": "Ezviz-OpenBiz",
   "license": "",
   "dependencies": {
-    "@ezuikit/utils-tools": "2.0.1",
+    "@ezuikit/utils-tools": "2.0.2",
     "deepmerge": "^4.3.1",
     "@skax/picker": "1.1.7",
     "@skax/delegate": "4.0.2",
