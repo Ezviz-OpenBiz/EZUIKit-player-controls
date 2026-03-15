@@ -1,0 +1,27 @@
+:root {
+  --edate-header-height: 34px;
+  --edate-footer-height: var(--edate-header-height, 34px);
+  --edate-font-size: 14px;
+  --edate-default-color: rgba(0, 0, 0, 0.88);
+  --edate-primary-color: #648ffc;
+  --edate-hover-color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
+  --edate-hover-bg-color: rgba(0, 0, 0, 0.04);
+  --edate-active-color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
+  --edate-active-bg-color: #e6f4ff;
+  --edate-disabled-color: rgba(0, 0, 0, 0.25);
+  --edate-disabled-bg-color: rgba(0, 0, 0, 0.04);
+  --edate-disabled-active-bg-color: rgba(0, 0, 0, 0.25);
+  --edate-border-color: rgba(5, 5, 5, 0.06);
+  --edate-border-radius: 2px;
+  --edate-close-color: rgba(240, 87, 87, 1);
+
+  //
+  --edate-calendar-border-radius: 50%;
+  --edate-calendar-cell-width: 26px;
+  --edate-calendar-cell-height: 26px;
+
+  //
+  --edate-badge-color: var(--edate-primary-color, #648ffc);
+  --edate-arrow-color: rgba(0, 0, 0, 0.45);
+  --edate-arrow-hover-color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
+}
