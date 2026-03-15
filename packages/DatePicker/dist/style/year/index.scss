@@ -1,0 +1,98 @@
+@use '../style/_style.scss' as common;
+
+.#{common.$eyear-prefix-cls} {
+  line-height: normal;
+  cursor: unset;
+
+  &-layout {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+
+  // year panel
+  &-panel {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--edate-border-color, rgba(5, 5, 5, 0.06));
+    background-color: #fff;
+
+    & .#{common.$eyear-prefix-cls}-body {
+      padding: 1px 8px;
+    }
+
+    & table {
+      width: 100%;
+    }
+
+    & .#{common.$eyear-prefix-cls}-cell {
+      height: 52px;
+    }
+
+    & .#{common.$eyear-prefix-cls}-cell-inner {
+      padding: 0px 8px;
+    }
+  }
+
+  // ---------------------------- start body ---------------------------------
+
+  &-body {
+    padding: 0px 10px;
+  }
+
+  // &-content {
+  //   min-width: 210px;
+  // }
+
+  &-cell {
+    position: relative;
+    padding: 0px 0;
+    cursor: pointer;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+
+    &:not(.#{common.$disabled}):hover &-inner {
+      background-color: var(--edate-hover-bg-color, rgba(0, 0, 0, 0.04));
+    }
+
+    &::before {
+      position: absolute;
+      top: 50%;
+      inset-inline-start: 0;
+      inset-inline-end: 0;
+      z-index: 1;
+      height: 22px;
+      transform: translateY(-50%);
+      transition: all 0.3s;
+      content: '';
+    }
+
+    &-in-view {
+      color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
+
+      &.#{common.$eyear-prefix-cls}-cell-selected:not(.#{common.$disabled}) .#{common.$eyear-prefix-cls}-cell-inner {
+        background-color: var(--edate-primary-color, #1677ff);
+        color: #fff;
+      }
+      &.#{common.$eyear-prefix-cls}-cell-selected.#{common.$disabled} .#{common.$eyear-prefix-cls}-cell-inner {
+        background-color: var(--edate-disabled-bg-color, rgba(0, 0, 0, 0.04));
+      }
+    }
+
+    &-inner {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      min-width: 22px;
+      height: 22px;
+      line-height: 22px;
+      border-radius: var(--data-picker-border-radius, 2px);
+      transition:
+        background 0.2s,
+        border 0.2s;
+    }
+  }
+
+  // ------------------------- end body -----------------------
+}

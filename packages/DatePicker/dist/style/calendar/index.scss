@@ -1,0 +1,138 @@
+@use '../style/_style.scss' as common;
+@use '~@skax/picker/dist/style/_style.scss' as picker;
+
+.#{common.$ecalendar-prefix-cls} {
+  line-height: normal;
+  cursor: unset;
+  box-sizing: border-box;
+  padding-left: 0;
+  margin: 0;
+  text-align: left;
+
+  &-panel {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--edate-border-color, rgba(5, 5, 5, 0.06));
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // ---------------------------- start body ---------------------------------
+  &-body {
+    flex: 1 1 auto;
+    padding: 6px 10px;
+    color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
+    box-sizing: border-box;
+  }
+
+  &-content {
+    width: 100%;
+    box-sizing: border-box;
+
+    th {
+      height: 30px;
+    }
+
+    tr td {
+      padding: 3px 0px;
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        height: var(--edate-calendar-cell-height, 24px);
+        width: 100%;
+      }
+    }
+  }
+
+  &-cell {
+    position: relative;
+    padding: 0px 0;
+    cursor: pointer;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+
+    &:not(.#{common.$disabled}):hover &-inner {
+      background-color: var(--edate-hover-bg-color, rgba(0, 0, 0, 0.04));
+    }
+
+    &-in-view {
+      color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
+
+      &.#{common.$ecalendar-prefix-cls}-cell-selected:not(.#{common.$disabled}) {
+        .#{common.$ecalendar-prefix-cls}-cell-inner {
+          background-color: var(--edate-primary-color, #1677ff) !important;
+          color: #fff;
+        }
+
+        .#{common.$ecalendar-prefix-cls}-badge {
+          background-color: #fff;
+        }
+      }
+
+      &.#{common.$ecalendar-prefix-cls}-cell-selected.#{common.$disabled} {
+        .#{common.$ecalendar-prefix-cls}-cell-inner {
+          background-color: var(--edate-disabled-bg-color, rgba(0, 0, 0, 0.25));
+        }
+      }
+
+      &.#{common.$ecalendar-prefix-cls}-cell-today .#{common.$ecalendar-prefix-cls}-cell-inner {
+        border-color: var(--edate-primary-color, #1677ff);
+      }
+
+      &.#{common.$ecalendar-prefix-cls}-cell-today.#{common.$disabled} .#{common.$ecalendar-prefix-cls}-cell-inner {
+        border-color: var(--edate-disabled-bg-color, rgba(0, 0, 0, 0.25));
+      }
+    }
+
+    &-inner {
+      position: relative;
+      z-index: 2;
+      padding: 0;
+      line-height: var(--edate-calendar-cell-height, 26px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--edate-calendar-border-radius, 2px);
+      border: 1px solid transparent;
+      inset-inline-end: 0;
+      inset-inline-start: 0;
+      width: var(--edate-calendar-cell-width, 26px);
+      height: var(--edate-calendar-cell-height, 26px);
+      transition:
+        background 0.2s,
+        border 0.2s;
+    }
+
+    .#{common.$ecalendar-prefix-cls}-badge {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background-color: var(--edate-primary-color, #1677ff);
+      top: 50%;
+      left: 50%;
+      z-index: 3;
+      transform: translateX(-50%) translateY(8px);
+    }
+
+    &.#{common.$disabled} {
+      .#{common.$ecalendar-prefix-cls}-badge {
+        background-color: var(--edate-disabled-color, rgba(0, 0, 0, 0.25));
+      }
+    }
+  }
+
+  // ------------------------- end body -----------------------
+}
+
+.epicker-mobile {
+  .#{common.$ecalendar-prefix-cls} {
+    &-content {
+      tr td {
+        padding: 8px 0px;
+      }
+    }
+  }
+}

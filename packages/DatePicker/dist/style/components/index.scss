@@ -1,0 +1,321 @@
+@use '../style/_style.scss' as common;
+@use '~@skax/picker/dist/style/_style.scss' as picker;
+
+.epicker-mobile .edate-mobile {
+  --edate-hover-bg-color: transparent; // 移动端不需要hover 背景 不然有问题
+}
+
+// edate
+.#{common.$edate-prefix-cls} {
+  &-container {
+    font-size: 14px;
+    display: flex;
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    max-height: 80%;
+    min-width: 246px;
+
+    & * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      border: none;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    & ul,
+    & li {
+      list-style: none;
+      margin: 0;
+      border: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    table,
+    thead,
+    tbody,
+    th,
+    tr,
+    td {
+      border: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      border-spacing: 0px;
+      border-color: transparent;
+
+      &:active,
+      &:focus,
+      &:focus-visible {
+        background-color: transparent;
+      }
+    }
+
+    table {
+      height: 100%;
+    }
+  }
+
+  &-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &-header {
+    height: var(--edate-header-height, 34px);
+    line-height: var(--edate-header-height, 34px);
+    color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--edate-border-color, rgba(5, 5, 5, 0.06));
+    user-select: none;
+    padding: 2px 15px;
+
+    &-view {
+      text-align: center;
+      width: 40%;
+    }
+
+    &-title-hover {
+      cursor: pointer;
+      transition: color 0.2s ease-in-out;
+      &:hover {
+        color: var(--edate-primary-color, #1677ff);
+      }
+    }
+  }
+
+  &-prev-btns,
+  &-next-btns {
+    display: inline-flex;
+    height: var(--edate-header-height, 34px);
+    line-height: var(--edate-header-height, 34px);
+  }
+
+  &-super-prev-btn,
+  &-prev-btn,
+  &-super-next-btn,
+  &-next-btn {
+    min-width: 1.6em;
+    font-size: var(--edate-font-size, 14px);
+    padding: 0;
+    color: var(--edate-arrow-color, rgba(0, 0, 0, 0.45));
+    line-height: var(--edate-header-height, 34px);
+    background: 0 0;
+    border: 0;
+    cursor: pointer;
+    transition: color 0.2s;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    &:not(.#{common.$edate-prefix-cls}-disabled):active {
+      color: var(--edate-arrow-hover-color, rgba(0, 0, 0, 0.88));
+    }
+  }
+
+  $icon-width: 6px;
+
+  &-super-prev-icon,
+  &-prev-icon,
+  &-super-next-icon,
+  &-next-icon {
+    position: relative;
+    display: inline-flex;
+    width: $icon-width;
+    height: $icon-width;
+    transform: rotate(-45deg);
+    user-select: none;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      inset-inline-start: 0;
+      display: inline-block;
+      width: $icon-width;
+      height: $icon-width;
+      border: 0 solid currentcolor;
+      border-block-start-width: 1.5px;
+      border-block-end-width: 0;
+      border-inline-start-width: 1.5px;
+      border-inline-end-width: 0;
+      content: '';
+    }
+  }
+
+  &-super-prev-icon::after,
+  &-super-next-icon::after {
+    position: absolute;
+    display: inline-block;
+    width: $icon-width;
+    height: $icon-width;
+    border: 0 solid currentcolor;
+    border-block-start-width: 1.5px;
+    border-block-end-width: 0;
+    border-inline-start-width: 1.5px;
+    border-inline-end-width: 0;
+    content: '';
+    top: -4px;
+    left: -4px;
+  }
+
+  &-super-next-icon,
+  &-next-icon {
+    transform: rotate(135deg);
+  }
+
+  &-footer {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 5px;
+    height: var(--edate-footer-height, 34px);
+    border-left: 1px solid var(--edate-border-color, rgba(5, 5, 5, 0.06));
+    border-right: 1px solid var(--edate-border-color, rgba(5, 5, 5, 0.06));
+    border-bottom: 1px solid var(--edate-border-color, rgba(5, 5, 5, 0.06));
+  }
+
+  &-today,
+  &-now,
+  &-btn-text {
+    cursor: pointer;
+    color: var(--edate-primary-color, #1677ff);
+    user-select: none;
+
+    &:not(.#{common.$disabled}):active {
+      opacity: 0.75;
+    }
+  }
+
+  &-close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+
+    .#{common.$edate-prefix-cls}-close-icon {
+      display: inline-flex;
+    }
+
+    &:active {
+      color: var(--edate-close-color, rgba(240, 87, 87, 1));
+    }
+  }
+
+  &-btn-text {
+    padding: 2px 4px;
+    &.#{common.$edate-prefix-cls}-disabled {
+      color: var(--edate-disabled-color, rgba(0, 0, 0, 0.25)) !important;
+    }
+  }
+
+  &-btn {
+    outline: none;
+    position: relative;
+    display: inline-block;
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: center;
+    background-image: none;
+    background: transparent;
+    border: 1px solid #d9d9d9;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    user-select: none;
+    touch-action: manipulation;
+    color: var(--edate-primary-color, #1677ff);
+    border-radius: 2px;
+    padding: 0px 4px;
+    height: 20px;
+    line-height: 19px;
+    user-select: none;
+    min-width: 32px;
+
+    &.#{common.$edate-prefix-cls}-disabled {
+      background-color: var(--edate-disabled-bg-color, rgba(0, 0, 0, 0.04)) !important ;
+      color: var(--edate-disabled-color, rgba(0, 0, 0, 0.25)) !important;
+      cursor: not-allowed !important;
+      border-color: var(--edate-disabled-color, rgba(0, 0, 0, 0.25)) !important;
+    }
+  }
+
+  &-btn-primary {
+    border-color: var(--edate-primary-color, #1677ff);
+    color: #fff;
+    background-color: var(--edate-primary-color, #1677ff);
+
+    &:not(.#{common.$disabled}):active {
+      opacity: 0.75;
+    }
+  }
+
+  &-disabled {
+    cursor: not-allowed !important;
+
+    &::before {
+      background-color: var(--edate-disabled-bg-color, rgba(0, 0, 0, 0.04)) !important ;
+      color: var(--edate-disabled-color, rgba(0, 0, 0, 0.25)) !important;
+      cursor: not-allowed !important;
+    }
+
+    & > * {
+      color: var(--edate-disabled-color, rgba(0, 0, 0, 0.25)) !important;
+      cursor: not-allowed !important;
+    }
+  }
+}
+
+.#{common.$edate-prefix-cls}-picker-date {
+  .#{common.$emonth-prefix-cls}-container,
+  .#{common.$eyear-prefix-cls}-container {
+    display: none;
+  }
+}
+
+.#{common.$edate-prefix-cls}-picker-month {
+  .#{common.$ecalendar-prefix-cls}-container,
+  .#{common.$eyear-prefix-cls}-container {
+    display: none;
+  }
+}
+
+.#{common.$edate-prefix-cls}-picker-year {
+  .#{common.$emonth-prefix-cls}-container,
+  .#{common.$ecalendar-prefix-cls}-container {
+    display: none;
+  }
+}
+
+// picker-mobile
+.#{picker.$picker-prefix}-mobile.#{common.$edate-prefix-cls}-picker-container {
+  border-radius: 10px;
+  overflow: hidden;
+  .#{picker.$picker-prefix}-body {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-bottom: 15px;
+    background-color: #fff;
+    overflow: hidden;
+
+    .#{common.$edate-prefix-cls}-panel {
+      border: none;
+    }
+    .#{common.$edate-prefix-cls}-header {
+      height: 44px;
+      border-bottom: none;
+    }
+  }
+}

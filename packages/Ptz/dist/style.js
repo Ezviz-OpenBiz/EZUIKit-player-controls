@@ -1,5 +1,5 @@
 /*
-* @ezuikit/control-time-line v1.0.6
+* @ezuikit/control-ptz v1.0.0-alpha.1
 * Copyright (c) 2026-03-15 Ezviz-OpenBiz
 * Released under the MIT License.
 */

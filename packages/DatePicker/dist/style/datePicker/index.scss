@@ -1,0 +1,16 @@
+@use '../style/_style.scss' as common;
+@use '~@skax/picker/dist/style/_style.scss' as picker;
+
+.#{$edate-prefix-cls}-picker-container {
+  .#{$edate-prefix-cls}-container {
+    min-width: 246px;
+  }
+
+  &.epicker-mobile {
+    .#{$edate-prefix-cls}-container {
+      max-height: 100%;
+      padding-bottom: #{'constant(safe-area-inset-bottom)'}; /*兼容 IOS<11.2*/
+      padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+    }
+  }
+}
