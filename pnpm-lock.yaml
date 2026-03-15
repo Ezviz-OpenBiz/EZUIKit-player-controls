@@ -107,6 +107,15 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
 
+  packages/Ptz:
+    dependencies:
+      '@ezuikit/utils-tools':
+        specifier: 2.0.3
+        version: 2.0.3
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
+
   packages/TimeLine:
     dependencies:
       '@ezuikit/utils-i18n':
@@ -127,6 +136,8 @@ importers:
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
+
+  packages/Zoom: {}
 
 packages:
 
@@ -1456,6 +1467,10 @@ packages:
 
   /@ezuikit/utils-tools@2.0.2:
     resolution: {integrity: sha512-Iay08gfn7URRJ0L16TkEYo8QcBENPN7LLs0O3Cv8Dxfm13rQMN4h03TbzARv/dDGAkKa910CIQ2bKG2QKIZ3nw==}
+    dev: false
+
+  /@ezuikit/utils-tools@2.0.3:
+    resolution: {integrity: sha512-YvUGDU1ikjSc5YjQLh6kQWGBOpqkOczb3HiocWm7FOk9grW6IAGd3RbRu0e+XyWT20nefcEpbIhRwOYsTejjnA==}
     dev: false
 
   /@hutson/parse-repository-url@3.0.2:

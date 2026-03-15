@@ -1,0 +1,30 @@
+{
+  "name": "@ezuikit/control-zoom",
+  "version": "1.0.0-alpha.1",
+  "description": "zoom control for ezviz",
+  "title": "zoom",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "keywords": [
+    "zoom"
+  ],
+  "files": [
+    "dist"
+  ],
+  "author": "Ezviz-OpenBiz",
+  "license": "",
+  "dependencies": {},
+  "peerDependencies": {},
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls/issues"
+  },
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme"
+}
