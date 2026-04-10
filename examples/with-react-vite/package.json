@@ -11,9 +11,15 @@
   },
   "dependencies": {
     "classnames": "^2.5.1",
-    "ezuikit-js": "8.2.4-beta.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@ezuikit/control-date-picker": "workspace:*",
+    "@ezuikit/control-ptz": "workspace:*",
+    "@ezuikit/control-aichat": "workspace:*",
+    "@ezuikit/control-talk": "workspace:*",
+    "@ezuikit/control-time-line": "workspace:*",
+    "@ezuikit/control-zoom": "workspace:*",
+    "@ezuikit/control-broadcast": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.12.4",

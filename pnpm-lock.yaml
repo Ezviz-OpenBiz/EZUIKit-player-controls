@@ -17,9 +17,27 @@ importers:
 
   examples/vue3-demo:
     dependencies:
-      ezuikit-js:
-        specifier: 8.2.4-beta.2
-        version: 8.2.4-beta.2
+      '@ezuikit/control-aichat':
+        specifier: workspace:*
+        version: link:../../packages/AIChat
+      '@ezuikit/control-broadcast':
+        specifier: workspace:*
+        version: link:../../packages/Broadcast
+      '@ezuikit/control-date-picker':
+        specifier: workspace:*
+        version: link:../../packages/DatePicker
+      '@ezuikit/control-ptz':
+        specifier: workspace:*
+        version: link:../../packages/Ptz
+      '@ezuikit/control-talk':
+        specifier: workspace:*
+        version: link:../../packages/Talk
+      '@ezuikit/control-time-line':
+        specifier: workspace:*
+        version: link:../../packages/TimeLine
+      '@ezuikit/control-zoom':
+        specifier: workspace:*
+        version: link:../../packages/Zoom
       vue:
         specifier: 3.4.37
         version: 3.4.37(typescript@5.3.3)
@@ -42,12 +60,30 @@ importers:
 
   examples/with-react-vite:
     dependencies:
+      '@ezuikit/control-aichat':
+        specifier: workspace:*
+        version: link:../../packages/AIChat
+      '@ezuikit/control-broadcast':
+        specifier: workspace:*
+        version: link:../../packages/Broadcast
+      '@ezuikit/control-date-picker':
+        specifier: workspace:*
+        version: link:../../packages/DatePicker
+      '@ezuikit/control-ptz':
+        specifier: workspace:*
+        version: link:../../packages/Ptz
+      '@ezuikit/control-talk':
+        specifier: workspace:*
+        version: link:../../packages/Talk
+      '@ezuikit/control-time-line':
+        specifier: workspace:*
+        version: link:../../packages/TimeLine
+      '@ezuikit/control-zoom':
+        specifier: workspace:*
+        version: link:../../packages/Zoom
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
-      ezuikit-js:
-        specifier: 8.2.4-beta.2
-        version: 8.2.4-beta.2
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -89,6 +125,18 @@ importers:
         specifier: 5.4.10
         version: 5.4.10(@types/node@20.19.27)(terser@5.44.1)
 
+  packages/AIChat:
+    dependencies:
+      '@ezuikit/utils-i18n':
+        specifier: ^2.0.0
+        version: 2.0.0
+
+  packages/Broadcast:
+    dependencies:
+      '@ezuikit/utils-i18n':
+        specifier: ^2.0.0
+        version: 2.0.0
+
   packages/DatePicker:
     dependencies:
       '@ezuikit/utils-i18n':
@@ -115,6 +163,12 @@ importers:
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
+
+  packages/Talk:
+    dependencies:
+      '@ezuikit/utils-i18n':
+        specifier: ^2.0.0
+        version: 2.0.0
 
   packages/TimeLine:
     dependencies:
@@ -1417,52 +1471,10 @@ packages:
     dev: true
     optional: true
 
-  /@ezuikit/player-ezopen@8.2.5-beta.3:
-    resolution: {integrity: sha512-JyWUFGDduSyMBLGKYVynL9EGRvBRAd33BH6xZG6HEy/IFi+jj5rpxdY731KSc3EIxzZaMRMKMzSmK2gC9SohXA==}
-    dependencies:
-      '@ezuikit/player-plugin-record': 8.2.0
-      '@ezuikit/utils-i18n': 2.0.0
-      '@ezuikit/utils-logger': 2.0.0
-      '@ezuikit/utils-service': 1.0.1
-      '@ezuikit/utils-tools': 2.0.1
-      dayjs: 1.11.19
-      deepmerge: 4.3.1
-      eventemitter3: 5.0.1
-      screenfull: 5.2.0
-      ua-parser-js: 1.0.37
-    dev: false
-
-  /@ezuikit/player-plugin-record@8.2.0:
-    resolution: {integrity: sha512-5T+1pSw83FmZDrpcNrDRQOf0vv3a3flnwWWZ8N42ZZENtATeMUAXXu2LkmnrLpsRmSVBELIX13adEqnAk1k39A==}
-    dev: false
-
-  /@ezuikit/utils-collect@0.1.1:
-    resolution: {integrity: sha512-BgEOnTtAq8rQRBAKv5rLXbQLGOnfOZ6NS0QTmiviey80JbMJlxrLiqmjL5lxvkm4JtCcXCtSgPA4tskQKN4eDA==}
-    dev: false
-
   /@ezuikit/utils-i18n@2.0.0:
     resolution: {integrity: sha512-gMkfdwFTRk3bAkUVWRGPyEsQl4aIImBpQp732aSSHA75LFPi1MmdaB2Xf34OeC+4v+Anpbt75vviCpUrKPMKlQ==}
     dependencies:
       deepmerge: 4.3.1
-    dev: false
-
-  /@ezuikit/utils-logger@2.0.0:
-    resolution: {integrity: sha512-xtq7Vwle75pfA1UfmcsO2cAdqu9n04fxXDu32fpta7A99ENgyk8saK1NRxeiLnqQHdibaIAmrIbfehgLAH6ecQ==}
-    dev: false
-
-  /@ezuikit/utils-service@1.0.1:
-    resolution: {integrity: sha512-iNjYuU7AScBJxvKBM9PjiGI2y64QJNPT/H1Fy/Y7ZIAlw4DO//TP+x50qCho+i+EOUpWLtOqBQvtRb7a0O4X4Q==}
-    dependencies:
-      '@ezuikit/utils-tools': 1.1.0
-      dayjs: 1.11.19
-    dev: false
-
-  /@ezuikit/utils-tools@1.1.0:
-    resolution: {integrity: sha512-mujPtXIhZnuJrJySu1/Z6X90sMJQStZydurZcfetMCH6pqIYN4P+1w6+P8PCTR6k4LJp5nY9+eNnKa7AZ8OBKA==}
-    dev: false
-
-  /@ezuikit/utils-tools@2.0.1:
-    resolution: {integrity: sha512-zr+fXIiYP3/4Gp3aSASHhOvkymrRxo+G5Owhxzj/jBq4osifgq8kpDCC399VWEpZvwWUuY4AJENkqq2IC+Qfrw==}
     dev: false
 
   /@ezuikit/utils-tools@2.0.3:
@@ -1557,10 +1569,6 @@ packages:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
     dev: true
-
-  /@juggle/resize-observer@3.4.0:
-    resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
-    dev: false
 
   /@lerna/create@8.2.4(typescript@5.9.3):
     resolution: {integrity: sha512-A8AlzetnS2WIuhijdAzKUyFpR5YbLLfV3luQ4lzBgIBgRfuoBDZeF+RSZPhra+7A6/zTUlrbhKZIOi/MNhqgvQ==}
@@ -2715,10 +2723,6 @@ packages:
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dev: true
 
-  /abortcontroller-polyfill@1.7.8:
-    resolution: {integrity: sha512-9f1iZ2uWh92VcrU9Y8x+LdM4DLj75VE0MJB8zuF1iUnroEptStw+DQ8EQPMUdfe5k+PkB1uUfDQfWbhstH8LrQ==}
-    dev: false
-
   /acorn@8.15.0:
     resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
     engines: {node: '>=0.4.0'}
@@ -3325,17 +3329,9 @@ packages:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
     dev: true
 
-  /dayjs@1.11.19:
-    resolution: {integrity: sha512-t5EcLVS6QPBNqM2z8fakk/NKel+Xzshgt8FFKAn+qwlD1pzZWxh0nVCrvFK7ZDb6XucZeF9z8C7CBWTRIVApAw==}
-    dev: false
-
   /de-indent@1.0.2:
     resolution: {integrity: sha512-e/1zu3xH5MQryN2zdVaF0OrdNLUbvWxzMbi+iNA6Bky7l1RoP8a2fIbRocyHclXt/arDrrR6lL3TqFD9pMQTsg==}
     dev: true
-
-  /debounce-promise@3.1.2:
-    resolution: {integrity: sha512-rZHcgBkbYavBeD9ej6sP56XfG53d51CD4dnaw989YX/nZ/ZJfgRx/9ePKmTNiUiyQvh4mtrMoS3OAWW+yoYtpg==}
-    dev: false
 
   /debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -3595,10 +3591,6 @@ packages:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
     dev: true
 
-  /eventemitter3@5.0.1:
-    resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
-    dev: false
-
   /execa@5.0.0:
     resolution: {integrity: sha512-ov6w/2LCiuyO4RLYGdpFGjkcs0wMTgGE8PrkTHikeUy5iJekXyPIKUjifk5CsE0pt7sMCrMZ3YNqoCj6idQOnQ==}
     engines: {node: '>=10'}
@@ -3618,23 +3610,6 @@ packages:
     resolution: {integrity: sha512-ZgEeZXj30q+I0EN+CbSSpIyPaJ5HVQD18Z1m+u1FXbAeT94mr1zw50q4q6jiiC447Nl/YTcIYSAftiGqetwXCA==}
     dev: true
 
-  /ezuikit-js@8.2.4-beta.2:
-    resolution: {integrity: sha512-qiODnsBNwGnH3GfsnTdWiE8Dv5JRFdM6Ujq1or3Q8BqLd5yK+ayFMdczmByHU7edxt5CtYEk/DVYG3BaUCr/1w==}
-    dependencies:
-      '@ezuikit/player-ezopen': 8.2.5-beta.3
-      '@ezuikit/utils-collect': 0.1.1
-      '@ezuikit/utils-i18n': 2.0.0
-      '@ezuikit/utils-logger': 2.0.0
-      '@ezuikit/utils-tools': 2.0.1
-      '@juggle/resize-observer': 3.4.0
-      '@skax/delegate': 4.0.2
-      abortcontroller-polyfill: 1.7.8
-      debounce-promise: 3.1.2
-      deepmerge: 4.3.1
-      formdata-polyfill: 4.0.10
-      screenfull: 5.2.0
-    dev: false
-
   /fdir@6.5.0(picomatch@4.0.3):
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
     engines: {node: '>=12.0.0'}
@@ -3646,14 +3621,6 @@ packages:
     dependencies:
       picomatch: 4.0.3
     dev: true
-
-  /fetch-blob@3.2.0:
-    resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
-    engines: {node: ^12.20 || >= 14.13}
-    dependencies:
-      node-domexception: 1.0.0
-      web-streams-polyfill: 3.3.3
-    dev: false
 
   /figures@3.2.0:
     resolution: {integrity: sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==}
@@ -3716,13 +3683,6 @@ packages:
       hasown: 2.0.2
       mime-types: 2.1.35
     dev: true
-
-  /formdata-polyfill@4.0.10:
-    resolution: {integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==}
-    engines: {node: '>=12.20.0'}
-    dependencies:
-      fetch-blob: 3.2.0
-    dev: false
 
   /front-matter@4.0.2:
     resolution: {integrity: sha512-I8ZuJ/qG92NWX8i5x1Y8qyj3vizhXS31OxjKDu3LKP+7/qBgfIKValiZIEwoVoJKUHlhWtYrktkxV1XsX+pPlg==}
@@ -4866,12 +4826,6 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /node-domexception@1.0.0:
-    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
-    engines: {node: '>=10.5.0'}
-    deprecated: Use your platform's native DOMException instead
-    dev: false
-
   /node-fetch@2.6.7:
     resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
     engines: {node: 4.x || >=6.0.0}
@@ -5756,11 +5710,6 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
-  /screenfull@5.2.0:
-    resolution: {integrity: sha512-9BakfsO2aUQN2K9Fdbj87RJIEZ82Q9IGim7FqM5OsebfoFC6ZHXgDq/KvniuLTPdeM8wY2o6Dj3WQ7KeQCj3cA==}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
   /semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
     hasBin: true
@@ -6152,10 +6101,6 @@ packages:
     hasBin: true
     dev: true
 
-  /ua-parser-js@1.0.37:
-    resolution: {integrity: sha512-bhTyI94tZofjo+Dn8SN6Zv8nBDvyXTymAdM3LDI/0IboIUwTu1rEhW7v2TfiVsoYWgkQ4kOVqnI8APUFbIQIFQ==}
-    dev: false
-
   /uglify-js@3.19.3:
     resolution: {integrity: sha512-v3Xu+yuwBXisp6QYTcH4UbH+xYJXqnq2m/LtQVWKWzYc1iehYnLixoQDN9FH6/j9/oybfd6W9Ghwkl8+UMKTKQ==}
     engines: {node: '>=0.8.0'}
@@ -6370,11 +6315,6 @@ packages:
     dependencies:
       defaults: 1.0.4
     dev: true
-
-  /web-streams-polyfill@3.3.3:
-    resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
-    engines: {node: '>= 8'}
-    dev: false
 
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}

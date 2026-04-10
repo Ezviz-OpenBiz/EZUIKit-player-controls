@@ -9,8 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "ezuikit-js": "8.2.4-beta.2",
-    "vue": "3.4.37"
+    "vue": "3.4.37",
+    "@ezuikit/control-date-picker": "workspace:*",
+    "@ezuikit/control-ptz": "workspace:*",
+    "@ezuikit/control-aichat": "workspace:*",
+    "@ezuikit/control-talk": "workspace:*",
+    "@ezuikit/control-time-line": "workspace:*",
+    "@ezuikit/control-zoom": "workspace:*",
+    "@ezuikit/control-broadcast": "workspace:*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "5.1.2",

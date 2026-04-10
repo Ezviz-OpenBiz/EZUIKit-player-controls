@@ -1,6 +1,7 @@
 packages:
   - "packages/*"
   - "examples/*"
+  - "!examples/with-vue2.5"
   - "!**/test/**"
   - "!**/dist/**"
   - "!**/build/**"
