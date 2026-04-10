@@ -8,7 +8,6 @@
 
 控件都存储在 `packages`下， 仅需要改 `packages` 下的文件， 其他文件不要动
 
-
 ## npm publish
 
 npm 包的发布仅需要打一个 git tag 然后提交， github actions 的 release.yml 会自动发布
