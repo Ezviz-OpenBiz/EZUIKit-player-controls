@@ -1,0 +1,30 @@
+{
+  "name": "@ezuikit/control-broadcast",
+  "version": "0.0.1",
+  "description": "broadcast voice control",
+  "title": "broadcast",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "keywords": [
+    "ezuikit",
+    "broadcast",
+    "voice"
+  ],
+  "author": "Ezviz-OpenBiz",
+  "license": "",
+  "dependencies": {
+    "@ezuikit/utils-i18n": "^2.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls/issues"
+  },
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme"
+}
