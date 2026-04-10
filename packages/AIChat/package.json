@@ -11,6 +11,9 @@
     "ai",
     "video-search"
   ],
+  "files": [
+    "dist"
+  ],
   "author": "Ezviz-OpenBiz",
   "license": "",
   "dependencies": {

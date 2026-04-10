@@ -10,6 +10,9 @@
     "broadcast",
     "voice"
   ],
+  "files": [
+    "dist"
+  ],
   "author": "Ezviz-OpenBiz",
   "license": "",
   "dependencies": {

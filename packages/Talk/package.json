@@ -9,6 +9,9 @@
     "ezuikit",
     "talk"
   ],
+  "files": [
+    "dist"
+  ],
   "author": "Ezviz-OpenBiz",
   "license": "",
   "dependencies": {
