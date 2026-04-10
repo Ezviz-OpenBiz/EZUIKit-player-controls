@@ -1,0 +1,31 @@
+{
+  "name": "@ezuikit/control-aichat",
+  "version": "0.0.1",
+  "description": "AI video search chat control",
+  "title": "aichat",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "keywords": [
+    "ezuikit",
+    "aichat",
+    "ai",
+    "video-search"
+  ],
+  "author": "Ezviz-OpenBiz",
+  "license": "",
+  "dependencies": {
+    "@ezuikit/utils-i18n": "^2.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls/issues"
+  },
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme"
+}
