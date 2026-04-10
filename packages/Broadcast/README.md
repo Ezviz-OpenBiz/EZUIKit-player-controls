@@ -26,6 +26,10 @@ Broadcast 模块采用**事件驱动架构**，不直接调用接口，而是通
 ## 安装
 
 ```bash
+npm install @ezuikit/control-broadcast
+# or 
+yarn add @ezuikit/control-broadcast
+# or
 pnpm install @ezuikit/control-broadcast
 ```
 
@@ -182,15 +186,6 @@ new Broadcast(options: BroadcastOptions)
 - `recordError` - 录音错误
 - `error` - 通用错误
 
-## 开发
-
-```bash
-# 开发模式
-pnpm dev
-
-# 构建
-pnpm build
-```
 
 ## License
 
