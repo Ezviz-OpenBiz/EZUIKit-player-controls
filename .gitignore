@@ -15,6 +15,7 @@ stats.html
 .setting
 build/
 .next/
+examples/*/dist
 npm-debug.log*
 npm-error.log*
 yarn-debug.log*
