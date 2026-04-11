@@ -1,15 +1,13 @@
 <template>
   <div id="app">
-    <EzopenPlayer />
+    app
   </div>
 </template>
 
 <script>
-import EzopenPlayer from "./components/Player.vue";
 export default {
   name: "App",
   components: {
-    EzopenPlayer,
   },
 };
 </script>
