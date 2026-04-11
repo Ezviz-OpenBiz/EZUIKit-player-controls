@@ -13,6 +13,7 @@
     "classnames": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.0",
     "@ezuikit/control-date-picker": "workspace:*",
     "@ezuikit/control-ptz": "workspace:*",
     "@ezuikit/control-aichat": "workspace:*",
@@ -32,7 +33,8 @@
     "pretty-quick": "^4.0.0",
     "terser": "^5.36.0",
     "typescript": "5.3.3",
-    "vite": "5.4.10"
+    "vite": "5.4.10",
+    "vite-plugin-require-transform": "^1.0.21"
   },
   "engines": {
     "node": ">=18"

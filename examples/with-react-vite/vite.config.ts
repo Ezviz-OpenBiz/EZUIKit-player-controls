@@ -2,6 +2,7 @@ import { defineConfig, type UserConfig, type ConfigEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 // import viteImagemin from 'vite-plugin-imagemin';
 import legacy from "@vitejs/plugin-legacy";
+import requireTransform from 'vite-plugin-require-transform';
 
 // open sentry
 const OPEN_SENTRY: boolean = false; // process.env.NODE_ENV === 'production'
@@ -44,6 +45,9 @@ export default defineConfig(((env: ConfigEnv) => {
       },
     },
     plugins: [
+      requireTransform({
+        fileRegex: /.js$|.cjs$|.jsx$|.ts$|.tsx$/
+      }),
       react(),
       // https://www.npmjs.com/package/@vitejs/plugin-legacy
       // Vite's default browser support baseline is Native ESM, native ESM dynamic import, and import.meta. This plugin provides support for legacy browsers that do not support those features when building for production.

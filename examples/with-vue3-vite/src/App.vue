@@ -1,22 +1,52 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import { RouterView, RouterLink } from 'vue-router'
 </script>
 
 <template>
-    <div>app</div>
+  <div class="app">
+    <nav class="sidebar">
+      <h3>EZUIKit Controls</h3>
+      <RouterLink to="/">首页</RouterLink>
+      <RouterLink to="/date-picker">DatePicker 日期选择</RouterLink>
+      <RouterLink to="/ptz">Ptz 云台控制</RouterLink>
+      <RouterLink to="/aichat">AIChat AI对话</RouterLink>
+      <RouterLink to="/talk">Talk 对讲</RouterLink>
+      <RouterLink to="/time-line">TimeLine 时间轴</RouterLink>
+      <RouterLink to="/zoom">Zoom 缩放</RouterLink>
+      <RouterLink to="/broadcast">Broadcast 云广播</RouterLink>
+    </nav>
+    <main class="content">
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style scoped>
-.logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
+.app {
+  display: flex;
+  min-height: 100vh;
 }
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+.sidebar {
+  width: 220px;
+  padding: 16px;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-.logo.vue:hover {
-    filter: drop-shadow(0 0 2em #42b883aa);
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+.sidebar a:hover,
+.sidebar a.router-link-active {
+  background: #1890ff;
+  color: #fff;
+}
+.content {
+  flex: 1;
+  padding: 24px;
 }
 </style>
