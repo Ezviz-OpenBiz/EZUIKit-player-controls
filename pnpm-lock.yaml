@@ -15,49 +15,6 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
 
-  examples/vue3-demo:
-    dependencies:
-      '@ezuikit/control-aichat':
-        specifier: workspace:*
-        version: link:../../packages/AIChat
-      '@ezuikit/control-broadcast':
-        specifier: workspace:*
-        version: link:../../packages/Broadcast
-      '@ezuikit/control-date-picker':
-        specifier: workspace:*
-        version: link:../../packages/DatePicker
-      '@ezuikit/control-ptz':
-        specifier: workspace:*
-        version: link:../../packages/Ptz
-      '@ezuikit/control-talk':
-        specifier: workspace:*
-        version: link:../../packages/Talk
-      '@ezuikit/control-time-line':
-        specifier: workspace:*
-        version: link:../../packages/TimeLine
-      '@ezuikit/control-zoom':
-        specifier: workspace:*
-        version: link:../../packages/Zoom
-      vue:
-        specifier: 3.4.37
-        version: 3.4.37(typescript@5.3.3)
-    devDependencies:
-      '@vitejs/plugin-vue':
-        specifier: 5.1.2
-        version: 5.1.2(vite@5.4.0)(vue@3.4.37)
-      terser:
-        specifier: ^5.36.0
-        version: 5.44.1
-      typescript:
-        specifier: ^5.3.3
-        version: 5.3.3
-      vite:
-        specifier: 5.4.0
-        version: 5.4.0(terser@5.44.1)
-      vue-tsc:
-        specifier: 2.0.29
-        version: 2.0.29(typescript@5.3.3)
-
   examples/with-react-vite:
     dependencies:
       '@ezuikit/control-aichat':
@@ -124,6 +81,49 @@ importers:
       vite:
         specifier: 5.4.10
         version: 5.4.10(@types/node@20.19.27)(terser@5.44.1)
+
+  examples/with-vue3-vite:
+    dependencies:
+      '@ezuikit/control-aichat':
+        specifier: workspace:*
+        version: link:../../packages/AIChat
+      '@ezuikit/control-broadcast':
+        specifier: workspace:*
+        version: link:../../packages/Broadcast
+      '@ezuikit/control-date-picker':
+        specifier: workspace:*
+        version: link:../../packages/DatePicker
+      '@ezuikit/control-ptz':
+        specifier: workspace:*
+        version: link:../../packages/Ptz
+      '@ezuikit/control-talk':
+        specifier: workspace:*
+        version: link:../../packages/Talk
+      '@ezuikit/control-time-line':
+        specifier: workspace:*
+        version: link:../../packages/TimeLine
+      '@ezuikit/control-zoom':
+        specifier: workspace:*
+        version: link:../../packages/Zoom
+      vue:
+        specifier: 3.4.37
+        version: 3.4.37(typescript@5.3.3)
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: 5.1.2
+        version: 5.1.2(vite@5.4.0)(vue@3.4.37)
+      terser:
+        specifier: ^5.36.0
+        version: 5.44.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+      vite:
+        specifier: 5.4.0
+        version: 5.4.0(terser@5.44.1)
+      vue-tsc:
+        specifier: 2.0.29
+        version: 2.0.29(typescript@5.3.3)
 
   packages/AIChat:
     dependencies:
