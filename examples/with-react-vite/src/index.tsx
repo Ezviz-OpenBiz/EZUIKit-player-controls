@@ -1,16 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { HashRouter, Routes, Route, NavLink } from "react-router-dom";
-import "./index.css";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { HashRouter, Routes, Route, NavLink } from 'react-router-dom';
+import './index.css';
 
-import Home from "./pages/Home";
-import DatePickerDemo from "./pages/DatePickerDemo";
-import PtzDemo from "./pages/PtzDemo";
-import AIChatDemo from "./pages/AIChatDemo";
-import TalkDemo from "./pages/TalkDemo";
-import TimeLineDemo from "./pages/TimeLineDemo";
-import ZoomDemo from "./pages/ZoomDemo";
-import BroadcastDemo from "./pages/BroadcastDemo";
+import Home from './pages/Home';
+import DatePickerDemo from './pages/DatePickerDemo';
+import PtzDemo from './pages/PtzDemo';
+import AIChatDemo from './pages/AIChatDemo';
+import TalkDemo from './pages/TalkDemo';
+import TimeLineDemo from './pages/TimeLineDemo';
+import ZoomDemo from './pages/ZoomDemo';
+import BroadcastDemo from './pages/BroadcastDemo';
 
 function App() {
   return (
@@ -31,12 +31,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/date-picker" element={<DatePickerDemo />} />
-            {/* <Route path="/ptz" element={<PtzDemo />} />
+            <Route path="/ptz" element={<PtzDemo />} />
             <Route path="/aichat" element={<AIChatDemo />} />
             <Route path="/talk" element={<TalkDemo />} />
             <Route path="/time-line" element={<TimeLineDemo />} />
             <Route path="/zoom" element={<ZoomDemo />} />
-            <Route path="/broadcast" element={<BroadcastDemo />} /> */}
+            <Route path="/broadcast" element={<BroadcastDemo />} />
           </Routes>
         </main>
       </div>
@@ -44,6 +44,4 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <App />
-);
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<App />);

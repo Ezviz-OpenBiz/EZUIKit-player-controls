@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import { TimeLine, MobileTimeLine } from "@ezuikit/control-time-line";
+import React, { useEffect, useRef } from 'react';
+import { TimeLine, MobileTimeLine } from '@ezuikit/control-time-line';
+import '@ezuikit/control-time-line/dist/style';
 
 export default function TimeLineDemo() {
   const pcRef = useRef<HTMLDivElement>(null);
@@ -12,19 +13,17 @@ export default function TimeLineDemo() {
     const now = new Date();
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0);
     const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
-    const timeSections = [
-      { startTime: todayStart.getTime(), endTime: todayEnd.getTime(), coverPic: "" },
-    ];
+    const timeSections = [{ startTime: todayStart.getTime(), endTime: todayEnd.getTime(), coverPic: '' }];
 
     if (pcRef.current) {
       timeLine = new TimeLine(pcRef.current, {
         current: now,
-        language: "zh",
+        language: 'zh',
         timeSections,
         width: 800,
         height: 60,
         onChange: (time) => {
-          console.log("TimeLine onChange:", time);
+          console.log('TimeLine onChange:', time);
         },
       });
     }
@@ -32,12 +31,12 @@ export default function TimeLineDemo() {
     if (mobileRef.current) {
       mobileTimeLine = new MobileTimeLine(mobileRef.current, {
         current: now,
-        language: "zh",
+        language: 'zh',
         timeSections,
         height: 200,
         showTimeWidthBtn: true,
         onChange: (time) => {
-          console.log("MobileTimeLine onChange:", time);
+          console.log('MobileTimeLine onChange:', time);
         },
       });
     }

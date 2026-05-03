@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import { Ptz } from "@ezuikit/control-ptz";
+import React, { useEffect, useRef } from 'react';
+import { Ptz } from '@ezuikit/control-ptz';
+import '@ezuikit/control-ptz/dist/style';
 
 export default function PtzDemo() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -9,16 +10,16 @@ export default function PtzDemo() {
 
     if (containerRef.current) {
       ptz = new Ptz(containerRef.current, {
-        language: "zh",
-        accessToken: "your-access-token",
-        deviceSerial: "your-device-serial",
+        language: 'zh',
+        accessToken: 'your-access-token',
+        deviceSerial: 'your-device-serial',
         channelNo: 1,
         onDirection: (info) => {
-          console.log("Ptz direction:", info);
+          console.log('Ptz direction:', info);
           return () => {};
         },
         onSpeedChange: (speed) => {
-          console.log("Ptz speed:", speed);
+          console.log('Ptz speed:', speed);
         },
       });
     }
