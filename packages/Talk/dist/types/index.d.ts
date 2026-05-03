@@ -30,13 +30,22 @@ declare class EventEmitter {
     removeAllListener(): void;
 }
 
+/**
+ * Talk 对讲功能类
+ */
 interface TalkOptions {
-    deviceSerial: '';
-    channelNo: '1';
+    /**
+     * 设备序列号
+     */
+    deviceSerial: string;
+    /**
+     * 通道号， 默认1
+     */
+    channelNo: string | number;
     /**
      * 访问令牌， 如果和 token 一起， 优先使用小权限token
      */
-    accessToken?: '';
+    accessToken: string;
     /**
      * 优先使用小权限token
      *
@@ -53,12 +62,12 @@ interface TalkOptions {
             talk: string;
         };
     };
-    env: {
-        domain: 'https://open.ys7.com';
+    env?: {
+        domain: string;
     };
-    capacity: {
-        support_talk: null;
-        support_switch_talkmode: null;
+    capacity?: {
+        support_talk: string | null;
+        support_switch_talkmode: string | null;
     };
 }
 declare global {

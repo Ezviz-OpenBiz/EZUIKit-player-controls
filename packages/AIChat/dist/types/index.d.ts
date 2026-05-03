@@ -376,8 +376,8 @@ declare class Services {
      */
     getChatSuggested(): Promise<ApiResponse<ChatSuggestedData>>;
     /**
-    * 发送AI对话内容
-    */
+     * 发送AI对话内容
+     */
     sendAIChatCompletions(message: string): Promise<ApiResponse<void>>;
 }
 

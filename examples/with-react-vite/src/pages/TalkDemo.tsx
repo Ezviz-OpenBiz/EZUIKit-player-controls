@@ -8,8 +8,8 @@ export default function TalkDemo() {
   useEffect(() => {
     talkRef.current = new Talk({
       deviceSerial: "your-device-serial",
-      channelNo: "1",
       accessToken: "your-access-token",
+      channelNo: "1",
       env: { domain: "https://open.ys7.com" },
       capacity: { support_talk: null, support_switch_talkmode: null },
     });

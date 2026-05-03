@@ -190,6 +190,11 @@ declare class BroadcastUI {
     private lastTouchTime;
     private pendingStop;
     private orientationChangeHandler;
+    /**
+     *
+     * @param container
+     * @param options
+     */
     constructor(container: HTMLElement | string, options: BroadcastUIOptions);
     /**
      * 设置屏幕方向变化监听器（移动端）
