@@ -11,12 +11,12 @@
   "dependencies": {
     "vue": "^2.5.17",
     "vue-router": "^3.6.5",
-    "@ezuikit/control-date-picker": "^1.0.5",
-    "@ezuikit/control-ptz": "^1.0.0-alpha.2",
+    "@ezuikit/control-date-picker": "^2.0.0-beta.1",
+    "@ezuikit/control-ptz": "^1.0.0-beta.3",
     "@ezuikit/control-aichat": "^0.0.1",
     "@ezuikit/control-talk": "^0.0.1",
-    "@ezuikit/control-time-line": "^1.0.7",
-    "@ezuikit/control-zoom": "^0.0.1-beta.1",
+    "@ezuikit/control-time-line": "^2.0.0-beta.2",
+    "@ezuikit/control-zoom": "^1.0.0-beta.1",
     "@ezuikit/control-broadcast": "^0.0.1"
   },
   "devDependencies": {
