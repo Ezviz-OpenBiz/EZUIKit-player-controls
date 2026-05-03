@@ -646,17 +646,17 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.28.5"
 
-"@ezuikit/control-aichat@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/control-aichat/-/control-aichat-0.0.1.tgz#82f8b10bf9ab20d3484a93d12cada4b8bf92b318"
-  integrity sha512-4JXJ1cTqI3dKc2Q20vHnLTy7LVrYuNoqQvS329IG8INGs5LqQUvnil+N2saVzY7yTNMpjqoBS1L9pxnI6PqTQA==
+"@ezuikit/control-aichat@^0.1.0-beta.1":
+  version "0.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/control-aichat/-/control-aichat-0.1.0-beta.1.tgz#2255cc6ba2eab6f29ba915944f347c46c7c09d6c"
+  integrity sha512-YlmKq0bKrzVSY/kdJZ7XLNwREfyQHdC7ubErj27q0trq59GZgLgdcoKkILelX3BzBjbmyMRf6Yg7Q1Gwk62mMg==
   dependencies:
     "@ezuikit/utils-i18n" "^2.0.0"
 
-"@ezuikit/control-broadcast@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/control-broadcast/-/control-broadcast-0.0.1.tgz#57435779e649cda4c35b48159ee02d07f9cbfcf4"
-  integrity sha512-1gWjksqj6BVCRGzz14BhotnDRtJFQyPFggIlK0WadQGwIFMt9JC0Xh5In9ObMJEvWbsiYL5fej/Ulkzr+bmdag==
+"@ezuikit/control-broadcast@^0.1.0-beta.1":
+  version "0.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/control-broadcast/-/control-broadcast-0.1.0-beta.1.tgz#f227a63f00ce4355a93ed0a37618ba66c0c4b32b"
+  integrity sha512-vv84gXb8QiK/0lB6e4ufYSFvdEdq2aIBP7x0kh2F6ydg4dFWbkt7szIjc6E5FUl6DkmZj540T6pLpd3p+SZIig==
   dependencies:
     "@ezuikit/utils-i18n" "^2.0.0"
 
@@ -679,10 +679,10 @@
     "@ezuikit/utils-tools" "2.0.3"
     deepmerge "^4.3.1"
 
-"@ezuikit/control-talk@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/control-talk/-/control-talk-0.0.1.tgz#ea0043f5e1d728c3b759f547911d68d9ccbf4ed2"
-  integrity sha512-U/tc5iLlgVUq5DRwN2/Gtzy7jlhLy45DytitsycGQTx6B6+Fbi20Hbo9KsPuEH100K2nayY7dtA2g1DrgDoFfw==
+"@ezuikit/control-talk@^0.1.0-beta.1":
+  version "0.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/control-talk/-/control-talk-0.1.0-beta.1.tgz#f1f62e580349d68665727514d2fc993201bdcf7c"
+  integrity sha512-I0WoGbhHjoHSqRTGWl0QpqQep1J561FJEOAxtR4XqGkGlRkJVprEGvpEe/epJN608EMRZNo8In2t4IUiiWjTVA==
   dependencies:
     "@ezuikit/utils-i18n" "^2.0.0"
 

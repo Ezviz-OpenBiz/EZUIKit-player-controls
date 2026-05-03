@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import "@ezuikit/control-aichat/dist/index.css";
+import "@ezuikit/control-aichat/dist/style";
 import AIChat from "@ezuikit/control-aichat";
 
 export default {

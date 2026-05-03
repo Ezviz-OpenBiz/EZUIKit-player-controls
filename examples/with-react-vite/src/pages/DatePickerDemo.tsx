@@ -1,4 +1,4 @@
-import '@ezuikit/control-date-picker/dist/style.css';
+import '@ezuikit/control-date-picker/dist/style';
 import React, { useEffect, useRef } from "react";
 import * as DatePicker from '@ezuikit/control-date-picker';
 

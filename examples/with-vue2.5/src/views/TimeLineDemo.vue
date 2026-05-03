@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import "@ezuikit/control-time-line/dist/style.css";
+import "@ezuikit/control-time-line/dist/style";
 import { TimeLine, MobileTimeLine } from "@ezuikit/control-time-line";
 
 export default {
