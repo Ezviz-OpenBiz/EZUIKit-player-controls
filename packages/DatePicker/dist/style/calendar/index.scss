@@ -1,5 +1,5 @@
 @use '../style/_style.scss' as common;
-@use '~@skax/picker/dist/style/_style.scss' as picker;
+@use '@skax/picker/dist/style/style.scss' as picker;
 
 .#{common.$ecalendar-prefix-cls} {
   line-height: normal;

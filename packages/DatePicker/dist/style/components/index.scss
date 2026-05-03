@@ -1,5 +1,5 @@
 @use '../style/_style.scss' as common;
-@use '~@skax/picker/dist/style/_style.scss' as picker;
+@use '@skax/picker/dist/style/style.scss' as picker;
 
 .epicker-mobile .edate-mobile {
   --edate-hover-bg-color: transparent; // 移动端不需要hover 背景 不然有问题

@@ -1,6 +1,6 @@
 /*
-* @ezuikit/control-date-picker v2.0.0-beta.1
-* Copyright (c) 2026-05-03 Ezviz-OpenBiz
+* @ezuikit/control-date-picker v2.0.0-beta.2
+* Copyright (c) 2026-05-04 Ezviz-OpenBiz
 * Released under the MIT License.
 */
 !function(global,factory){"object"==typeof exports&&"undefined"!=typeof module?factory(exports):"function"==typeof define&&define.amd?define(["exports"],factory):factory((global="undefined"!=typeof globalThis?globalThis:global||self).DatePicker={})}(this,function(exports){"use strict";function getDefaultExportFromCjs(x){return x&&x.__esModule&&Object.prototype.hasOwnProperty.call(x,"default")?x.default:x}var hasRequiredDelegate,delegate$2={exports:{}};

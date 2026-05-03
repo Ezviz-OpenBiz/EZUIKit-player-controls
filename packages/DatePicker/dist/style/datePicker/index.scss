@@ -1,5 +1,5 @@
 @use '../style/_style.scss' as common;
-@use '~@skax/picker/dist/style/_style.scss' as picker;
+@use '@skax/picker/dist/style/style.scss' as picker;
 
 .#{$edate-prefix-cls}-picker-container {
   .#{$edate-prefix-cls}-container {
