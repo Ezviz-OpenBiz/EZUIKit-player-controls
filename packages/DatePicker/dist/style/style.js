@@ -1,5 +1,5 @@
 /*
-* @ezuikit/control-ptz v1.0.0-beta.3
+* @ezuikit/control-date-picker v2.0.0-beta.1
 * Copyright (c) 2026-05-03 Ezviz-OpenBiz
 * Released under the MIT License.
 */

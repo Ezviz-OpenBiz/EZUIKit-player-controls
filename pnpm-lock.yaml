@@ -158,8 +158,8 @@ importers:
         specifier: 4.0.2
         version: 4.0.2
       '@skax/picker':
-        specifier: 1.1.7
-        version: 1.1.7
+        specifier: 1.1.8
+        version: 1.1.8
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -194,8 +194,8 @@ importers:
         specifier: 1.1.2
         version: 1.1.2
       '@skax/picker':
-        specifier: 1.1.7
-        version: 1.1.7
+        specifier: 1.1.8
+        version: 1.1.8
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -2342,8 +2342,8 @@ packages:
     resolution: {integrity: sha512-dRYjWY6+ix7FCdDLkkEgitO5EcawaHJt1Fu6BXUwKjpikkGnVeMRzrIwfH3jr6FbrhZvZr4StsYG7x5xMHZ3CQ==}
     dev: false
 
-  /@skax/picker@1.1.7:
-    resolution: {integrity: sha512-OXUyLW329DCKINmgtn7A7AMu6hScp/+/K1OgFFUP9hMFizPy1U/E66mVWi2PzZmYjhk7XRFtGbWu2H4nKpwhpA==}
+  /@skax/picker@1.1.8:
+    resolution: {integrity: sha512-PY8eefUG2KYheTV4VsToL66JDyFWbNrUQcz4sdEUfdFs5A2JWBYL4tNVEIMUq92m03yXaPtkNXh2RcgKO2Czzg==}
     dev: false
 
   /@swc/core-darwin-arm64@1.15.8:

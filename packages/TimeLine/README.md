@@ -16,7 +16,7 @@ pnpm add @ezuikit/control-time-line
 ## demo
 
 ```ts
-import '@ezuikit/control-time-line/dist/style.css';
+import '@ezuikit/control-time-line/dist/style';
 import { TimeLine } from '@ezuikit/control-time-line';
 
 const timeLine = new TimeLine(document.getElementById('container'), {
@@ -50,8 +50,8 @@ const timeLine = new TimeLine(document.getElementById('container'), {
 
 ```html
 <!-- 引入 umd,  -->
-<!-- node_modules/@ezuikit/control-time-line/dist/style.css -->
-<link rel="stylesheet" href="./style.css" />
+<!-- node_modules/@ezuikit/control-time-line/dist/style/style.css -->
+<link rel="stylesheet" href="./style/style.css" />
 <!-- node_modules/@ezuikit/control-time-line/dist/index.umd.js-->
 <script src="./index.umd.js"></script>
 <div id="container"></div>

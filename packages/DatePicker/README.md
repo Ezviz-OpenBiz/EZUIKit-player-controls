@@ -16,7 +16,7 @@ pnpm add @ezuikit/control-date-picker
 ## demo
 
 ```ts
-import '@ezuikit/control-date-picker/dist/style.css';
+import '@ezuikit/control-date-picker/dist/style';
 import { DatePicker, type DatePickerModeType } from '@ezuikit/control-date-picker';
 
 const timeLine = new DatePicker(document.getElementById('container'), {
@@ -40,8 +40,8 @@ const timeLine = new DatePicker(document.getElementById('container'), {
 
 ```html
 <!-- 引入 umd,  -->
-<!-- node_modules/@ezuikit/control-date-picker/dist/style.css -->
-<link rel="stylesheet" href="./style.css" />
+<!-- node_modules/@ezuikit/control-date-picker/dist/style/style.css -->
+<link rel="stylesheet" href="./style/style.css" />
 <!-- node_modules/@ezuikit/control-date-picker/dist/index.umd.js-->
 <script src="./index.umd.js"></script>
 <div id="container"></div>

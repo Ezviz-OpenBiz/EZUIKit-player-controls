@@ -1,5 +1,5 @@
 /*
-* @ezuikit/control-ptz v1.0.0-beta.2
+* @ezuikit/control-ptz v1.0.0-beta.3
 * Copyright (c) 2026-05-03 Ezviz-OpenBiz
 * Released under the MIT License.
 */
