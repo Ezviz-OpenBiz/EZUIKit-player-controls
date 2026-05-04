@@ -1,15 +1,15 @@
 {
   "name": "@ezuikit/control-aichat",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "description": "AI video search chat control",
   "title": "aichat",
   "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
+  "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.esm.js",
       "require": "./dist/index.cjs",
       "default": "./dist/index.cjs"
     },
