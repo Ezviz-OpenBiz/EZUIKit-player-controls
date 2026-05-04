@@ -1,5 +1,5 @@
 /*
-* @ezuikit/control-date-picker v2.0.0-beta.2
+* @ezuikit/control-date-picker v2.0.0-beta.3
 * Copyright (c) 2026-05-04 Ezviz-OpenBiz
 * Released under the MIT License.
 */

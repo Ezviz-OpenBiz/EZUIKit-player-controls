@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-broadcast",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "description": "broadcast voice control",
   "title": "broadcast",
   "main": "dist/index.cjs",
