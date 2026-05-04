@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import "@ezuikit/control-ptz/dist/style";
+import "@ezuikit/control-ptz/dist/style/style.js";
 import { Ptz } from "@ezuikit/control-ptz";
 
 export default {

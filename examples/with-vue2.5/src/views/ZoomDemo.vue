@@ -6,8 +6,8 @@
       <button @click="zoomOut" style="margin-left: 8px;">缩小</button>
       <button @click="resetZoom" style="margin-left: 8px;">重置</button>
     </div>
-    <div ref="zoomContainer" style="width: 600px; height: 400px; border: 1px solid #ccc; overflow: hidden;">
-      <img src="https://images.pexels.com/photos/34577784/pexels-photo-34577784.jpeg" alt="zoom demo" style="width: 100%; height: 100%; object-fit: cover;" />
+    <div style="width: 600px; height: 400px; border: 1px solid #ccc; overflow: hidden;">
+      <img ref="zoomContainer" src="https://images.pexels.com/photos/34577784/pexels-photo-34577784.jpeg" alt="zoom demo" style="width: 100%; height: 100%; object-fit: cover;" />
     </div>
   </div>
 </template>

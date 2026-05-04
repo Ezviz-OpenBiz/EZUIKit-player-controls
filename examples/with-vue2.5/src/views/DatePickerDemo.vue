@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import "@ezuikit/control-date-picker/dist/style";
+import "@ezuikit/control-date-picker/dist/style/style.js";
 import { DatePicker, Calendar } from "@ezuikit/control-date-picker";
 
 export default {
