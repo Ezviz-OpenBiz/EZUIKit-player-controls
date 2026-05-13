@@ -31,7 +31,6 @@
     "eventemitter3": "^5.0.1"
   },
   "devDependencies": {
-    "@common/rollup": "workspace:*"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
