@@ -1,0 +1,48 @@
+{
+  "name": "@ezuikit/control-alarm-message",
+  "version": "0.0.1-beta.1",
+  "description": "alarm message list control",
+  "title": "alarm-message",
+  "main": "dist/index.cjs",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development rollup --config rollup.config.mjs --watch",
+    "build": "npm run clean && cross-env NODE_ENV=production rollup --config rollup.config.mjs",
+    "clean": "rimraf dist",
+    "types": "tsc src/index.ts --emitDeclarationOnly --declaration --declarationDir dist/types --esModuleInterop"
+  },
+  "keywords": [
+    "ezuikit",
+    "alarm",
+    "message"
+  ],
+  "author": "Ezviz-OpenBiz",
+  "license": "MIT",
+  "dependencies": {
+    "eventemitter3": "^5.0.1"
+  },
+  "devDependencies": {
+    "@common/rollup": "workspace:*"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls/issues"
+  },
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme"
+}
