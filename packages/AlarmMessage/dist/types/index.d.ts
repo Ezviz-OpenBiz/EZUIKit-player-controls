@@ -60,5 +60,12 @@ declare class AlarmMessage {
     destroy(): void;
 }
 
-export { AlarmMessage as default };
+/**
+ * 告警类型编码 → 名称映射表
+ * 基于告警消息类型表.md
+ */
+declare const ALARM_TYPE_MAP: Record<number, string>;
+declare function getAlarmTypeName(alarmType: number): string;
+
+export { ALARM_TYPE_MAP, AlarmMessage as default, getAlarmTypeName };
 export type { AlarmItem, AlarmListUpdateData, AlarmMessageOptions };
