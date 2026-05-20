@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-alarm-message",
-  "version": "0.0.1-beta.3",
+  "version": "0.0.1-beta.4",
   "description": "alarm message list control",
   "title": "alarm-message",
   "main": "dist/index.cjs",
@@ -29,9 +29,6 @@
   "license": "MIT",
   "dependencies": {
     "eventemitter3": "^5.0.1"
-  },
-  "devDependencies": {
-    "@common/rollup": "workspace:*"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
