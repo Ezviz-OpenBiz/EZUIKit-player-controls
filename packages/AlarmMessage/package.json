@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-alarm-message",
-  "version": "0.0.1-beta.6",
+  "version": "0.0.1-beta.7",
   "description": "alarm message list control",
   "title": "alarm-message",
   "main": "dist/index.cjs",
