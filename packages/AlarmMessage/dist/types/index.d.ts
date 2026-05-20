@@ -54,6 +54,7 @@ declare class AlarmMessage {
     updateAlarmList(data: AlarmListUpdateData): void;
     setLoading(loading: boolean): void;
     setError(message: string): void;
+    setDate(date: Date): void;
     updateOptions(options: Partial<AlarmMessageOptions>): void;
     on(event: string, callback: (data: any) => void): void;
     off(event: string, callback: (data: any) => void): void;
