@@ -1,5 +1,5 @@
 /*
-* @ezuikit/control-alarm-message v0.0.1-beta.5
+* @ezuikit/control-alarm-message v0.0.1-beta.6
 * Copyright (c) 2026-05-20 Ezviz-OpenBiz
 * Released under the MIT License.
 */
