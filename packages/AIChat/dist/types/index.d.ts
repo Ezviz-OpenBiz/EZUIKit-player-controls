@@ -206,6 +206,11 @@ interface AIChatUIOptions {
     onRelevanceLevelChange: (level: number) => void;
     /** 升级服务回调（可选） */
     onUpgradeService?: () => void;
+    /**
+     * 嵌入模式：true 时把 root 直接挂进 container，宽高跟随容器；自动关闭拖拽 + 全屏迁移。
+     * 由 AIChat 主类校验后传入。
+     */
+    embed?: boolean;
 }
 /**
  * AI对话UI控制器类
@@ -486,6 +491,12 @@ interface AIChatOptions {
     deviceSerial?: string;
     /** 通道号 */
     channelNo?: number | string;
+    /**
+     * 嵌入模式：true 时 UI 直接挂进 `container`，宽高 100% 跟随容器，
+     * 自动关闭拖拽和全屏 DOM 迁移；默认 false（保持老版 fixed 弹窗行为）。
+     * 注意：传 true 时必须同时传 `container`，否则会被自动降级为 false。
+     */
+    embed?: boolean;
 }
 /**
  * AI视频搜索对话控制类

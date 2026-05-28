@@ -133,6 +133,52 @@ aiChat.on('upgrade', (data) => {
 
 > 通过 `EZUIKitPlayer` 主 SDK 集成时，`onUpgradeService` 必须配在 `params.onUpgradeService`（ezopen 的 `_initAIChat()` 从 `this.params.onUpgradeService` 读取，不会从实例属性读取）。
 
+### 嵌入到自定义容器（embed 模式）
+
+让 AIChat 直接渲染进你给的容器（而不是浮在 body 上的 fixed 弹窗）：
+
+```ts
+import AIChat from '@ezuikit/control-aichat';
+import '@ezuikit/control-aichat/dist/style/style.css';
+
+const aiChat = new AIChat({
+  container: '#my-side-panel',
+  embed: true,        // ← 嵌入模式
+});
+aiChat.open();
+```
+
+**嵌入模式特性：**
+
+- 挂载点：直接放进你给的 `container` 内部
+- 尺寸：100% × 100%，完全跟随 container 宽高
+- 拖拽：自动关闭（嵌入下不允许拖动）
+- 全屏：随外层容器全屏，不再迁移 DOM
+
+**前置要求：**
+
+- 必须传入 `container`，否则会 `console.warn` 并降级为 `embed: false`
+- container 最小宽度建议 **300px**（再小会触发表格 / 头部布局破图）
+- 如果 container 当前是 `position: static`，SDK 会自动给它打上 `position: relative` 兜底
+
+```css
+/* 推荐显式给 container 留好上下文 */
+#my-side-panel {
+  position: relative;
+  width: 320px;
+  height: 600px;
+  overflow: hidden;     /* 截掉超出的部分 */
+}
+```
+
+### 老用户兼容（不传 embed）
+
+```ts
+new AIChat({ container: '#x' });  // 等价于 embed: false
+```
+
+行为与之前完全一致：UI 浮在 body 上、`fixed` 定位、贴 container 旁、可拖拽。
+
 ### 快捷操作 actionList（含二级菜单）
 
 接口返回的 `actionList` 支持 `children` 字段，含 children 的项会渲染为带"▾"的下拉按钮，点击弹出 popover：
@@ -328,6 +374,7 @@ new AIChat(options: AIChatOptions)
 | `accessToken` | `string` | — | 调用内置接口所需 |
 | `baseURL` | `string` | `https://open.ys7.com` | 接口域名 |
 | `deviceSerial` | `string` | — | 设备序列号 |
+| `embed` | `boolean` | `false` | 嵌入模式：true 时 UI 直接挂进 container，宽高跟随容器，自动关拖拽 |
 
 ### 方法
 
