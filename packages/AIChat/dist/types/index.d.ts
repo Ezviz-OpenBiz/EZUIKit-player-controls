@@ -155,6 +155,10 @@ interface ActionItem {
     actionType: string;
     /** 消息内容 */
     messageContent: string;
+    /** 子菜单项；存在且 length > 0 时父按钮显示折叠箭头并向上弹 popover */
+    children?: ActionItem[] | null;
+    /** 业务侧透传字段（如内置"相关度"用 { n: 50 } 标记选中数值） */
+    payload?: Record<string, unknown>;
 }
 /**
  * AI对话推荐内容数据
@@ -198,6 +202,8 @@ interface AIChatUIOptions {
     onVideoPlay: (video: VideoItem) => void;
     /** 查看全部回调 */
     onViewAll: (videos: VideoItem[]) => void;
+    /** 相关度等级切换回调 */
+    onRelevanceLevelChange: (level: number) => void;
     /** 升级服务回调（可选） */
     onUpgradeService?: () => void;
 }
@@ -223,6 +229,14 @@ declare class AIChatUI {
     private quickActionsContainer;
     private fullscreenChangeHandler;
     private originalParent;
+    /** 当前打开的 quickAction popover（DOM + 父按钮）；同时只允许一个 */
+    private _activePopover;
+    /** quickActions 横滚状态更新函数（绑定 ResizeObserver / scroll） */
+    private _quickActionsScrollUpdate;
+    /** quickActions 容器的 ResizeObserver */
+    private _quickActionsResizeObserver;
+    /** 当前处于"播放中"态的视频卡（互斥用） */
+    private _currentPlayingCard;
     /**
      * 构造函数
      * @param container 容器元素（用于位置参考）
@@ -269,6 +283,63 @@ declare class AIChatUI {
      * 创建底部操作栏
      */
     private createFooter;
+    /**
+     * 创建一个 quickAction 按钮（父或叶子通用）
+     * @param item ActionItem
+     * @returns 按钮 DOM
+     */
+    private _createQuickActionButton;
+    /**
+     * 叶子项点击的统一处理：触发 onQuickAction（消息派发由 AIChat 主类的 handleQuickAction 负责）
+     */
+    private _handleActionLeafClick;
+    /**
+     * 内置"相关度"按钮（接口里没有，写死追加在右侧）
+     * - 父按钮 actionType: 'builtinRelevance'，children 为 低/中/高
+     * - 选中子项后不发消息，只切换 level 状态 + 改父按钮文案
+     */
+    private _buildBuiltinRelevanceAction;
+    /**
+     * 未开通态：权益对比表 DOM（普通版 vs AI智能版）
+     * 数据来自 locale.features，结构：行(name + tag) | basic ✓/✗ | ai ✓
+     * 视觉规格：表格 cornerRadius 8 / 行高 32 / AI智能版列贯穿蓝紫渐变高亮
+     */
+    private _renderFeatureTable;
+    /**
+     * 打开 quickAction 子菜单 popover（向上弹）
+     * @param anchor 父按钮
+     * @param items 子项
+     * @param onSelect 选中回调
+     * @param opts.focusFirst 打开后聚焦第一个子项（键盘触发）
+     */
+    private _openActionPopover;
+    /**
+     * 计算 popover 位置：默认向上弹（紧贴 anchor 上方）；空间不足才 flip 下方
+     * popover 挂在 document.body，position: fixed，使用视口坐标
+     * 设计稿 5:345：popover 左侧与父按钮左侧对齐
+     */
+    private _positionPopover;
+    /**
+     * 关闭当前打开的 popover
+     */
+    private _closeActionPopover;
+    /**
+     * quickActions 横滚 + 渐变蒙层（受 data-can-scroll-left/right 控制）
+     * - 鼠标 wheel deltaY 转 scrollLeft
+     * - ResizeObserver 监听容器宽度变化
+     */
+    private _setupQuickActionsScroll;
+    /**
+     * 处理视频卡点击：本地"播放中"乐观 UI（互斥） + 触发 onVideoPlay 让上层跳转
+     *
+     * 实现细节：
+     * - 多卡片互斥：点 B 时 A 立刻清掉播放中态
+     * - 乐观 UI：根据 `videoLong` / `startTime~endTime` 算时长，本地 setTimeout 自动复原
+     * - 不监听播放器实际播放进度；不依赖播放器事件（设计文档明确不做双向同步）
+     * @param video 被点的视频对象
+     * @param event 原生 click 事件（用于通过 currentTarget 找回卡片 DOM）
+     */
+    private _handleVideoCardClick;
     /**
      * 处理发送消息
      */
@@ -378,7 +449,9 @@ declare class Services {
     /**
      * 发送AI对话内容
      */
-    sendAIChatCompletions(message: string): Promise<ApiResponse<void>>;
+    sendAIChatCompletions(message: string, options?: {
+        relevanceLevel?: number;
+    }): Promise<ApiResponse<void>>;
 }
 
 /**
@@ -455,6 +528,8 @@ declare class AIChat {
     currentSearchResult: VideoItem[];
     /** AI对话推荐内容 */
     chatSuggestedData: ChatSuggestedData | null;
+    /** 当前相关度等级（1=低 2=中 3=高），默认 3（高） */
+    private _currentRelevanceLevel;
     /**
      * 构造函数
      * @param options 配置选项

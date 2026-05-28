@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.4] - 2026-05-28
+
+### Added
+
+- 快捷操作 `actionList` 支持 `children`
+  - 含 `children` 的项渲染为带"▾"的下拉按钮，点击弹 popover（fixed 定位 + body 挂载）
+  - 完整键盘交互：Enter/Space/Esc/Tab/方向键
+- 内置"相关度"按钮
+  - 固定追加在 `actionList` 最右
+  - 子项 低 / 中 / 高（默认"高"，level=3）
+  - 选中后不发消息，只切 level 状态 + 改父按钮文案
+  - 新增 `onRelevanceLevelChange` 回调
+- `chat/completions` 接口新增 `relevanceLevel` 参数（1/2/3）
+- 横滚虚化提示：quickActions 容器溢出时按方向给出 `data-can-scroll-left/right` 渐隐遮罩
+- 横滚支持鼠标拖拽（H5 / 桌面统一）
+- 视频卡 hover 蒙层 + 点击播放动画（含 3s 延迟选项，给后端拉流留时间）
+- README 补充：升级页 / actionList / relevanceLevel / CSS 引入说明
+
+
+### Fixed
+
+- 升级页"立即升级"按钮无回调（`handleUpgradeService` 内部漏调 `options.onUpgradeService?.()`）
+
+### Notes
+
+- 主 SDK 接入升级页时 `onUpgradeService` 必须挂在 `params.onUpgradeService`，ezopen 内部从这里读取
+- `actionList` `intelligentType` 参数暂保持不传，与历史版本一致
+
+---
+
 ## [0.0.1] - 2026-01-19
 
 ### Added
