@@ -77,7 +77,8 @@
 }
 
 /* ========== 嵌入模式（embed: true）========== */
-/* 直接挂进用户传入的 container，宽高跟随容器，关闭拖拽 / 阴影 / 圆角 */
+/* 直接挂进用户传入的 container，宽高跟随容器，关闭拖拽 / 阴影 / 圆角
+   注意：opacity / pointer-events 沿用 .aichat-root 默认（隐藏），由 open() 调用 .show 接管显示 */
 .aichat-root.embed {
   position: absolute;
   inset: 0;
@@ -85,8 +86,6 @@
   height: 100%;
   min-width: 300px;          /* 嵌入模式 container 最小宽度 300，再小会破图 */
   z-index: auto;
-  opacity: 1;
-  pointer-events: auto;
 }
 
 .aichat-root.embed .aichat-container {
