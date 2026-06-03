@@ -242,6 +242,8 @@ declare class AIChatUI {
     private _quickActionsResizeObserver;
     /** 当前处于"播放中"态的视频卡（互斥用） */
     private _currentPlayingCard;
+    /** 当前相关度等级（UI 层跟踪，用于 popover 高亮选中项） */
+    private _currentRelevanceLevel;
     /**
      * 构造函数
      * @param container 容器元素（用于位置参考）
@@ -539,7 +541,7 @@ declare class AIChat {
     currentSearchResult: VideoItem[];
     /** AI对话推荐内容 */
     chatSuggestedData: ChatSuggestedData | null;
-    /** 当前相关度等级（1=低 2=中 3=高），默认 3（高） */
+    /** 当前相关度等级（1=低 2=中 3=高） */
     private _currentRelevanceLevel;
     /**
      * 构造函数

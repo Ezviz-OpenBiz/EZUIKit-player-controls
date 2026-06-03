@@ -1020,27 +1020,26 @@
 .video-list-grid.aichat-video-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(auto-fit, 65px);
   gap: 12px;
   align-content: start;
 }
 
-/* 视频列表中的卡片样式 */
+/* 视频列表中的卡片样式 - 用 padding-top 百分比撑出 152:85 比例高度
+   padding-top 百分比相对于 grid item 自身的宽度计算，
+   grid 能正确识别 padding 贡献的行高，不会重叠 */
 .video-list-grid .aichat-video-card {
-  /* 老浏览器兜底；现代浏览器走 aspect-ratio（已在 .aichat-video-card 全局规则上声明） */
-  height: 85px;
-  aspect-ratio: 152 / 85;
+  height: 0;
+  padding-top: 55.92%;  /* 85/152 ≈ 55.92% */
+  position: relative;
   border-radius: 6px;
   overflow: hidden;
 }
 
-@supports (aspect-ratio: 1) {
-  .video-list-grid .aichat-video-card {
-    height: auto;
-  }
-}
-
 .video-list-grid .video-thumbnail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
   padding-top: 0;
 }
