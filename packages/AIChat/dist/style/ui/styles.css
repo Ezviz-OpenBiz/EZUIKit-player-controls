@@ -777,7 +777,7 @@
   border-radius: 6px;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.2s;
+  /* transition: all 0.1s; */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: relative;
 }
@@ -788,14 +788,19 @@
   }
 }
 
-.aichat-video-card:hover {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+/* 仅在真正支持 hover 的设备（鼠标）上启用 hover 视觉变化。
+ * 触屏设备（iOS/Android）跳过 hover，避免 iOS Safari 第一次 tap 只激活 :hover、
+ * 第二次 tap 才触发 click 的双击问题。 */
+@media (hover: hover) and (pointer: fine) {
+  .aichat-video-card:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  }
 }
 
 /* 播放中态：蓝色边框（按 Pixso 设计稿 item-id=5:2317 stroke 2px #648ffc） */
 .aichat-video-card.playing {
   outline: 2px solid #648ffc;
-  outline-offset: -2px;
+  /* outline-offset: -2px; */
   box-shadow: 0 2px 12px rgba(100, 143, 252, 0.4);
 }
 
@@ -891,12 +896,14 @@
   height: 24px;
 }
 
-.aichat-video-card:hover .video-play-btn {
-  opacity: 1;
-}
+@media (hover: hover) and (pointer: fine) {
+  .aichat-video-card:hover .video-play-btn {
+    opacity: 1;
+  }
 
-.video-play-btn:hover {
-  transform: translate(-50%, -50%) scale(1.1);
+  .video-play-btn:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
 }
 
 .video-videoLong {
@@ -928,9 +935,11 @@
   height: 12.44px;
 }
 
-/* 鼠标移入时三角形播放图标消失 */
-.aichat-video-card:hover .video-triangle-play-icon {
-  opacity: 0;
+/* 鼠标移入时三角形播放图标消失（仅鼠标设备） */
+@media (hover: hover) and (pointer: fine) {
+  .aichat-video-card:hover .video-triangle-play-icon {
+    opacity: 0;
+  }
 }
 
 /* 查看全部按钮 */
