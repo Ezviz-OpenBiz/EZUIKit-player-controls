@@ -30,7 +30,7 @@
     box-sizing: border-box;
 
     th {
-      height: 30px;
+      height: var(--edate-calendar-weekday-height, 30px);
     }
 
     tr td {
@@ -50,7 +50,7 @@
     padding: 0px 0;
     cursor: pointer;
     text-align: center;
-    color: rgba(0, 0, 0, 0.25);
+    color: var(--edate-out-view-color, rgba(0, 0, 0, 0.25));
     box-sizing: border-box;
 
     &:not(.#{common.$disabled}):hover &-inner {
@@ -63,11 +63,11 @@
       &.#{common.$ecalendar-prefix-cls}-cell-selected:not(.#{common.$disabled}) {
         .#{common.$ecalendar-prefix-cls}-cell-inner {
           background-color: var(--edate-primary-color, #1677ff) !important;
-          color: #fff;
+          color: var(--edate-on-primary-color, #fff);
         }
 
         .#{common.$ecalendar-prefix-cls}-badge {
-          background-color: #fff;
+          background-color: var(--edate-on-primary-color, #fff);
         }
       }
 
@@ -107,10 +107,10 @@
 
     .#{common.$ecalendar-prefix-cls}-badge {
       position: absolute;
-      width: 3px;
-      height: 3px;
+      width: var(--edate-badge-size, 3px);
+      height: var(--edate-badge-size, 3px);
       border-radius: 50%;
-      background-color: var(--edate-primary-color, #1677ff);
+      background-color: var(--edate-badge-color, #1677ff);
       top: 50%;
       left: 50%;
       z-index: 3;

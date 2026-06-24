@@ -4,3 +4,4 @@ import './components/index.scss';
 import './calendar/index.scss';
 import './month/index.scss';
 import './year/index.scss';
+import './time/index.scss';

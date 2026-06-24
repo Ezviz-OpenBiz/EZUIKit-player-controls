@@ -1,4 +1,5 @@
 import { DateTime } from '@ezuikit/utils-tools';
+import { DelegateEvent } from '@skax/delegate';
 import Picker, { PickerOptions } from '@skax/picker';
 
 interface CalendarLocale {
@@ -8,6 +9,10 @@ interface CalendarLocale {
     months: string[];
     today: string;
     ok: string;
+    /** 时间选择「此刻」文案 */
+    now: string;
+    /** 时间选择「取消」文案 */
+    cancel: string;
 }
 
 /**
@@ -135,6 +140,8 @@ interface HeaderOptions {
 declare class Header {
     options: Required<HeaderOptions>;
     $header: HTMLElement | null;
+    /** 头部内部事件委托集合，destroy 时统一解绑（修复监听泄漏 P0）。 */
+    private _delegations;
     constructor(options: HeaderOptions);
     private _render;
     private _getStrOrFunToStr;
@@ -229,6 +236,12 @@ declare class Container<T extends ContainerOptions> {
      */
     header: Header | null;
     /**
+     * 该容器注册的事件委托集合，destroy 时统一解绑（修复监听泄漏 P0）。
+     */
+    protected _delegations: Array<{
+        destroy: () => void;
+    }>;
+    /**
      * The locale object for the current language.
      */
     locale: CalendarLocale;
@@ -239,6 +252,12 @@ declare class Container<T extends ContainerOptions> {
      * @returns {void}
      */
     private _setLocale;
+    /**
+     * 注册事件委托并登记，便于 destroy 统一解绑（修复 delegate 监听不解绑导致的泄漏 P0）。
+     * 子类应使用本方法替代直接调用 delegate。
+     * @returns {{ destroy: () => void }} delegate 句柄
+     */
+    protected _delegate(el: Element, selector: string, type: string, cb: (e: DelegateEvent) => void, useCapture?: boolean): any;
     /**
      * destroy content node
      * @example
@@ -589,7 +608,7 @@ declare class Month extends Container<MonthOptions> {
 /**
  * 年历 （12 年）配置项
  */
-interface YearOptions extends Omit<ContainerOptions, 'showPrevIcon' | 'showNextIcon' | 'renderPrevIcon' | 'renderNextIcon'> {
+interface YearOptions extends Omit<ContainerOptions, 'prefixCls' | 'showPrevIcon' | 'showNextIcon' | 'renderPrevIcon' | 'renderNextIcon'> {
     /** 当前时间 或当前年份 */
     current?: Date | number;
     /** 是否展示头部, 默认 true */
@@ -812,5 +831,185 @@ declare class DatePicker extends Picker {
     private _removeCurrentTypeClass;
 }
 
-export { Calendar, DatePicker, Header, Month, Year };
-export type { CalendarLocale, CalendarOptions, ContainerOptions, DatePickerModeType, DatePickerOptions, HeaderOptions, MonthOptions, PopupContainerEle, YearOptions };
+/**
+ * @zh 时间选择器配置
+ * @en time options
+ */
+interface TimeOptions extends ContainerOptions {
+    /** 当前时分秒 00:00:00 */
+    current?: string;
+    /** 自定义行高， 默认 208px */
+    columnHeight?: number;
+    /** 自定义行宽， 默认 120 */
+    width?: number;
+    /** 自定义cell高， 默认 30 */
+    cellHeight?: number;
+    /** 是否显示头部, 默认 true */
+    showHeader?: boolean;
+    /** 是否显示底部, 默认 true */
+    showFooter?: boolean;
+    /** 是否显示底部「取消」按钮，默认 false */
+    showCancel?: boolean;
+    /** 是否显示底部「确定」按钮，默认 false */
+    showOk?: boolean;
+    /** 禁用小时, true 禁用小时 */
+    disabledHour?: (time: number) => boolean;
+    /** 禁用分钟, true 禁用分钟 */
+    disabledMinute?: (time: number) => boolean;
+    /** 禁用秒, true 禁用秒 */
+    disabledSecond?: (time: number) => boolean;
+    /** 点击 单元格 cell  */
+    onCell?: (type: string, time: string, times: string[]) => void;
+    /** time 变换后 */
+    onChange?: (type: string, time: string, times: string[]) => void;
+    /** 点击底部「取消」回调 */
+    onCancel?: () => void;
+}
+/**
+ * 时分秒控件
+ *
+ * 滚动交互采用 **CSS transform: translateY 平移**（不依赖原生 overflow 滚动）：
+ *  - 鼠标滚轮：实时跟随平移，停止后吸附到最近单元格；
+ *  - 点击单元格：选中并平移到列顶部；
+ *  - 移动端：触摸拖拽平移 + 抬手惯性吸附；
+ *  - 平移过渡使用 transform + transition，开启 will-change 保证丝滑；
+ *  - 事件监听做被动模式能力检测，兼容主流浏览器与旧环境。
+ */
+declare class Time extends Container<TimeOptions> {
+    options: Required<TimeOptions>;
+    private _current;
+    /** 已绑定的平移事件清理函数集合，destroy 时统一解绑 */
+    private _panCleanups;
+    constructor(container: PopupContainerEle, options: TimeOptions);
+    /**
+     * 获取时分秒数组 ["21", "30", "37"]
+     * @returns {[string, string, string]}
+     */
+    get _currentTimes(): string[];
+    /**
+     * 获取当前时间
+     * @returns {string} "00:00:00"
+     */
+    get current(): string | undefined;
+    /**
+     * set current time
+     * @param {string | [string, string, string]} time 设置激活时间
+     */
+    setCurrent(time?: string | [string, string, string]): void;
+    /**
+     * 销毁：先解绑平移事件再销毁容器。
+     */
+    destroy(): void;
+    private _events;
+    /** 当前三列（视口）元素 */
+    private get _columns();
+    /** 取某列内的轨道（被平移的 ul） */
+    private _trackOf;
+    /** 测量单元格高度：优先取真实渲染高度，无布局（如测试 / 样式未加载）时回退到选项值 */
+    private _measureCellHeight;
+    /** 单元格最大索引（用于钳制平移范围） */
+    private _maxIndex;
+    private _clamp;
+    /** 读取轨道当前平移量（px，<=0） */
+    private _getTrackOffset;
+    /**
+     * 设置轨道平移量并钳制到合法区间 [-(maxIndex*cellH), 0]。
+     * @param smooth 是否启用过渡动画（点击 / 吸附为 true；拖拽 / 滚轮跟随为 false）
+     */
+    private _setTrackOffset;
+    /** 把指定单元格平移到列顶部 */
+    private _panCellToTop;
+    /** 吸附到最近的单元格边界 */
+    private _snapColumn;
+    /**
+     * 根据当前时间把各列选中项平移到顶部。
+     * @param behavior 'smooth' 带过渡（默认）；'auto' 立即定位（用于首帧）
+     * @private 内部方法：由 setCurrent / 构造 / 点击等流程驱动，不对外暴露
+     */
+    private activeItem;
+    /** 被动监听能力检测（兼容旧浏览器；支持时用 {passive:false} 以允许 preventDefault） */
+    private _supportsPassive;
+    private _bindPanEvents;
+    /** 鼠标滚轮：实时跟随平移，停止后吸附 */
+    private _bindColumnWheel;
+    /** 触摸拖拽（移动端）：拖动跟随 + 抬手惯性吸附 */
+    private _bindColumnTouch;
+    private _render;
+    /**
+     * 渲染底部 footer（取消 / 确定），默认不展示（showCancel / showOk 均为 false）。
+     * @private
+     */
+    private _renderFooter;
+    private _renderTimeBody;
+    /**
+     * 生成时分秒列：外层 .etime-column 为定高视口（overflow hidden），
+     * 内层 .etime-track（ul）承载单元格并被 transform 平移。
+     * @param { "hour" | "minute" | "second"} type
+     * @param {string[]} times 时间数组
+     * @returns {string} 列 dom 字符串
+     */
+    private _generateList;
+    /**
+     * 检查时分秒格式化是否正确
+     * @param {string | [string, string, string]} time 时间字符串 HH:mm:ss
+     * @returns {boolean} true 正确 false 不正确
+     */
+    private _checkTimeFmt;
+}
+
+/**
+ * TimePicker 配置。footer（取消 / 确定）能力来自内嵌 `Time`：
+ * `showCancel` / `showOk` / `onOk` / `onCancel` 透传给 Time，弹层默认展示 footer。
+ */
+interface TimePickerOptions extends PickerOptions, Omit<TimeOptions, 'onOk' | 'onChange'> {
+    /** 点击底部「确定」回调，参数为当前时间 HH:mm:ss */
+    onOk?: (time: string) => void;
+    /**
+     *
+     * @param type
+     * @param time
+     * @param times
+     * @returns
+     */
+    onChange: (time: string, times: string[]) => void;
+}
+/**
+ * 时分秒选择弹层
+ *
+ * 在 `Time` 面板外层包一层 `@skax/picker` 弹层，提供触发、定位与显隐控制。
+ * `Time` 面板在弹层首次打开时懒创建并挂载到 `this.$body`；footer 的「取消 / 确定」
+ * 由 `Time` 渲染，TimePicker 仅在其回调中补充「关闭弹层」行为。
+ */
+declare class TimePicker extends Picker {
+    options: TimePickerOptions;
+    /** 内嵌时分秒面板，弹层首次打开时懒创建 */
+    time: Time | null;
+    private _current;
+    constructor(container: HTMLElement | (() => HTMLElement) | null, options: TimePickerOptions);
+    /**
+     * 获取当前时间
+     * @returns {string} "00:00:00"
+     */
+    get current(): string;
+    /**
+     * set current time
+     * @param {string | [string, string, string]} time 设置激活时间
+     */
+    setCurrent(time?: string | [string, string, string]): void;
+    /**
+     * 收起弹层
+     */
+    hide(): void;
+    /**
+     * 销毁：先销毁内嵌面板再销毁弹层。
+     */
+    destroy(): void;
+    /**
+     * Picker 的 onOpenChange，在 open=true 时懒创建面板（含 footer）并定位到选中时间。
+     * @param {boolean} open
+     */
+    protected _onOpenChange(open: boolean): void;
+}
+
+export { Calendar, DatePicker, Header, Month, Time, TimePicker, Year };
+export type { CalendarLocale, CalendarOptions, ContainerOptions, DatePickerModeType, DatePickerOptions, HeaderOptions, MonthOptions, PopupContainerEle, TimeOptions, TimePickerOptions, YearOptions };

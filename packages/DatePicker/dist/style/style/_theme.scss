@@ -1,9 +1,20 @@
 :root {
+  /* ============================ 尺寸 · 通用 ============================ */
   --edate-header-height: 34px;
-  --edate-footer-height: var(--edate-header-height, 34px);
+  --edate-footer-height: 36px;
   --edate-font-size: 14px;
+  --edate-min-width: 246px;
+  --edate-border-radius: 2px;
+
+  /* ============================ 颜色 · 通用 ============================ */
+  /* 面板背景色 */
+  --edate-bg-color: #fff;
   --edate-default-color: rgba(0, 0, 0, 0.88);
   --edate-primary-color: #648ffc;
+  /* 主色之上的前景色（选中态文字、主按钮文字） */
+  --edate-on-primary-color: #fff;
+  /* 非本视图（上 / 下月等）单元格文字色 */
+  --edate-out-view-color: rgba(0, 0, 0, 0.25);
   --edate-hover-color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
   --edate-hover-bg-color: rgba(0, 0, 0, 0.04);
   --edate-active-color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
@@ -12,16 +23,39 @@
   --edate-disabled-bg-color: rgba(0, 0, 0, 0.04);
   --edate-disabled-active-bg-color: rgba(0, 0, 0, 0.25);
   --edate-border-color: rgba(5, 5, 5, 0.06);
-  --edate-border-radius: 2px;
+  /* 按钮描边色 */
+  --edate-btn-border-color: #d9d9d9;
   --edate-close-color: rgba(240, 87, 87, 1);
+  --edate-arrow-color: rgba(0, 0, 0, 0.45);
+  --edate-arrow-hover-color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
 
-  //
+  /* ============================ Calendar 日历 ============================ */
   --edate-calendar-border-radius: 50%;
   --edate-calendar-cell-width: 26px;
   --edate-calendar-cell-height: 26px;
+  /* 星期表头行高 */
+  --edate-calendar-weekday-height: 30px;
 
-  //
+  /* 徽章点 */
   --edate-badge-color: var(--edate-primary-color, #648ffc);
-  --edate-arrow-color: rgba(0, 0, 0, 0.45);
+  --edate-badge-size: 3px;
+
+  /* ============================ Month 月历 ============================ */
+  --edate-month-cell-height: 52px;
+  --edate-month-cell-inner-min-width: 22px;
+  --edate-month-cell-inner-height: 22px;
+
+  /* ============================ Year 年历 ============================ */
+  --edate-year-cell-height: 52px;
+  --edate-year-cell-inner-min-width: 22px;
+  --edate-year-cell-inner-height: 22px;
+
+  /* ============================ Time 时间 ============================ */
+  /* 滚动列总高度 */
+  --edate-time-column-height: 208px;
+  /* 时 / 分 / 秒单元格高度 */
+  --edate-time-cell-height: 30px;
+
+  /* 箭头 hover 色 */
   --edate-arrow-hover-color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
 }

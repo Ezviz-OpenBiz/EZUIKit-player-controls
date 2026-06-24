@@ -42,9 +42,9 @@ $mobile-axis-area-width: 23%;
     box-sizing: border-box;
     height: 60px;
     font-size: 12px;
-    color: #666666;
+    color: var(--ez-time-line-text-color, #666666);
     border-right: $mobile-axis-width solid;
-    border-right-color: #bdcdff;
+    border-right-color: var(--ez-time-line-axis-border-color, #bdcdff);
     margin: 0px;
     padding: 0;
     border-bottom: none;
@@ -74,7 +74,7 @@ $mobile-axis-area-width: 23%;
     width: $mobile-axis-width;
     position: absolute;
     left: 100%;
-    background-color: #ddd;
+    background-color: var(--ez-time-line-section-color, #ddd);
     box-sizing: border-box;
   }
 
@@ -164,7 +164,7 @@ $mobile-axis-area-width: 23%;
       width: 90px;
       height: 50px;
       z-index: 1;
-      background-color: rgba(0, 0, 0, 0.3);
+      background-color: var(--ez-time-line-cover-fold-overlay, rgba(0, 0, 0, 0.3));
     }
   }
 
@@ -213,13 +213,13 @@ $mobile-axis-area-width: 23%;
       width: 70px;
       height: 30px;
       top: 0;
-      background-color: #ededed;
+      background-color: var(--ez-time-line-cover-fold-placeholder-front, #ededed);
     }
     &::after {
       width: 80px;
       height: 40px;
       top: 5px;
-      background-color: #cccccc;
+      background-color: var(--ez-time-line-cover-fold-placeholder-back, #cccccc);
     }
   }
 
@@ -229,7 +229,7 @@ $mobile-axis-area-width: 23%;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(183, 195, 207), rgba(212, 209, 209) 100%);
+    background: linear-gradient(180deg, var(--ez-time-line-item-cover-placeholder-start, rgba(183, 195, 207)), var(--ez-time-line-item-cover-placeholder-end, rgba(212, 209, 209)) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -264,7 +264,7 @@ $mobile-axis-area-width: 23%;
     justify-content: center;
     font-size: 16px;
     padding: 7px;
-    border: 1px solid rgba(153, 153, 153, 1);
+    border: 1px solid var(--ez-time-line-op-btn-border, rgba(153, 153, 153, 1));
     border-radius: 8px;
     cursor: pointer;
     box-sizing: border-box;
@@ -274,14 +274,14 @@ $mobile-axis-area-width: 23%;
       border-color 0.3s ease;
 
     &:active {
-      color: rgba(54, 159, 255, 1);
-      border-color: rgba(54, 159, 255, 1);
+      color: var(--ez-time-line-op-btn-active, rgba(54, 159, 255, 1));
+      border-color: var(--ez-time-line-op-btn-active, rgba(54, 159, 255, 1));
     }
   }
 
   &-disabled {
     cursor: not-allowed !important;
-    border-color: rgba(222, 222, 222, 1) !important;
+    border-color: var(--ez-time-line-op-btn-disabled-border, rgba(222, 222, 222, 1)) !important;
   }
 
   &-picker.epicker.epicker-mobile .epicker-body {
@@ -302,7 +302,7 @@ $mobile-axis-area-width: 23%;
 
     &-header {
       height: 65px;
-      color: rgba(44, 44, 44, 1);
+      color: var(--ez-time-line-picker-header, rgba(44, 44, 44, 1));
       font-size: 18px;
       font-weight: 500;
       line-height: 45px;
@@ -326,11 +326,11 @@ $mobile-axis-area-width: 23%;
       height: 24px;
       width: 24px;
       font-size: 24px;
-      color: #20262c;
+      color: var(--ez-time-line-picker-close, #20262c);
       transition: color 0.3s ease;
       cursor: pointer;
       &:active {
-        color: rgba(240, 87, 87, 1);
+        color: var(--ez-time-line-picker-close-active, rgba(240, 87, 87, 1));
       }
     }
 
@@ -348,7 +348,7 @@ $mobile-axis-area-width: 23%;
     }
 
     &-item-title {
-      color: rgba(102, 102, 102, 1);
+      color: var(--ez-time-line-picker-item-title, rgba(102, 102, 102, 1));
       font-size: 14px;
       font-weight: 400;
       line-height: 20px;
@@ -430,4 +430,26 @@ $mobile-axis-area-width: 23%;
       z-index: 1;
     }
   }
+}
+
+// PC 鼠标悬停时间气泡（DOM 叠加层，跟随光标右下角；基础样式以内联为主，本规则供覆盖定制）
+.#{$time-line-prefix}-hover-tip {
+  position: absolute;
+  z-index: 25;
+  box-sizing: border-box;
+  padding: 2px 8px;
+  font-size: 12px;
+  line-height: 18px;
+  white-space: nowrap;
+  border-radius: 4px;
+  pointer-events: none;
+  user-select: none;
+  color: var(--ez-time-line-hover-tip-color, #ffffff);
+  background-color: var(--ez-time-line-hover-tip-bg, rgba(0, 0, 0, 0.75));
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: opacity 0.12s ease;
+  top: 0px;
+  left: 0px;
+  opacity: 0;
+  display: none;
 }

@@ -20,7 +20,7 @@
     }
 
     & .#{common.$emonth-prefix-cls}-cell {
-      height: 52px;
+      height: var(--edate-month-cell-height, 52px);
     }
 
     & .#{common.$emonth-prefix-cls}-cell-inner {
@@ -44,7 +44,7 @@
     padding: 0px 0;
     cursor: pointer;
     text-align: center;
-    color: rgba(0, 0, 0, 0.25);
+    color: var(--edate-out-view-color, rgba(0, 0, 0, 0.25));
     box-sizing: border-box;
 
     &:not(.#{common.$disabled}):hover &-inner {
@@ -57,7 +57,7 @@
       inset-inline-start: 0;
       inset-inline-end: 0;
       z-index: 1;
-      height: 22px;
+      height: var(--edate-month-cell-inner-height, 22px);
       transform: translateY(-50%);
       transition: all 0.3s;
       content: '';
@@ -68,7 +68,7 @@
 
       &.#{common.$emonth-prefix-cls}-cell-selected:not(.#{common.$disabled}) .#{common.$emonth-prefix-cls}-cell-inner {
         background-color: var(--edate-primary-color, #1677ff) !important;
-        color: #fff;
+        color: var(--edate-on-primary-color, #fff);
       }
       &.#{common.$emonth-prefix-cls}-cell-selected.#{common.$disabled} .#{common.$emonth-prefix-cls}-cell-inner {
         background-color: var(--edate-disabled-bg-color, rgba(0, 0, 0, 0.04)) !important;
@@ -79,9 +79,9 @@
       position: relative;
       z-index: 2;
       display: inline-block;
-      min-width: 22px;
-      height: 22px;
-      line-height: 22px;
+      min-width: var(--edate-month-cell-inner-min-width, 22px);
+      height: var(--edate-month-cell-inner-height, 22px);
+      line-height: var(--edate-month-cell-inner-height, 22px);
       border-radius: var(--edate-border-radius, 2px);
       transition:
         background 0.2s,

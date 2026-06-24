@@ -1,0 +1,127 @@
+// @use "~@common/components/dist/style/_style.scss" as common;
+// @use "~@skax/picker/dist/style/_style.scss" as picker;
+
+@use '../style/_style.scss' as common;
+@use '@skax/picker/dist/style/style.scss' as picker;
+
+$time-prefix-cls: etime;
+
+.#{picker.$picker-prefix}-mobile .#{$time-prefix-cls}-container {
+  padding-bottom: #{'constant(safe-area-inset-bottom)'}; /*兼容 IOS<11.2*/
+  padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+}
+
+.#{$time-prefix-cls} {
+  &-container {
+    min-width: unset;
+    max-height: unset;
+  }
+
+  &-panel {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--edate-border-color, rgba(5, 5, 5, 0.06));
+  }
+
+  &-body {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  &-header {
+    justify-content: center;
+  }
+
+  // 列视口：定高裁剪容器，纵向平移由 JS 通过 transform 接管（无原生滚动）
+  &-column {
+    position: relative;
+    flex: 1 1 33.33333%;
+    width: 33.33333%;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-inline-start: 1px solid var(--edate-border-color, rgba(5, 5, 5, 0.06));
+    // 由 JS 接管纵向平移，禁用浏览器默认手势滚动，避免移动端冲突
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &:first-child {
+      border-inline-start: 0;
+    }
+  }
+
+  // 平移轨道：承载单元格，整体被 translateY 平移
+  &-track {
+    list-style: none;
+    margin: 1px 0;
+    padding: 0;
+    transform: translateY(0);
+    // 丝滑 & 兼容性：提示合成层 + 减少子像素抖动
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    li {
+      margin: 0;
+      // 单元格平分/铺满所在列宽
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0px;
+    }
+  }
+
+  &-cell {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+
+  &-cell &-cell-inner {
+    display: inline-block;
+    margin: 0;
+    color: var(--edate-default-color, rgba(0, 0, 0, 0.88));
+    cursor: pointer;
+    transition: background 0.2s;
+    box-sizing: border-box;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: 100%;
+  }
+
+  &-cell-selected:not(.#{common.$disabled}) div {
+    background-color: var(--edate-active-bg-color, #f0f7ff);
+    color: var(--edate-active-color, rgba(0, 0, 0, 0.88));
+  }
+
+  &-cell-selected.#{common.$disabled} div {
+    background-color: var(--edate-disabled-bg-color, rgba(0, 0, 0, 0.04));
+  }
+
+  &-cell:not(.#{common.$disabled}) .#{$time-prefix-cls}-cell-inner {
+    &:hover {
+      color: var(--edate-hover-color, rgba(0, 0, 0, 0.88));
+      background-color: var(--edate-hover-bg-color, rgba(0, 0, 0, 0.04));
+    }
+  }
+
+  &-picker {
+    border-radius: 2px;
+    overflow: hidden;
+
+    .#{$time-prefix-cls}-panel {
+      border: none;
+    }
+
+    .#{$time-prefix-cls}-container {
+      width: 160px;
+    }
+  }
+}
