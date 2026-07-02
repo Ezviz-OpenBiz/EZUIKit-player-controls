@@ -453,3 +453,47 @@ $mobile-axis-area-width: 23%;
   opacity: 0;
   display: none;
 }
+
+// -----------------------------------------------------------------------------
+// PC 录像片段图标（DOM 叠加层，覆盖在 canvas 之上，不拦截交互）
+// -----------------------------------------------------------------------------
+.ez-time-line-section-icon-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ez-time-line-section-icon {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  // 叠加层 pointer-events:none 不拦截 canvas，图标自身需可点击
+  pointer-events: auto;
+  user-select: none;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+// 图标右上角数量角标
+.ez-time-line-section-icon-count {
+  position: absolute;
+  top: 7px;
+  right: 0;
+  transform: translate(50%, -50%);
+  box-sizing: border-box;
+  height: 12px;
+  padding: 0 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  line-height: 11px;
+  white-space: nowrap;
+  border-radius: 7px;
+  cursor: pointer;
+}

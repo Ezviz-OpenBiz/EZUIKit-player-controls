@@ -403,6 +403,18 @@ interface TimeLineOptions extends BaseTimeLineOptions {
      * @param time 点击位置对应的时间
      */
     onClickSeek?: (time: Date) => void;
+    /** 是否在录像片段上绘制图片图标，默认 true */
+    showSectionIcon?: boolean;
+    /** 录像片段图标颜色，默认 '#FFFFFF' */
+    sectionIconColor?: string;
+    /** 录像片段图标尺寸（CSS px），默认 14 */
+    sectionIconSize?: number;
+    /** 是否在录像片段图标右上角绘制数量角标，默认 true（按 timeWidth 区间统计事件个数，大于 0 时才绘制） */
+    showSectionCount?: boolean;
+    /** 数量角标文字颜色，默认 '#FFFFFF' */
+    sectionCountColor?: string;
+    /** 数量角标背景颜色，默认 '#FF4D4F' */
+    sectionCountBgColor?: string;
 }
 /**
  * 时间轴控件类， 支持PC/Mobile 拖动和缩放
@@ -437,6 +449,10 @@ declare class TimeLine extends BaseTimeLine<TimeLineOptions> {
     private _dragMoved;
     private _containerRect;
     private _drawRafId;
+    /** 录像片段图标 DOM 叠加层（覆盖在 canvas 之上，pointer-events:none 不拦截交互） */
+    private _$sectionIconLayer;
+    /** 录像片段图标 span 复用池 */
+    private _sectionIconPool;
     constructor(container: HTMLElement, options: TimeLineOptions);
     /**
      * 初始化 (canvas)
@@ -479,6 +495,28 @@ declare class TimeLine extends BaseTimeLine<TimeLineOptions> {
      * @returns
      */
     destroy(): void;
+    /**
+     * 初始化录像片段图标的 DOM 叠加层。
+     * 图标不再绘制在 canvas 上，而是用 `<span>` 叠加在 canvas 之上并按片段位置定位，
+     * 叠加层 `pointer-events:none`，不拦截 canvas 的拖动/点击/悬停交互。
+     */
+    private _initSectionIconLayer;
+    /**
+     * 收集需要叠加图标的统计信息：按 `timeWidth` 区间（`_timeWidthArray[0]` 秒为一格）聚合，
+     * 统计「开始时间落在该区间内」的事件个数；每个有事件的区间输出一个图标渲染项，
+     * 角标数值为该区间内的事件数。仅返回与可见画布相交的区间。
+     * @param offsetTop - 录像区顶部偏移（已乘 dpr）
+     * @param sectionHeight - 录像区高度（已乘 dpr）
+     */
+    private _collectSectionIcons;
+    /** 创建一个图标 `<span>`（图片图标 + 数量角标），供复用池使用 */
+    private _createSectionIconEl;
+    /**
+     * 根据可见片段（CSS px 坐标）渲染图标叠加层。
+     * 图标在片段内水平、垂直居中；右上角按需展示数量角标。复用 span 节点，多余的隐藏。
+     * @param renders - 可见片段图标渲染信息（CSS px）
+     */
+    private _renderSectionIcons;
     /**
      * 缩放时间轴 动态减少间距 （没处理 dpr）
      * @returns 刻度间距
@@ -579,7 +617,10 @@ declare class TimeLine extends BaseTimeLine<TimeLineOptions> {
      * @returns
      */
     private _mouseleaveFun;
-    /** 容器滚轮：拦截默认滚动（具名，便于移除） */
+    /**
+     * 容器滚轮：仅拦截作用于「时间轴画布」上的默认滚动（配合画布滚轮缩放）。
+     * 弹框等覆盖层（如录像列表 VirtualScroll，同样挂在容器内）需要正常滚动，故不拦截。
+     */
     private _containerWheelFun;
     /**
      * 鼠标抬起事件监听
