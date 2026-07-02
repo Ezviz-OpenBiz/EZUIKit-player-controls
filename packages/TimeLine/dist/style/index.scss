@@ -464,6 +464,7 @@ $mobile-axis-area-width: 23%;
   overflow: hidden;
   pointer-events: none;
   z-index: 2;
+  user-select: none;
 }
 
 .ez-time-line-section-icon {

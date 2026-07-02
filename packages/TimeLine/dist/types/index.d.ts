@@ -79,6 +79,7 @@ interface TimeLineTimeSection {
     endTime: number;
     /** 封面图片 */
     coverPic: string | undefined;
+    EVENT_TYPE: number | string;
     [key: string]: number | string | undefined;
 }
 interface BaseTimeLineOptions extends TimeLineStyleOptions {
@@ -415,6 +416,17 @@ interface TimeLineOptions extends BaseTimeLineOptions {
     sectionCountColor?: string;
     /** 数量角标背景颜色，默认 '#FF4D4F' */
     sectionCountBgColor?: string;
+    /**
+     * 点击录像片段图标的回调。
+     * @param info.startTime 该图标所在 timeWidth 区间内「最早开始的录像片段」的开始时间（毫秒时间戳）
+     * @param info.count 该区间内录像片段个数
+     * @param info.index 该「最早开始片段」在 timeSections 中的位置序号（从 0 开始）
+     */
+    onSectionIconClick?: (info: {
+        startTime: number;
+        count: number;
+        index: number;
+    }) => void;
 }
 /**
  * 时间轴控件类， 支持PC/Mobile 拖动和缩放
@@ -501,6 +513,11 @@ declare class TimeLine extends BaseTimeLine<TimeLineOptions> {
      * 叠加层 `pointer-events:none`，不拦截 canvas 的拖动/点击/悬停交互。
      */
     private _initSectionIconLayer;
+    /**
+     * 判断片段是否为「事件」片段：其 `EVENT_TYPE` 值是否命中 {@link _REC_EVENT_KEYS_}。
+     * @param section - 录像片段
+     */
+    private _isEventSection;
     /**
      * 收集需要叠加图标的统计信息：按 `timeWidth` 区间（`_timeWidthArray[0]` 秒为一格）聚合，
      * 统计「开始时间落在该区间内」的事件个数；每个有事件的区间输出一个图标渲染项，

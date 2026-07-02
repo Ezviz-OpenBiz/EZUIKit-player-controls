@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-virtual-scroll",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.3",
   "description": "high performance fixed-height virtual scroll list for ezviz",
   "title": "virtual-scroll",
   "main": "dist/index.cjs",
