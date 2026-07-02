@@ -61,7 +61,7 @@ interface RecListModalOptions extends ModalOptions {
      */
     renderCardIcon?: (section: Segment) => string;
     /** 卡片点击回调 */
-    onCardClick?: (section: Segment, index: number) => void;
+    onCardClick?: (section: Segment, index: number, sections: Segment[]) => void;
 }
 
 /**
