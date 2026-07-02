@@ -1,0 +1,342 @@
+// -----------------------------------------------------------------------------
+// 录像片段列表弹框（RecListModal）
+// 列表由 VirtualScroll 渲染（容器即 .ez-rec-list-modal-list），采用「已知不固定行高」，
+// 分组标题与卡片行高度不同但均可预先计算，行内容填满各自虚拟项高度。
+// -----------------------------------------------------------------------------
+.ez-rec-list-modal {
+  // VirtualScroll 滚动容器（撑满 Modal 内容区：高度 = 弹框高度 − 头部高度）
+  &-list {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  // 空数据占位
+  &-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.35);
+    font-size: 14px;
+    user-select: none;
+    z-index: 1;
+  }
+
+  // 小时分组标题（已知行高：填满虚拟项高度，标题贴底，顶部留白形成分组间隔）
+  &-group {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    box-sizing: border-box;
+    gap: 6px;
+    line-height: 1;
+    padding: 0 10px 8px 12px;
+  }
+
+  &-group-title {
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.88);
+  }
+
+  &-group-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    box-sizing: border-box;
+    font-size: 12px;
+    line-height: 18px;
+    color: #fff;
+    background-color: rgba(54, 159, 255, 1);
+    border-radius: 9px;
+  }
+
+  // 一行卡片（已知行高：填满虚拟项高度，卡片随行拉伸）
+  &-row {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    box-sizing: border-box;
+    gap: 8px;
+    padding: 0 10px 8px 12px;
+  }
+
+  // 单张卡片（一行 2 列，卡片间距 8px，等分一行宽度）
+  &-card {
+    flex: 1 1 0;
+    // 限制单卡最大宽度为「(一行宽度 - 列间距) / 2」，最后一行卡片不足时不被拉伸占满
+    max-width: calc((100% - 8px) / 2);
+    min-width: 0;
+    cursor: pointer;
+    user-select: none;
+  }
+  // 激活态卡片（当前时间落在该卡片时间范围内）：缩略图外侧描边高亮，内留白形成间隙
+  &-card-active &-card-thumb {
+    box-shadow:
+      0 0 0 1px var(--ez-rec-list-modal-card-active-gap, #fff),
+      0 0 0 3px var(--ez-rec-list-modal-card-active, #369fff);
+  }
+  // 播放中指示（均衡器）：默认隐藏，仅激活（正在播放）卡片展示，位于缩略图左下角
+  &-card-playing {
+    position: absolute;
+    left: 6px;
+    bottom: 4px;
+    z-index: 2;
+    display: none;
+    align-items: flex-end;
+    color: #fff;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+    pointer-events: none;
+    svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+    }
+    // 三条竖条依次跳动，模拟播放
+    svg rect {
+      transform-box: fill-box;
+      transform-origin: bottom;
+      animation: ez-rec-list-modal-eq 0.9s ease-in-out infinite;
+    }
+    svg rect:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+    svg rect:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+  }
+  // 仅激活卡片展示播放中指示
+  &-card-active &-card-playing {
+    display: inline-flex;
+  }
+  // 尊重「减少动效」偏好
+  @media (prefers-reduced-motion: reduce) {
+    &-card-playing svg rect {
+      animation: none;
+    }
+  }
+
+  // 缩略图区域（填满卡片高度 = 行高 - 行间距 = cardHeight）
+  &-card-thumb {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ddd;
+
+    // 半透明遮罩，保证角标文字可读
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 38px;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0));
+      pointer-events: none;
+    }
+  }
+
+  &-card-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  // 无封面占位（居中展示图片图标）
+  &-card-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, var(--ez-rec-list-modal-item-cover-placeholder-start, rgb(183, 195, 207)), var(--ez-rec-list-modal-item-cover-placeholder-end, rgb(212, 209, 209)) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fff;
+    z-index: 1;
+  }
+
+  // 左上角开始时间
+  &-card-start {
+    position: absolute;
+    top: 5px;
+    left: 6px;
+    z-index: 2;
+    font-size: 12px;
+    line-height: 14px;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    user-select: none;
+  }
+
+  // 右上角时长
+  &-card-duration {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    z-index: 2;
+    font-size: 12px;
+    line-height: 14px;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    user-select: none;
+  }
+
+  // 右下角类型图标
+  &-card-icon {
+    position: absolute;
+    right: 5px;
+    bottom: 4px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+    pointer-events: none;
+
+    svg {
+      display: block;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  // 标题栏：标题文案 + 「事件」过滤勾选框
+  &-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  &-title-text {
+    flex: 0 0 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+// 图片懒加载状态（与 ImageLazyLoader 默认类名对应）
+.ez-lazy-image {
+  &.ez-lazy-image-loaded {
+    opacity: 1;
+  }
+  &.ez-lazy-image-error {
+    opacity: 0;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Checkbox 复选框组件（Checkbox.ts）
+// -----------------------------------------------------------------------------
+.ez-rec-list-modal-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--ez-rec-list-modal-checkbox-label, rgba(0, 0, 0, 0.65));
+  cursor: pointer;
+  user-select: none;
+
+  // 视觉隐藏的原生 input（保留键盘/无障碍）
+  &-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  // 自定义方框
+  &-box {
+    box-sizing: border-box;
+    position: relative;
+    flex: 0 0 auto;
+    width: var(--ez-rec-list-modal-checkbox-size, 16px);
+    height: var(--ez-rec-list-modal-checkbox-size, 16px);
+    border: 1px solid var(--ez-rec-list-modal-checkbox-border, #c0c4cc);
+    border-radius: 4px;
+    background-color: #fff;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  // 对勾
+  &-check {
+    position: absolute;
+    inset: 0;
+    display: block;
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  // 选中态
+  &-checked &-box {
+    background-color: var(--ez-rec-list-modal-checkbox-active, #2f6fdb);
+    border-color: var(--ez-rec-list-modal-checkbox-active, #2f6fdb);
+  }
+
+  &-checked &-check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  // 禁用态
+  &-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  // 键盘聚焦可见
+  &-input:focus-visible + &-box {
+    box-shadow: 0 0 0 2px rgba(47, 111, 219, 0.3);
+  }
+}
+
+// 播放中均衡器竖条跳动动画
+@keyframes ez-rec-list-modal-eq {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
