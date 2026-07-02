@@ -43,9 +43,6 @@
     "eventemitter3": "^5.0.1",
     "@ezuikit/utils-i18n": "^2.0.0"
   },
-  "devDependencies": {
-    "@common/rollup": "workspace:*"
-  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"

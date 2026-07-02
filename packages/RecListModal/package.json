@@ -48,9 +48,6 @@
     "@ezuikit/control-modal": "0.0.1-beta.5",
     "@ezuikit/control-virtual-scroll": "0.0.1-beta.1"
   },
-  "devDependencies": {
-    "@common/rollup": "workspace:*"
-  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
