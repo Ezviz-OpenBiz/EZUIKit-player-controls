@@ -1,0 +1,46 @@
+$evscroll-prefix-cls: 'evscroll';
+
+.#{$evscroll-prefix-cls} {
+  // 滚动容器（库会确保 overflow / position）
+  &-wrapper {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  // 撑满总高度的占位层
+  &-content {
+    position: relative;
+    width: 100%;
+  }
+
+  // 可视项绝对定位容器
+  &-viewport {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  // 单个行容器（绝对定位，固定高度）
+  &-item {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // 滚动条（WebKit）
+  &-wrapper::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+  &-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
