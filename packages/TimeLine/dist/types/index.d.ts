@@ -408,7 +408,7 @@ interface TimeLineOptions extends BaseTimeLineOptions {
      * @param time 点击位置对应的时间
      */
     onClickSeek?: (time: Date) => void;
-    /** 是否在录像片段上绘制图片图标，默认 true */
+    /** 是否在录像片段上绘制图片图标，默认 false, 后续会放开 */
     showSectionIcon?: boolean;
     /** 录像片段图标颜色，默认 '#FFFFFF' */
     sectionIconColor?: string;
