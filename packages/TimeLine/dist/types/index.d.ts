@@ -79,7 +79,7 @@ interface TimeLineTimeSection {
     endTime: number;
     /** 封面图片 */
     coverPic: string | undefined;
-    EVENT_TYPE: number | string;
+    EVENT_TYPE?: number | string;
     [key: string]: number | string | undefined;
 }
 interface BaseTimeLineOptions extends TimeLineStyleOptions {
