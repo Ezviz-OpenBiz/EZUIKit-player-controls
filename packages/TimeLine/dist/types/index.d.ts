@@ -400,6 +400,10 @@ interface TimeLineOptions extends BaseTimeLineOptions {
     /** 是否支持点击时间轴跳转到点击时间点，默认 true */
     enabledClickToSeek?: boolean;
     /**
+     * 开启鼠标滚轮, 默认 true
+     */
+    enabledWheelZoom?: boolean;
+    /**
      * 点击跳转回调（enabledClickToSeek 开启且发生点击跳转时触发）
      * @param time 点击位置对应的时间
      */
