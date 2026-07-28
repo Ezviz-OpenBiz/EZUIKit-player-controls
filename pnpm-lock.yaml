@@ -143,8 +143,8 @@ importers:
   packages/AIChat:
     dependencies:
       '@ezuikit/utils-i18n':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
 
   packages/AlarmMessage:
     dependencies:
@@ -155,17 +155,17 @@ importers:
   packages/Broadcast:
     dependencies:
       '@ezuikit/utils-i18n':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
 
   packages/DatePicker:
     dependencies:
       '@ezuikit/utils-i18n':
-        specifier: 2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       '@ezuikit/utils-tools':
-        specifier: 2.0.3
-        version: 2.0.3
+        specifier: ^2.0.5
+        version: 2.0.5
       '@skax/delegate':
         specifier: 4.0.2
         version: 4.0.2
@@ -179,8 +179,8 @@ importers:
   packages/Modal:
     dependencies:
       '@ezuikit/utils-i18n':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -191,8 +191,8 @@ importers:
   packages/Ptz:
     dependencies:
       '@ezuikit/utils-tools':
-        specifier: 2.0.3
-        version: 2.0.3
+        specifier: ^2.0.5
+        version: 2.0.5
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -200,17 +200,17 @@ importers:
   packages/RecListModal:
     dependencies:
       '@ezuikit/control-modal':
-        specifier: 0.0.1-beta.7
-        version: link:../Modal
+        specifier: 0.0.1
+        version: 0.0.1
       '@ezuikit/control-virtual-scroll':
-        specifier: 0.0.1-beta.3
+        specifier: 0.0.1
         version: link:../VirtualScroll
       '@ezuikit/utils-i18n':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       '@ezuikit/utils-tools':
-        specifier: 2.0.3
-        version: 2.0.3
+        specifier: ^2.0.5
+        version: 2.0.5
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -218,17 +218,17 @@ importers:
   packages/Talk:
     dependencies:
       '@ezuikit/utils-i18n':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
 
   packages/TimeLine:
     dependencies:
       '@ezuikit/utils-i18n':
-        specifier: 2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       '@ezuikit/utils-tools':
-        specifier: 2.0.3
-        version: 2.0.3
+        specifier: ^2.0.5
+        version: 2.0.5
       '@skax/delegate':
         specifier: 4.0.2
         version: 4.0.2
@@ -1531,14 +1531,22 @@ packages:
     dev: true
     optional: true
 
-  /@ezuikit/utils-i18n@2.0.0:
-    resolution: {integrity: sha512-gMkfdwFTRk3bAkUVWRGPyEsQl4aIImBpQp732aSSHA75LFPi1MmdaB2Xf34OeC+4v+Anpbt75vviCpUrKPMKlQ==}
+  /@ezuikit/control-modal@0.0.1:
+    resolution: {integrity: sha512-PWm8jL0tp5FzWp8gA1YJI+uw1KmPvRKMGkbCQALDevEja9qPp4xS4Fuvn5phhcUY1Wvd8G4K/8L/qICz3mlFNQ==}
+    dependencies:
+      '@ezuikit/utils-i18n': 2.0.1
+      deepmerge: 4.3.1
+      eventemitter3: 5.0.4
+    dev: false
+
+  /@ezuikit/utils-i18n@2.0.1:
+    resolution: {integrity: sha512-846z2bDpCxioTBO3KG8Uw8QUFa6hzquSzmZKWPO6fjT3P4v6zNnXRz+Z3JCPlXnc4eesi03A+JmMAU6m5KI4gg==}
     dependencies:
       deepmerge: 4.3.1
     dev: false
 
-  /@ezuikit/utils-tools@2.0.3:
-    resolution: {integrity: sha512-YvUGDU1ikjSc5YjQLh6kQWGBOpqkOczb3HiocWm7FOk9grW6IAGd3RbRu0e+XyWT20nefcEpbIhRwOYsTejjnA==}
+  /@ezuikit/utils-tools@2.0.5:
+    resolution: {integrity: sha512-7SR3kKQdColQ+Rz/PPaLzHi8Yv3RuhFUh3iMymonlO95OJSZBgjaTSX5QNeTnZIi57soNVoHByR4tS/JbMA4Wg==}
     dev: false
 
   /@hutson/parse-repository-url@3.0.2:

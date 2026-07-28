@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-rec-list-modal",
-  "version": "0.0.1-beta.6",
+  "version": "0.0.1-beta.7",
   "description": "recording list modal control for ezviz",
   "title": "rec-list-modal",
   "main": "dist/index.cjs",
@@ -43,8 +43,8 @@
   "license": "MIT",
   "dependencies": {
     "deepmerge": "^4.3.1",
-    "@ezuikit/utils-tools": "2.0.3",
-    "@ezuikit/utils-i18n": "^2.0.0",
+    "@ezuikit/utils-tools": "^2.0.5",
+    "@ezuikit/utils-i18n": "^2.0.1",
     "@ezuikit/control-modal": "0.0.1",
     "@ezuikit/control-virtual-scroll": "0.0.1"
   },

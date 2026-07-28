@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-modal",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "draggable modal dialog control for ezviz",
   "title": "modal",
   "main": "dist/index.cjs",
@@ -41,7 +41,7 @@
   "dependencies": {
     "deepmerge": "^4.3.1",
     "eventemitter3": "^5.0.1",
-    "@ezuikit/utils-i18n": "^2.0.0"
+    "@ezuikit/utils-i18n": "^2.0.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
