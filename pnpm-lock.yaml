@@ -164,8 +164,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       '@ezuikit/utils-tools':
-        specifier: ^2.0.5
-        version: 2.0.5
+        specifier: ^2.0.6
+        version: 2.0.6
       '@skax/delegate':
         specifier: 4.0.2
         version: 4.0.2
@@ -191,8 +191,8 @@ importers:
   packages/Ptz:
     dependencies:
       '@ezuikit/utils-tools':
-        specifier: ^2.0.5
-        version: 2.0.5
+        specifier: ^2.0.6
+        version: 2.0.6
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -209,8 +209,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       '@ezuikit/utils-tools':
-        specifier: ^2.0.5
-        version: 2.0.5
+        specifier: ^2.0.6
+        version: 2.0.6
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -227,8 +227,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       '@ezuikit/utils-tools':
-        specifier: ^2.0.5
-        version: 2.0.5
+        specifier: ^2.0.6
+        version: 2.0.6
       '@skax/delegate':
         specifier: 4.0.2
         version: 4.0.2
@@ -1545,8 +1545,8 @@ packages:
       deepmerge: 4.3.1
     dev: false
 
-  /@ezuikit/utils-tools@2.0.5:
-    resolution: {integrity: sha512-7SR3kKQdColQ+Rz/PPaLzHi8Yv3RuhFUh3iMymonlO95OJSZBgjaTSX5QNeTnZIi57soNVoHByR4tS/JbMA4Wg==}
+  /@ezuikit/utils-tools@2.0.6:
+    resolution: {integrity: sha512-1XUk8IY28FpspjzgbbVEfcsRiwKx9l5ltjOYw9RYh3BK2XAKv2B2N+79RCQ1qfmjLVsHLx2H8xTwSJECSWcnqg==}
     dev: false
 
   /@hutson/parse-repository-url@3.0.2:

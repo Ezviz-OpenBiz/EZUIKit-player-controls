@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-time-line",
-  "version": "2.1.0-beta.9",
+  "version": "2.1.0",
   "description": "time line control for ezviz",
   "title": "time-line",
   "main": "dist/index.cjs",
@@ -34,7 +34,7 @@
   "author": "Ezviz-OpenBiz",
   "license": "",
   "dependencies": {
-    "@ezuikit/utils-tools": "^2.0.5",
+    "@ezuikit/utils-tools": "^2.0.6",
     "deepmerge": "^4.3.1",
     "@skax/picker": "1.1.8",
     "@skax/delegate": "4.0.2",
