@@ -19,4 +19,5 @@ examples/*/dist
 npm-debug.log*
 npm-error.log*
 yarn-debug.log*
-           
+*.map
+**/*.map     
