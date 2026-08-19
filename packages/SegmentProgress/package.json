@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-segment-progress",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.1",
   "description": "playback segment progress bar control for ezviz",
   "title": "segmentProgress",
   "main": "dist/index.cjs",
