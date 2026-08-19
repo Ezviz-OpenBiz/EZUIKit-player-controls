@@ -1,0 +1,95 @@
+$prefix: 'ez-segment-progress';
+
+.#{$prefix} {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &-time {
+    flex: none;
+    color: var(--ez-segment-progress-text-color, rgba(255, 255, 255, 0.9));
+    font-size: 12px;
+    line-height: 1;
+    // 等宽数字，避免秒数变化时宽度跳动导致轨道左右抖
+    font-variant-numeric: tabular-nums;
+
+    &-current {
+      margin-right: 8px;
+    }
+
+    &-total {
+      margin-left: 8px;
+    }
+  }
+
+  &-track {
+    position: relative;
+    flex: 1 1 auto;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--ez-segment-progress-track-color, rgba(255, 255, 255, 0.35));
+    cursor: pointer;
+    touch-action: none;
+
+    // 轨道只有 3px 高，扩大触摸热区，否则手指很难点中
+    &::before {
+      position: absolute;
+      right: 0;
+      left: 0;
+      top: -12px;
+      bottom: -12px;
+      content: '';
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ez-segment-progress-played-color, #1890ff);
+      outline-offset: 4px;
+    }
+  }
+
+  &-played {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    border-radius: 2px;
+    background: var(--ez-segment-progress-played-color, #1890ff);
+    pointer-events: none;
+  }
+
+  &-thumb {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--ez-segment-progress-thumb-color, #fff);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.35);
+    transform: translate(-50%, -50%);
+    transition:
+      width 0.1s,
+      height 0.1s;
+    pointer-events: none;
+  }
+
+  // 按下反馈：指示器放大
+  &-dragging &-thumb {
+    width: 14px;
+    height: 14px;
+  }
+
+  &-disabled {
+    opacity: 0.5;
+
+    .#{$prefix}-track {
+      cursor: not-allowed;
+    }
+  }
+}
