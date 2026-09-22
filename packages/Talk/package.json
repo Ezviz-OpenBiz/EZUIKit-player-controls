@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-talk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "talk",
   "title": "talk",
   "main": "dist/index.cjs",
