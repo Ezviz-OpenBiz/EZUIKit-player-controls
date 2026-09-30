@@ -1,5 +1,5 @@
 /*
-* @ezuikit/control-drawer v0.0.1-beta.2
+* @ezuikit/control-drawer v0.0.1-beta.3
 * Copyright (c) 2026-10-01 03:43:12 Ezviz-OpenBiz
 * Released under the MIT License.
 */
