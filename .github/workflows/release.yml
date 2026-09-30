@@ -80,21 +80,21 @@ jobs:
             pnpm --filter "$NAME" publish --access public --tag "$TAG" --no-git-checks
           done
 
-          ## 创建 Release.txt 文件，内容为当前提交的 SHA 值
-          - name: Build Release.txt
-            run: echo ${{ github.sha }} > Release.txt
-          - name: Test
-            run: cat Release.txt
+      ## 创建 Release.txt 文件，内容为当前提交的 SHA 值
+      - name: Build Release.txt
+        run: echo ${{ github.sha }} > Release.txt
+      - name: Test
+        run: cat Release.txt
 
-          # 自动创建 GitHub Release
-          - name: Create GitHub Release
-            uses: softprops/action-gh-release@v3
-            with:
-              tag_name: ${{ github.ref_name }}
-              name: ${{ github.ref_name }}
-              generate_release_notes: true
-              prerelease: ${{ steps.determine_tag.outputs.tag != 'latest' }}
-              files: |
-                ${{ steps.archive.outputs.archive_name }}.zip
-                ${{ steps.archive.outputs.archive_name }}.tar.gz
-                Release.txt
+      # 自动创建 GitHub Release
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          prerelease: ${{ steps.determine_tag.outputs.tag != 'latest' }}
+          files: |
+            ${{ steps.archive.outputs.archive_name }}.zip
+            ${{ steps.archive.outputs.archive_name }}.tar.gz
+            Release.txt
