@@ -32,6 +32,8 @@ interface DrawerOptions {
     showClose?: boolean;
     /** 按下 Esc 是否关闭，默认 true */
     closeOnEscape?: boolean;
+    /** 开合动画时长（ms），默认 300，需与样式变量 `--edrawer-duration` 保持一致 */
+    duration?: number;
     /** 创建后是否立即打开，默认 false（仅构造时生效） */
     open?: boolean;
     /** 根节点层级，缺省使用样式变量 `--edrawer-z-index`（默认 100） */
@@ -45,6 +47,18 @@ interface DrawerOptions {
     getContainer?: DrawerContainerGetter;
     /** 打开/关闭回调 */
     onOpenChange?: (open: boolean) => void;
+    /** 打开开始回调（打开动画开始前同步触发） */
+    onOpenStart?: () => void;
+    /** 打开中回调（打开过渡进行中触发） */
+    onOpening?: () => void;
+    /** 打开结束回调（打开过渡结束后触发） */
+    onOpenEnd?: () => void;
+    /** 关闭开始回调（关闭动画开始前同步触发） */
+    onCloseStart?: () => void;
+    /** 关闭中回调（关闭过渡进行中触发） */
+    onClosing?: () => void;
+    /** 关闭结束回调（关闭过渡结束、根节点隐藏后触发） */
+    onCloseEnd?: () => void;
 }
 
 /**
@@ -86,6 +100,12 @@ declare class Drawer {
     private _destroyed;
     /** 收起动画结束后隐藏根节点的定时器 */
     private _hideTimer;
+    /** 打开动画结束后回调的定时器 */
+    private _openTimer;
+    /** 打开中回调的 rAF 句柄 */
+    private _openingRaf;
+    /** 关闭中回调的 rAF 句柄 */
+    private _closingRaf;
     /**
      * @param container 默认挂载容器，支持 CSS 选择器、元素 ID 或 HTMLElement，缺省或找不到时为 document.body。
      * 非 body 容器需为定位元素（position 非 static），抽屉相对它铺满定位。
@@ -135,7 +155,7 @@ declare class Drawer {
     private _mount;
     /** 移除 DOM 与元素级监听，并释放全部节点引用 */
     private _teardownDom;
-    private _clearHideTimer;
+    private _clearTimers;
     /** 读取布局属性以强制浏览器回流 */
     private _reflow;
     private readonly _onCloseClick;

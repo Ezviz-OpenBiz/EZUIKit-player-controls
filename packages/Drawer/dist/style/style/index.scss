@@ -5,7 +5,7 @@
 // 外观通过 --edrawer-* 变量定制，缺省值见各 var() 的回退值。
 // -----------------------------------------------------------------------------
 $edrawer-prefix-cls: 'edrawer';
-// 开合过渡时长，需与 src/constant.ts 中的 _DRAWER_DURATION_ 保持一致
+// 开合过渡时长（默认回退值）：可通过根节点上的 --edrawer-duration 按实例覆盖，需与 JS 默认 _DRAWER_DURATION_（300ms）保持一致
 $edrawer-duration: 0.3s;
 
 .#{$edrawer-prefix-cls} {
@@ -34,7 +34,7 @@ $edrawer-duration: 0.3s;
     left: 0;
     background-color: var(--edrawer-mask-bg, rgba(0, 0, 0, 0.3));
     opacity: 0;
-    transition: opacity $edrawer-duration ease;
+    transition: opacity var(--edrawer-duration, #{$edrawer-duration}) ease;
   }
 
   // 面板
@@ -46,7 +46,7 @@ $edrawer-duration: 0.3s;
     overflow: hidden;
     background-color: var(--edrawer-bg, #fff);
     color: var(--edrawer-color, rgba(0, 0, 0, 0.88));
-    transition: transform $edrawer-duration ease;
+    transition: transform var(--edrawer-duration, #{$edrawer-duration}) ease;
   }
 
   // 弹出方向：收起态面板位于容器外侧
