@@ -1,0 +1,162 @@
+// -----------------------------------------------------------------------------
+// Message 消息 / Toast 通知
+// 结构：.emessage（根，铺满挂载容器，点击穿透） > .emessage-item（每条消息，含图标 + 内容）
+// 外观通过 --emessage-* 变量定制，缺省值见各 var() 的回退值。
+// -----------------------------------------------------------------------------
+$emessage-prefix-cls: 'emessage';
+// 离开（关闭）动画时长，需与 src/constant.ts 中的 _MESSAGE_LEAVE_DURATION_ 保持一致
+$emessage-leave-duration: 0.2s;
+
+.#{$emessage-prefix-cls} {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--emessage-z-index, 1000);
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // 根节点不拦截指针事件：仅消息本身可交互，其余区域仍可操作底层内容
+  pointer-events: none;
+
+  // 挂载到 document.body 时相对视口定位
+  &-fixed {
+    position: fixed;
+  }
+
+  // 弹出方向：顶部 / 底部
+  &-top {
+    justify-content: flex-start;
+    padding: 16px;
+  }
+
+  &-bottom {
+    justify-content: flex-end;
+    padding: 16px;
+  }
+
+  // 单条消息（Toast）
+  &-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 80%;
+    margin: 4px 0;
+    padding: 5px 6px;
+    background: var(--emessage-bg, #fff);
+    color: var(--emessage-color, rgba(0, 0, 0, 0.88));
+    font-size: 12px;
+    line-height: 18px;
+    border: 1px solid var(--emessage-border-color, rgba(0, 0, 0, 0.06));
+    border-radius: 4px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    pointer-events: auto;
+    animation: emessage-fade-in 0.2s ease;
+  }
+
+  &-icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--emessage-icon-color, #4a9eff);
+  }
+
+  &-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  // 全屏消息：覆盖整个容器，图标与文案上下布局
+  &-item-full {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: var(--emessage-full-bg, rgba(255, 255, 255, 0.96));
+    font-size: 14px;
+    animation: none;
+  }
+
+  &-item-full &-icon {
+    font-size: 28px;
+  }
+
+  &-item-full &-content {
+    // 覆盖 toast 布局的 flex: 1 1 auto，避免内容在纵向被拉伸，保证图标与文案整体垂直水平居中
+    flex: 0 0 auto;
+    text-align: center;
+  }
+
+  // 类型配色
+  &-item-info {
+    --emessage-icon-color: #4a9eff;
+  }
+
+  &-item-success {
+    --emessage-icon-color: #52c41a;
+  }
+
+  &-item-warn {
+    --emessage-icon-color: #faad14;
+  }
+
+  &-item-error {
+    --emessage-icon-color: #ff4d4f;
+  }
+
+  // 离开动画（关闭时播放，结束后由 JS 移除 DOM）
+  &-item-leave {
+    animation: emessage-fade-out $emessage-leave-duration ease forwards;
+  }
+}
+
+@keyframes emessage-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes emessage-fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+// 尊重「减少动效」偏好
+@media (prefers-reduced-motion: reduce) {
+  .#{$emessage-prefix-cls}-item,
+  .#{$emessage-prefix-cls}-item-leave {
+    animation: none;
+  }
+}
