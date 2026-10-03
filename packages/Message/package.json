@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-message",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "description": "message / toast notification control for ezviz",
   "title": "message",
   "main": "dist/index.cjs",
