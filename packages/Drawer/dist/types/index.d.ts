@@ -49,14 +49,10 @@ interface DrawerOptions {
     onOpenChange?: (open: boolean) => void;
     /** 打开开始回调（打开动画开始前同步触发） */
     onOpenStart?: () => void;
-    /** 打开中回调（打开过渡进行中触发） */
-    onOpening?: () => void;
     /** 打开结束回调（打开过渡结束后触发） */
     onOpenEnd?: () => void;
     /** 关闭开始回调（关闭动画开始前同步触发） */
     onCloseStart?: () => void;
-    /** 关闭中回调（关闭过渡进行中触发） */
-    onClosing?: () => void;
     /** 关闭结束回调（关闭过渡结束、根节点隐藏后触发） */
     onCloseEnd?: () => void;
 }
@@ -102,10 +98,6 @@ declare class Drawer {
     private _hideTimer;
     /** 打开动画结束后回调的定时器 */
     private _openTimer;
-    /** 打开中回调的 rAF 句柄 */
-    private _openingRaf;
-    /** 关闭中回调的 rAF 句柄 */
-    private _closingRaf;
     /**
      * @param container 默认挂载容器，支持 CSS 选择器、元素 ID 或 HTMLElement，缺省或找不到时为 document.body。
      * 非 body 容器需为定位元素（position 非 static），抽屉相对它铺满定位。
