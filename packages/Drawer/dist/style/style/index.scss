@@ -1,0 +1,174 @@
+// -----------------------------------------------------------------------------
+// Drawer 抽屉布局骨架
+// 结构：.edrawer（根，铺满挂载容器） > .edrawer-mask（遮罩） + .edrawer-panel（面板）
+//       .edrawer-panel > .edrawer-header（.edrawer-title + .edrawer-close） + .edrawer-body
+// 外观通过 --edrawer-* 变量定制，缺省值见各 var() 的回退值。
+// -----------------------------------------------------------------------------
+$edrawer-prefix-cls: 'edrawer';
+// 开合过渡时长（默认回退值）：可通过根节点上的 --edrawer-duration 按实例覆盖，需与 JS 默认 _DRAWER_DURATION_（300ms）保持一致
+$edrawer-duration: 0.3s;
+
+.#{$edrawer-prefix-cls} {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--edrawer-z-index, 100);
+  overflow: hidden;
+  box-sizing: border-box;
+  // 根节点不拦截指针事件：不展示遮罩时，面板以外的区域仍可操作底层内容
+  pointer-events: none;
+
+  // 挂载到 document.body 时相对视口定位
+  &-fixed {
+    position: fixed;
+  }
+
+  // 遮罩
+  &-mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: var(--edrawer-mask-bg, rgba(0, 0, 0, 0.3));
+    opacity: 0;
+    transition: opacity var(--edrawer-duration, #{$edrawer-duration}) ease;
+  }
+
+  // 面板
+  &-panel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: var(--edrawer-bg, #fff);
+    color: var(--edrawer-color, rgba(0, 0, 0, 0.88));
+    transition: transform var(--edrawer-duration, #{$edrawer-duration}) ease;
+  }
+
+  // 弹出方向：收起态面板位于容器外侧
+  &-left &-panel,
+  &-right &-panel {
+    top: 0;
+    bottom: 0;
+    max-width: var(--edrawer-max-width, 100%);
+  }
+
+  &-top &-panel,
+  &-bottom &-panel {
+    left: 0;
+    right: 0;
+    max-height: var(--edrawer-max-height, 100%);
+  }
+
+  &-right &-panel {
+    right: 0;
+    border-left: 1px solid var(--edrawer-border-color, rgba(0, 0, 0, 0.1));
+    transform: translateX(100%);
+  }
+
+  &-left &-panel {
+    left: 0;
+    border-right: 1px solid var(--edrawer-border-color, rgba(0, 0, 0, 0.1));
+    transform: translateX(-100%);
+  }
+
+  &-top &-panel {
+    top: 0;
+    border-bottom: 1px solid var(--edrawer-border-color, rgba(0, 0, 0, 0.1));
+    transform: translateY(-100%);
+  }
+
+  &-bottom &-panel {
+    bottom: 0;
+    border-top: 1px solid var(--edrawer-border-color, rgba(0, 0, 0, 0.1));
+    transform: translateY(100%);
+  }
+
+  // 打开态（.edrawer.edrawer-open，优先级高于方向规则，不依赖书写顺序）：遮罩淡入、面板滑入，二者恢复可交互
+  &.#{$edrawer-prefix-cls}-open &-mask {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &.#{$edrawer-prefix-cls}-open &-panel {
+    transform: translate(0, 0);
+    pointer-events: auto;
+  }
+
+  // 头部
+  &-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: var(--edrawer-header-padding, 8px 16px);
+    border-bottom: 1px solid var(--edrawer-header-border-color, rgba(0, 0, 0, 0.08));
+  }
+
+  &-title {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--edrawer-title-color, #333);
+    font-size: var(--edrawer-title-font-size, 12px);
+    font-weight: 500;
+    line-height: 1.5;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  // 关闭按钮
+  &-close {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    margin-left: 12px;
+    padding: 4px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--edrawer-close-color, rgba(0, 0, 0, 0.4));
+    cursor: pointer;
+    transition: color 0.2s;
+    font-size: 14px;
+
+    &:hover {
+      color: var(--edrawer-close-hover-color, #333);
+      background: transparent;
+    }
+
+    svg {
+      display: block;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  // 内容区：占满头部以外的空间，内容超出时滚动
+  &-body {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    box-sizing: border-box;
+  }
+
+  // 隐藏态（收起动画结束后）
+  &-hidden {
+    display: none !important;
+  }
+}
+
+// 尊重「减少动效」偏好
+@media (prefers-reduced-motion: reduce) {
+  .#{$edrawer-prefix-cls}-mask,
+  .#{$edrawer-prefix-cls}-panel {
+    transition: none;
+  }
+}

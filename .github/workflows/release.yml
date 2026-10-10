@@ -6,7 +6,7 @@ on:
 
 permissions:
   id-token: write # Required for OIDC
-  contents: read
+  contents: write
 
 jobs:
   publish:
@@ -51,7 +51,7 @@ jobs:
           echo "$CHANGED_JSON" | jq -c '.[]' | while read -r pkg; do
             NAME=$(echo "$pkg" | jq -r '.name')
             VERSION=$(echo "$pkg" | jq -r '.version')
-            
+
             echo "Processing $NAME at version $VERSION..."
 
             # 3. 判断版本号，决定 tag
@@ -74,8 +74,27 @@ jobs:
             fi
 
             echo "Publishing $NAME@$VERSION with tag [$TAG]"
-            
+
             # 4. 执行针对性发布
             # 使用 from-package 确保发布的是当前 package.json 里的版本
             pnpm --filter "$NAME" publish --access public --tag "$TAG" --no-git-checks
           done
+
+      ## 创建 Release.txt 文件，内容为当前提交的 SHA 值
+      - name: Build Release.txt
+        run: echo ${{ github.sha }} > Release.txt
+      - name: Test
+        run: cat Release.txt
+
+      # 自动创建 GitHub Release
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          prerelease: ${{ steps.determine_tag.outputs.tag != 'latest' }}
+          files: |
+            ${{ steps.archive.outputs.archive_name }}.zip
+            ${{ steps.archive.outputs.archive_name }}.tar.gz
+            Release.txt
