@@ -13,6 +13,9 @@ $prefix: ezplayer;
     cursor: pointer;
     overflow: hidden;
     user-select: none;
+    // 按住时不让浏览器接管为滚动/缩放（否则会 pointercancel），并屏蔽 iOS 长按菜单
+    touch-action: none;
+    -webkit-touch-callout: none;
   }
 
   &-icon {
@@ -191,6 +194,9 @@ $prefix: ezplayer;
     height: 20px;
     cursor: pointer;
     text-align: center;
+    user-select: none;
+    touch-action: none;
+    -webkit-touch-callout: none;
   }
   &-zoom {
     // margin: $ {
@@ -237,6 +243,9 @@ $prefix: ezplayer;
     border-radius: 100%;
     overflow: hidden;
     box-sizing: border-box;
+    user-select: none;
+    touch-action: none;
+    -webkit-touch-callout: none;
   }
 
   &-container {
