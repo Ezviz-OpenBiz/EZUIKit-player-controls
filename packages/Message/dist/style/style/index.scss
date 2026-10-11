@@ -48,7 +48,7 @@ $emessage-leave-duration: 0.2s;
     padding: 5px 6px;
     background: var(--emessage-bg, rgba(0, 0, 0, 0.7));
     color: var(--emessage-color, rgba(255, 255, 255, 1));
-    font-size: 12px;
+    font-size: 13px;
     line-height: 18px;
     border: 1px solid var(--emessage-border-color, rgba(0, 0, 0, 0.06));
     border-radius: 4px;
@@ -65,6 +65,12 @@ $emessage-leave-duration: 0.2s;
     font-size: 16px;
     line-height: 1;
     color: var(--emessage-icon-color, #4a9eff);
+  }
+
+  &-icon-custom img,
+  &-icon-custom svg {
+    width: 1em;
+    height: 1em;
   }
 
   &-content {
@@ -94,7 +100,7 @@ $emessage-leave-duration: 0.2s;
     border-radius: 0;
     box-shadow: none;
     background: var(--emessage-full-bg, rgba(0, 0, 0, 0.7));
-    font-size: 14px;
+    font-size: 13px;
     animation: none;
   }
 
@@ -111,18 +117,22 @@ $emessage-leave-duration: 0.2s;
   // 类型配色
   &-item-info {
     --emessage-icon-color: #4a9eff;
+    z-index: 1;
   }
 
   &-item-success {
     --emessage-icon-color: #52c41a;
+    z-index: 1;
   }
 
   &-item-warn {
     --emessage-icon-color: #faad14;
+    z-index: 1;
   }
 
   &-item-error {
     --emessage-icon-color: #ff4d4f;
+    z-index: 1;
   }
 
   // 离开动画（关闭时播放，结束后由 JS 移除 DOM）

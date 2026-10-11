@@ -12,7 +12,11 @@ type MessagePosition = 'top' | 'bottom';
 interface MessageItemOptions {
     /** 消息类型，默认 'info' */
     type?: MessageType;
-    /** 消息内容，字符串按文本插入，也可传 HTMLElement */
+    /** 自定义图标：图片 URL 字符串或要插入的 HTMLElement；不传时使用类型默认图标 */
+    icon?: string | HTMLElement;
+    /** 按消息类型指定图标；可配置 info / success / warn / error 中的一项或多项 */
+    icons?: Partial<Record<MessageType, string | HTMLElement>>;
+    /** 消息内容，字符串按innerHTML插入(有安全风险，须开发者自行解决)，也可传 HTMLElement */
     content?: string | HTMLElement;
     /** 自动关闭时长（ms），默认继承实例的 `duration`，0 表示不自动关闭 */
     duration?: number;
@@ -29,6 +33,8 @@ interface MessageItem {
     id: string;
     /** 消息类型 */
     type: MessageType;
+    /** 自定义图标：图片 URL 字符串或要插入的 HTMLElement */
+    icon?: string | HTMLElement;
     /** 消息内容 */
     content: string | HTMLElement;
     /** 自动关闭时长（ms），0 表示不自动关闭 */
@@ -48,6 +54,10 @@ interface MessageItem {
 interface MessageOptions {
     /** 挂载容器，支持元素 ID、CSS 选择器或 HTMLElement，默认 document.body */
     container?: string | HTMLElement;
+    /** 全局默认图标：图片 URL 字符串或 HTMLElement；单条消息的 icon 可覆盖 */
+    icon?: string | HTMLElement;
+    /** 按消息类型配置全局图标；单条消息的 icons 可覆盖对应类型 */
+    icons?: Partial<Record<MessageType, string | HTMLElement>>;
     /** 单条消息自动关闭时长（ms），默认 3000，0 表示不自动关闭 */
     duration?: number;
     /** 最大同时显示条数，默认 0 表示不限制（超出后关闭最早的消息） */
@@ -151,7 +161,7 @@ declare class Message {
      */
     clear(): void;
     /**
-     * 更新配置。duration / maxCount 对后续新消息生效，position / zIndex / className 立即生效。
+     * 更新配置。icon / duration / maxCount 对后续新消息生效，position / zIndex / className 立即生效。
      * @param options 新配置
      */
     updateOptions(options: Partial<MessageOptions>): void;
