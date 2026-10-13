@@ -11,4 +11,3 @@
 - 实例 API：`open`（getter / setter）、`setTitle`、`setContent`、`updateOptions`、`destroy`、`Drawer.VERSION`
 - 打开 / 关闭回调 `onOpenChange`
 - 无障碍：面板 `role="dialog"`，头部通过 `aria-labelledby` 关联标题
-- 遵循 `prefers-reduced-motion` 关闭过渡动画

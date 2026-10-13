@@ -99,14 +99,15 @@ $edrawer-duration: 0.3s;
     pointer-events: auto;
   }
 
-  // 头部
+  // 头部：固定高度（含底部 1px 分隔线），内容垂直居中，避免被头部内的子元素（如日期栏）撑高
   &-header {
     display: flex;
     flex: 0 0 auto;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: var(--edrawer-header-padding, 8px 16px);
+    height: var(--edrawer-header-height, 40px);
+    padding: var(--edrawer-header-padding, 0 16px);
     border-bottom: 1px solid var(--edrawer-header-border-color, rgba(0, 0, 0, 0.08));
   }
 
@@ -115,7 +116,7 @@ $edrawer-duration: 0.3s;
     min-width: 0;
     overflow: hidden;
     color: var(--edrawer-title-color, #333);
-    font-size: var(--edrawer-title-font-size, 12px);
+    font-size: var(--edrawer-title-font-size, 14px);
     font-weight: 500;
     line-height: 1.5;
     white-space: nowrap;
@@ -162,13 +163,5 @@ $edrawer-duration: 0.3s;
   // 隐藏态（收起动画结束后）
   &-hidden {
     display: none !important;
-  }
-}
-
-// 尊重「减少动效」偏好
-@media (prefers-reduced-motion: reduce) {
-  .#{$edrawer-prefix-cls}-mask,
-  .#{$edrawer-prefix-cls}-panel {
-    transition: none;
   }
 }
