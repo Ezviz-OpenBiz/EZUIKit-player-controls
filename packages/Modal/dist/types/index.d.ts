@@ -1,5 +1,3 @@
-import { I18nTranslation } from '@ezuikit/utils-i18n';
-
 /**
  * 弹框位置坐标点（以视口左上角为原点，单位 px）
  */
@@ -9,8 +7,6 @@ interface ModalPosition {
     /** 距视口顶部距离（px） */
     y: number;
 }
-/** 监听回调 */
-type ModalListener = (...args: unknown[]) => void;
 /**
  * Modal 配置项
  */
@@ -33,7 +29,7 @@ interface ModalOptions {
     draggable?: boolean;
     /** 是否展示遮罩层，默认 true */
     showMask?: boolean;
-    /** 点击遮罩层是否关闭，默认 false */
+    /** 点击遮罩层是否关闭，默认 true */
     maskClosable?: boolean;
     /** 是否展示头部（标题栏，含标题与关闭按钮，也是拖动手柄），默认 true */
     showHeader?: boolean;
@@ -41,20 +37,27 @@ interface ModalOptions {
     showClose?: boolean;
     /** 按下 Esc 是否关闭，默认 true */
     closeOnEscape?: boolean;
-    /** 创建后是否立即打开，默认 false */
+    /** 创建后是否立即打开，默认 false。仅构造时读取，之后通过实例的 `open` 属性打开 / 关闭 */
     open?: boolean;
     /** 层级，默认 1000 */
     zIndex?: number;
     /** 追加到弹框根节点的自定义类名 */
     className?: string;
-    /** 显示语言，默认 'zh' */
-    language?: 'zh' | 'en';
-    /** 自定义多语言文案 */
-    locales?: Record<string, I18nTranslation>;
-    /** 打开回调 */
+    /** 打开回调（打开并定位之后调用） */
     onOpen?: () => void;
-    /** 关闭回调 */
+    /** 关闭回调（关闭按钮、Esc、点击遮罩或 `open = false`；销毁时不调用） */
     onClose?: () => void;
+    /** 开始拖动回调（在标题栏按下鼠标左键或触摸时） */
+    onDragStart?: () => void;
+    /** 拖动中回调：每帧最多一次，参数为约束到视口内后的位置 */
+    onDragging?: (position: ModalPosition) => void;
+    /** 结束拖动回调（松开鼠标或触摸结束），参数为最终位置 */
+    onDragEnd?: (position: {
+        left: number;
+        top: number;
+    }) => void;
+    /** Dom 节点初始化成功 */
+    onInitSuccess?: () => void;
 }
 
 /**
@@ -64,7 +67,8 @@ interface ModalOptions {
  * 1. 支持右上角 X 关闭、Esc 关闭、点击遮罩关闭；
  * 2. 支持拖动标题栏移动窗口，约束在视口内；
  * 3. 多实例时后创建在最上层，点击任意弹框自动置顶（bringToTop）；
- * 4. 通过 ModalProvider 单例统一管理所有实例的注册与 z-index 分配。
+ * 4. 通过 ModalProvider 单例统一管理所有实例的注册与 z-index 分配；
+ * 5. 不提供事件订阅，打开 / 关闭 / 拖动通过配置项中的回调通知（`onOpen` / `onClose` / `onDragStart` / `onDragging` / `onDragEnd`）。
  *
  * @example
  * ```ts
@@ -72,26 +76,20 @@ interface ModalOptions {
  *   title: '提示',
  *   content: '<p>Hello</p>',
  *   onClose: () => console.log('closed'),
+ *   onDragEnd: ({ left, top }) => console.log(left, top),
  * });
- * modal.open();
+ * modal.open = true; // 打开
+ * modal.open = false; // 关闭
  * ```
  */
 declare class Modal {
     /** 构建时由 Rollup 注入版本号 */
     static VERSION: string;
-    /** 事件常量 */
-    static EVENTS: {
-        readonly open: "open";
-        readonly close: "close";
-        readonly dragStart: "dragStart";
-        readonly dragging: "dragging";
-        readonly dragEnd: "dragEnd";
-    };
+    /** 关闭按钮图标 */
+    private static readonly _CLOSE_ICON_;
     /** 配置项 */
     options: ModalOptions;
     private _container;
-    private _i18n;
-    private _eventEmitter;
     /** 当前实例的 z-index 基础值（由 ModalProvider 分配，mask 用 base，wrap 用 base + 1） */
     private _baseZIndex;
     private _$mask;
@@ -100,7 +98,7 @@ declare class Modal {
     private _$title;
     private _$body;
     private _$close;
-    private _visible;
+    private _open;
     private _dragging;
     private _dragOffset;
     private _destroyed;
@@ -118,28 +116,29 @@ declare class Modal {
      */
     constructor(container?: string | HTMLElement, options?: ModalOptions);
     /**
-     * 打开弹框
+     * 打开 / 关闭弹框。
+     *
+     * - 打开（`true`）：显示遮罩与弹框，按 `options.position` 定位并约束在视口内，调用 `onOpen`；
+     * - 关闭（`false`）：隐藏遮罩与弹框并结束进行中的拖动，调用 `onClose`。
+     *
+     * 非布尔值按真假值处理；重复设置相同状态、或在 {@link Modal.destroy} 之后设置均无效果。
      */
-    open(): void;
+    set open(open: boolean);
     /**
-     * 关闭弹框
+     * 当前是否处于打开状态（销毁后为 false）
      */
-    close(): void;
-    /**
-     * 当前是否可见
-     */
-    isVisible(): boolean;
+    get open(): boolean;
     /**
      * 将当前弹框置顶（z-index 层级最高）
      */
     bringToTop(): void;
     /**
-     * 设置标题
+     * 设置标题, 支持 string | HTMLElement
      * @param title 字符串或 HTMLElement
      */
     setTitle(title: string | HTMLElement): void;
     /**
-     * 设置内容
+     * 设置内容， 支持 string | HTMLElement
      * @param content 字符串（HTML）或 HTMLElement
      */
     setContent(content: string | HTMLElement): void;
@@ -148,27 +147,26 @@ declare class Modal {
      * @param options 新配置
      */
     updateOptions(options: Partial<ModalOptions>): void;
-    /**
-     * 监听事件
-     * @param event 事件名（见 Modal.EVENTS）
-     * @param callback 回调
-     */
-    on(event: string, callback: ModalListener): void;
-    /**
-     * 取消监听
-     * @param event 事件名
-     * @param callback 回调（不传则移除该事件全部监听）
-     */
-    off(event: string, callback?: ModalListener): void;
     /** 设置位置并约束到视口范围内（窗口不允许超出页面区域） */
     setPosition(left: number, top: number, bounds?: {
         maxLeft: number;
         maxTop: number;
     }): ModalPosition;
     /**
-     * 销毁，释放 DOM 与事件
+     * 销毁，释放 DOM 与监听并从 ModalProvider 注销（幂等）。
+     * 销毁时不调用 `onClose`，之后 `open` 恒为 false。
      */
     destroy(): void;
+    /**
+     * 打开 / 关闭状态切换后的扩展点，供子类覆盖（默认什么也不做），通过 `this.open` 读取切换后的状态。
+     *
+     * 只在状态真正变化时调用，包括构造时 `options.open` 打开（此时子类构造函数尚未执行完）
+     * 与 `updateOptions` 重建后恢复打开；调用时 `onOpen` / `onClose` 已执行。
+     *
+     * 子类请覆盖本方法，不要重写 `open` 访问器：构建产物（swc 编译到 ES5）会把访问器里的 `super.open`
+     * 编译成 `Modal.prototype.open`、把 `super.open = value` 编译成 `this.open = value`，前者读错状态，后者无限递归。
+     */
+    protected _afterOpenChange(): void;
     private _resolveContainer;
     private _toSize;
     private _render;
@@ -203,23 +201,5 @@ declare class Modal {
     private _applyInitialPosition;
 }
 
-/**
- * Modal 事件常量，所有合法事件名必须在此声明。
- */
-declare const EVENTS: {
-    /** 打开 */
-    readonly open: "open";
-    /** 关闭 */
-    readonly close: "close";
-    /** 开始拖动 */
-    readonly dragStart: "dragStart";
-    /** 拖动中 */
-    readonly dragging: "dragging";
-    /** 结束拖动 */
-    readonly dragEnd: "dragEnd";
-};
-/** 事件名联合类型 */
-type ModalEventName = (typeof EVENTS)[keyof typeof EVENTS];
-
 export { Modal as default };
-export type { ModalEventName, ModalListener, ModalOptions, ModalPosition };
+export type { ModalOptions, ModalPosition };

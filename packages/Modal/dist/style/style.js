@@ -1,6 +1,6 @@
 /*
-* @ezuikit/control-modal v0.0.2
-* Copyright (c) 2026-07-28 Ezviz-OpenBiz
+* @ezuikit/control-modal v1.0.0-beta.1
+* Copyright (c) 2026-10-16 14:08:17 Ezviz-OpenBiz
 * Released under the MIT License.
 */
 require("./style.css");

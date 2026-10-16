@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-modal",
-  "version": "0.0.2",
+  "version": "1.0.0-beta.1",
   "description": "draggable modal dialog control for ezviz",
   "title": "modal",
   "main": "dist/index.cjs",
@@ -21,12 +21,6 @@
     "./dist/style/style.js": "./dist/style/style.js",
     "./dist/style/index.scss": "./dist/style/index.scss"
   },
-  "scripts": {
-    "dev": "cross-env NODE_ENV=development rollup --config rollup.config.mjs --watch",
-    "build": "npm run clean && cross-env NODE_ENV=production rollup --config rollup.config.mjs",
-    "clean": "rimraf dist",
-    "types": "tsc src/index.ts --emitDeclarationOnly --declaration --declarationDir dist/types --esModuleInterop"
-  },
   "keywords": [
     "ezuikit",
     "modal",
@@ -39,9 +33,7 @@
   "author": "Ezviz-OpenBiz",
   "license": "MIT",
   "dependencies": {
-    "deepmerge": "^4.3.1",
-    "eventemitter3": "^5.0.1",
-    "@ezuikit/utils-i18n": "^2.0.1"
+    "deepmerge": "^4.3.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
