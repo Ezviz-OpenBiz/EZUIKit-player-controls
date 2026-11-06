@@ -1,3 +1,5 @@
+import { LoggerCls } from '@ezuikit/utils-logger';
+
 interface BasePtzOptions {
     language?: 'zh' | 'en';
     env?: {
@@ -16,6 +18,11 @@ interface BasePtzOptions {
     locales?: Record<string, Record<string, string>>;
     onDirection?: (info: Record<string, any>) => (result?: any) => void;
     onSpeedChange?: (speed: number) => void;
+    /**
+     * 日志实例（`@ezuikit/utils-logger`），缺省时内部创建；日志以控件名 `Ptz` 作为上下文（前缀 `[Ptz]`）。
+     * 仅在构造时读取
+     */
+    logger?: LoggerCls;
 }
 /**
  * 按压结束原因
@@ -58,6 +65,8 @@ declare class BasePtz<T extends BasePtzOptions> {
     options: T;
     locale: Record<string, string>;
     speed: 1 | 3 | 7;
+    /** 日志实例：优先使用 options.logger，以控件名 Ptz 作为上下文 */
+    protected readonly _logger: LoggerCls;
     protected _destroyed: boolean;
     /** 控件自身的事件解绑函数，destroy 时统一执行 */
     private _unbinds;
