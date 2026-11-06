@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-ptz",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "ptz control for ezviz",
   "title": "ptz",
   "main": "dist/index.cjs",
@@ -32,7 +32,8 @@
   "author": "Ezviz-OpenBiz",
   "license": "",
   "dependencies": {
-    "deepmerge": "^4.3.1"
+    "deepmerge": "^4.3.1",
+    "@ezuikit/utils-logger": "2.1.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
