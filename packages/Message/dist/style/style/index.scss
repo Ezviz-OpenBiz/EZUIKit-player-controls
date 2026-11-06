@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // Message 消息 / Toast 通知
-// 结构：.emessage（根，铺满挂载容器，点击穿透） > .emessage-item（每条消息，含图标 + 内容）
+// 结构：.emessage（根，铺满挂载容器，点击穿透） > .emessage-item（图标 + 内容；notification 无图标）
 // 外观通过 --emessage-* 变量定制，缺省值见各 var() 的回退值。
 // -----------------------------------------------------------------------------
 $emessage-prefix-cls: 'emessage';
@@ -27,7 +27,7 @@ $emessage-leave-duration: 0.2s;
     position: fixed;
   }
 
-  // 弹出方向：顶部 / 底部
+  // 弹出方向：顶部 / 底部 / 左侧 / 右侧
   &-top {
     justify-content: flex-start;
     padding: 16px;
@@ -38,12 +38,24 @@ $emessage-leave-duration: 0.2s;
     padding: 16px;
   }
 
+  &-left {
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  &-right {
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 16px;
+  }
+
   // 单条消息（Toast）
   &-item {
     display: flex;
     align-items: center;
     gap: 8px;
-    max-width: 80%;
+    max-width: min(80%, 420px);
     margin: 4px 0;
     padding: 5px 6px;
     background: var(--emessage-bg, rgba(0, 0, 0, 0.7));
@@ -55,6 +67,12 @@ $emessage-leave-duration: 0.2s;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     pointer-events: auto;
     animation: emessage-fade-in 0.2s ease;
+  }
+
+  &-left &-item,
+  &-right &-item {
+    max-width: min(42vw, 340px);
+    margin: 0 0 8px;
   }
 
   &-icon {
@@ -77,6 +95,26 @@ $emessage-leave-duration: 0.2s;
     flex: 1 1 auto;
     min-width: 0;
     word-break: break-word;
+  }
+
+  &-close {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+    padding: 2px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    opacity: 0.75;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   // 全屏消息：覆盖整个容器，图标与文案上下布局
@@ -114,6 +152,20 @@ $emessage-leave-duration: 0.2s;
     text-align: center;
   }
 
+  &-item-full &-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    margin: 0;
+  }
+
+  &-item-notification &-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    margin: 0;
+  }
+
   // 类型配色
   &-item-info {
     --emessage-icon-color: #4a9eff;
@@ -141,6 +193,87 @@ $emessage-leave-duration: 0.2s;
   }
 }
 
+.#{$emessage-prefix-cls}-notifications {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  // width: min(420px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  pointer-events: auto;
+}
+
+.#{$emessage-prefix-cls}-notifications > .#{$emessage-prefix-cls}-item-notification {
+  grid-column: 1;
+  justify-self: end;
+  align-self: start;
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding-right: 28px;
+  pointer-events: auto;
+  animation: emessage-notification-enter 0.2s ease;
+  transition: margin-top 0.2s ease;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.08);
+}
+
+// 不超过三条：依次排列，间距 8px
+.#{$emessage-prefix-cls}-notifications > .#{$emessage-prefix-cls}-item-notification:nth-child(1) {
+  grid-row: 1;
+}
+
+.#{$emessage-prefix-cls}-notifications > .#{$emessage-prefix-cls}-item-notification:nth-child(2) {
+  grid-row: 2;
+  margin-top: 8px;
+}
+
+.#{$emessage-prefix-cls}-notifications > .#{$emessage-prefix-cls}-item-notification:nth-child(3) {
+  grid-row: 3;
+  margin-top: 8px;
+}
+
+// 超过三条时叠放（未悬停）：第二条起都叠在第一条后面，第二条比第一条下移 2px，
+// 第三条叠在第二条后面再下移 2px，第四条及之后叠在第三条后面、不再偏移。
+// 「超过三条」用 :nth-last-child 判断：第二条后面至少还有两条、第三条后面至少还有一条；第四条存在即超过三条。
+// 全部放进第一行（网格允许显式定位的项互相重叠），各条保持自身尺寸与内容完整展示；
+// 偏移在这里单独声明，不复用上面列表的间距；层级由 JS 按创建顺序写入的 z-index 决定（后创建的在上）。
+// 注意背景默认半透明，重叠部分会透出后面的通知。
+.#{$emessage-prefix-cls}-notifications:not(:hover) {
+  > .#{$emessage-prefix-cls}-item-notification:nth-child(2):nth-last-child(n + 3),
+  > .#{$emessage-prefix-cls}-item-notification:nth-child(3):nth-last-child(n + 2),
+  > .#{$emessage-prefix-cls}-item-notification:nth-child(n + 4) {
+    grid-row: 1;
+  }
+
+  > .#{$emessage-prefix-cls}-item-notification:nth-child(2):nth-last-child(n + 3) {
+    margin-top: 2px;
+  }
+
+  > .#{$emessage-prefix-cls}-item-notification:nth-child(3):nth-last-child(n + 2),
+  > .#{$emessage-prefix-cls}-item-notification:nth-child(n + 4) {
+    margin-top: 4px;
+  }
+}
+
+// 悬停展开全部通知（回到网格流依次排列）
+.#{$emessage-prefix-cls}-notifications:hover > .#{$emessage-prefix-cls}-item-notification {
+  grid-row: auto;
+}
+
+.#{$emessage-prefix-cls}-notifications:hover > .#{$emessage-prefix-cls}-item-notification:nth-child(n + 2) {
+  margin-top: 8px;
+}
+
+// 关闭：向右滑出淡出。通用的 .emessage-item-leave 优先级低于上面的通知规则，离场动画会被入场动画覆盖，
+// 因此单独声明。
+.#{$emessage-prefix-cls}-notifications > .#{$emessage-prefix-cls}-item-notification.#{$emessage-prefix-cls}-item-leave {
+  animation: emessage-notification-leave $emessage-leave-duration ease forwards;
+}
+
 @keyframes emessage-fade-in {
   from {
     opacity: 0;
@@ -150,6 +283,16 @@ $emessage-leave-duration: 0.2s;
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.#{$emessage-prefix-cls}-left .#{$emessage-prefix-cls}-item:not(.#{$emessage-prefix-cls}-item-notification),
+.#{$emessage-prefix-cls}-right .#{$emessage-prefix-cls}-item:not(.#{$emessage-prefix-cls}-item-notification) {
+  animation: emessage-fade-in-x 0.2s ease;
+}
+
+.#{$emessage-prefix-cls}-left .#{$emessage-prefix-cls}-item-leave:not(.#{$emessage-prefix-cls}-item-notification),
+.#{$emessage-prefix-cls}-right .#{$emessage-prefix-cls}-item-leave:not(.#{$emessage-prefix-cls}-item-notification) {
+  animation: emessage-fade-out-x $emessage-leave-duration ease forwards;
 }
 
 @keyframes emessage-fade-out {
@@ -163,10 +306,46 @@ $emessage-leave-duration: 0.2s;
   }
 }
 
-// 尊重「减少动效」偏好
-@media (prefers-reduced-motion: reduce) {
-  .#{$emessage-prefix-cls}-item,
-  .#{$emessage-prefix-cls}-item-leave {
-    animation: none;
+@keyframes emessage-fade-in-x {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes emessage-notification-enter {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes emessage-notification-leave {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+@keyframes emessage-fade-out-x {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(8px);
   }
 }
