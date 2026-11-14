@@ -7,6 +7,13 @@ $emessage-prefix-cls: 'emessage';
 // 离开（关闭）动画时长，需与 src/constant.ts 中的 _MESSAGE_LEAVE_DURATION_ 保持一致
 $emessage-leave-duration: 0.2s;
 
+// 盒模型：只作用于本控件自己的元素（类名带前缀），不依赖宿主页面的全局 box-sizing，也不影响用户传入的内容。
+// 放在最前面，后面的显式声明按书写顺序覆盖它。
+.#{$emessage-prefix-cls},
+[class*='#{$emessage-prefix-cls}-'] {
+  box-sizing: border-box;
+}
+
 .#{$emessage-prefix-cls} {
   position: absolute;
   top: 0;
@@ -85,10 +92,13 @@ $emessage-leave-duration: 0.2s;
     color: var(--emessage-icon-color, #4a9eff);
   }
 
-  &-icon-custom img,
-  &-icon-custom svg {
+  // 图标（内置 svg 与自定义 img / svg）：固定为 1em，不受宿主 `svg { width: 100%; margin: ...; max-width: ... }` 这类全局规则影响
+  &-icon img,
+  &-icon svg {
     width: 1em;
     height: 1em;
+    margin: 0;
+    max-width: none;
   }
 
   &-content {
@@ -97,15 +107,19 @@ $emessage-leave-duration: 0.2s;
     word-break: break-word;
   }
 
-  &-close {
+  // 关闭按钮：先 `all: unset` 一次性清掉宿主页面对 <button> 的全局样式，再重新声明本控件需要的样式。
+  // 类名写两遍把特异性提到 (0,2,0)，高于 `button` / `[type='button']` / `.xxx button` 这类常见宿主规则；
+  // 下面 item-full / notification 里同特异性的覆盖规则写在其后，仍然生效。
+  // 宿主若用 id 选择器或 !important 命中按钮，仍会压过这里，需要宿主自行避免。
+  &-close#{&}-close {
+    all: unset;
+    box-sizing: border-box;
     flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     margin-left: 4px;
     padding: 2px;
-    border: 0;
-    background: transparent;
     color: inherit;
     font: inherit;
     line-height: 1;
@@ -114,6 +128,21 @@ $emessage-leave-duration: 0.2s;
 
     &:hover {
       opacity: 1;
+    }
+
+    // `all: unset` 同时去掉了浏览器默认的焦点环，键盘操作时补回
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 1px;
+    }
+
+    // 关闭图标：固定为 1em，不受宿主 `svg` 全局规则影响
+    svg {
+      display: block;
+      width: 1em;
+      height: 1em;
+      margin: 0;
+      max-width: none;
     }
   }
 
