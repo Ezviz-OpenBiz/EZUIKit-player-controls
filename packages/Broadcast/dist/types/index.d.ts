@@ -135,8 +135,8 @@ interface BroadcastOptions extends BroadcastCallbacks {
     /** 语言，默认zh */
     language?: 'zh' | 'en';
     /**
-     * 容器，支持传入字符串ID或HTMLElement节点；面板挂载在容器内（PC 与移动端一致），非 body 容器需为定位元素。
-     * 缺省为 document.body（面板相对视口铺满）
+     * 容器
+     * @deprecated 已改为构造函数的第一个参数：`new Broadcast(container, options)`；此字段不再读取，传了也不生效
      */
     container?: string | HTMLElement;
     /** 展开方向 */
@@ -447,9 +447,11 @@ declare class Broadcast extends BroadcastUI {
     private pendingAudioBlob;
     /**
      * 构造函数
-     * @param options 配置选项
+     * @param container 挂载容器：元素 ID、CSS 选择器或 HTMLElement（先按 ID、再按选择器查找，找不到时回退到 document.body）；
+     *   PC 与移动端一致，非 body 容器需为定位元素
+     * @param options 配置选项（`options.container` 已废弃，不再读取）
      */
-    constructor(options: BroadcastOptions);
+    constructor(container: string | HTMLElement, options: BroadcastOptions);
     /**
      * 调用宿主回调（每次读取最新配置）。回调抛出的异常只通过 logger 打印，不中断控件内部流程。
      * @param name 回调名
@@ -511,7 +513,7 @@ declare class Broadcast extends BroadcastUI {
     sendVoice(fileUrl: string): void;
     /**
      * 更新配置：合并到 `broadcastOptions`，回调在下次触发时读取新值；
-     * 容器、方向、语言、移动端等界面相关配置只在构造时生效。
+     * 方向、语言、移动端、日志等界面相关配置只在构造时生效（容器是构造参数，无法更新）。
      * @param options 新的配置选项
      */
     updateOptions(options: Partial<BroadcastOptions>): void;
