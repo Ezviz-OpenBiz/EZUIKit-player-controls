@@ -154,9 +154,18 @@ importers:
 
   packages/Broadcast:
     dependencies:
+      '@ezuikit/control-drawer':
+        specifier: 0.0.1
+        version: 0.0.1
+      '@ezuikit/control-message':
+        specifier: 0.0.1-beta.5
+        version: 0.0.1-beta.5
       '@ezuikit/utils-i18n':
         specifier: ^2.0.1
         version: 2.0.1
+      '@ezuikit/utils-logger':
+        specifier: 2.1.0
+        version: 2.1.0
 
   packages/DatePicker:
     dependencies:
@@ -898,6 +907,12 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@ezuikit/control-drawer@0.0.1':
+    resolution: {integrity: sha512-oeD1Uol436kFx1Hr28SC7X3dzxBtVZzD2GhKiZuug9pHFh7fNz0aR2mW4ilmXvCX/fv6Qsyco/XkcsJcrERU3A==}
+
+  '@ezuikit/control-message@0.0.1-beta.5':
+    resolution: {integrity: sha512-MyUL0K/hdnEfJQWNf0VGHKhRN9FpNCEIWzqT90FnEWswoI4Qp3O3zYikZcbb+hTWosyZCyOpLvEdJPs1FEZwng==}
 
   '@ezuikit/control-modal@0.0.2':
     resolution: {integrity: sha512-Etd2RA/iKtkhsAIXtt/sifVPsIY9Xqhe0M9LGgC0s5/DApH4/GtetZQMkCwBgk8K3nLssN0dtzObRuUaxv9+Jw==}
@@ -4562,6 +4577,10 @@ snapshots:
 
   '@esbuild/win32-x64@0.21.5':
     optional: true
+
+  '@ezuikit/control-drawer@0.0.1': {}
+
+  '@ezuikit/control-message@0.0.1-beta.5': {}
 
   '@ezuikit/control-modal@0.0.2':
     dependencies:
