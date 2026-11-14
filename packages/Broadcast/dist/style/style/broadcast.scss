@@ -1,0 +1,323 @@
+/*
+ * 广播内容区样式（抽屉骨架由 @ezuikit/control-drawer 提供，录音提示基于 @ezuikit/control-message）。
+ * 结构：.edrawer（根）> .edrawer-mask + .edrawer-panel > .edrawer-header + .edrawer-body
+ * 本文件只负责注入到 .edrawer-body 内的广播内容（Tab / 列表 / 状态 / 底部按钮 / 轻提示 / 录音提示）。
+ */
+
+// 类名前缀，需与 src/constant.ts 中的 _BROADCAST_PREFIX_CLS_ 保持一致
+$broadcast-prefix-cls: 'ebroadcast';
+
+// 盒模型：只作用于本控件自己的元素（类名带前缀），不依赖宿主页面的全局 box-sizing。
+// 放在最前面，后面的显式声明按书写顺序覆盖它。
+[class*='#{$broadcast-prefix-cls}-'] {
+  box-sizing: border-box;
+}
+
+.#{$broadcast-prefix-cls} {
+  // 内容根：占满抽屉 body，纵向排布，列表区内部滚动，底部按钮常驻
+  // 固定排版：行高不再继承宿主页面的 line-height（1.5 为无单位数值，按各元素自身字号计算）
+  &-content-root {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    line-height: 1.5;
+  }
+
+  // Tab区域
+  &-tabs {
+    display: flex;
+    padding: 0 16px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  &-tab {
+    position: relative;
+    padding: 4px 4px;
+    margin-right: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+    transition: color 0.2s;
+    white-space: nowrap;
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.75);
+    }
+  }
+
+  &-tab-active,
+  &-tab-active:hover {
+    color: #4a9eff;
+  }
+
+  &-tab-active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 1px;
+    background: #4a9eff;
+  }
+
+  // 内容区域（语音列表滚动区）
+  &-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+    min-height: 0;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 2px;
+    }
+  }
+
+  // 语音列表：扁平行 + 悬停高亮，与 AlarmMessage 的列表行一致
+  &-voice-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-voice-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.03);
+    }
+  }
+
+  &-voice-item-selected,
+  &-voice-item-selected:hover {
+    background: rgba(74, 158, 255, 0.08);
+  }
+
+  &-voice-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.45);
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 50%;
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+
+  &-voice-item-selected &-voice-icon {
+    background: #4a9eff;
+    color: #ffffff;
+  }
+
+  &-voice-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  &-voice-item-selected &-voice-text {
+    color: #4a9eff;
+  }
+
+  // 状态区：加载 / 空 / 错误，占满剩余高度并居中
+  &-loading,
+  &-empty {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 12px;
+  }
+
+  &-error {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 0 16px;
+    color: #ff6b6b;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  // 底部按钮
+  &-footer {
+    padding: 10px 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    flex-shrink: 0;
+  }
+
+  // 按住说话按钮：先 `all: unset` 一次性清掉宿主页面对 <button> 的全局样式
+  // （padding、margin、font、line-height、text-transform、box-shadow、min-* 等），再重新声明本控件需要的样式。
+  // 类名写两遍把特异性提到 (0,2,0)，高于 `button` / `[type='button']` / `.xxx button` 这类常见宿主规则；
+  // 状态类（recording / disabled）同样写两遍并放在其后，保证覆盖（:hover / :active 为 (0,3,0)，状态下的 :hover / :active 也相应对齐）。
+  // 宿主若用 id 选择器或 !important 命中按钮，仍会压过这里，需要宿主自行避免。
+  &-talk-btn#{&}-talk-btn {
+    all: unset;
+    box-sizing: border-box;
+    // 与改动前一致：行内块 + 100% 宽，文字水平居中；不改成 flex，避免文字 span 变成块级 flex 项而改变行盒高度
+    display: inline-block;
+    width: 100%;
+    height: 32px;
+    // 单行文字在 32px 高度内垂直居中（行高等于高度）
+    line-height: 32px;
+    background: #4a9eff;
+    color: #ffffff;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      transform 0.1s;
+    user-select: none;
+
+    &:hover {
+      background: #3d8ee6;
+    }
+
+    &:active {
+      transform: scale(0.99);
+    }
+
+    // `all: unset` 同时去掉了浏览器默认的焦点环，键盘操作时补回
+    &:focus-visible {
+      outline: 2px solid rgba(74, 158, 255, 0.5);
+      outline-offset: 2px;
+    }
+  }
+
+  // 带 `-webkit-` 前缀的属性单独写成一条规则，不能和 `all: unset` 放在同一条里：
+  // 构建时压缩工具会把同一条规则里的声明重新排序，带前缀的声明会被排到 `all: unset` 之前而被它重置
+  // （iOS / Android 上会出现点击高亮，Safari 里 user-select 失效）。
+  // `:where(button)` 不增加特异性，只是让选择器串与上一条不同，避免被合并回去；它写在上一条之后，同特异性下后写的生效。
+  &-talk-btn#{&}-talk-btn:where(button) {
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  &-talk-btn-recording#{&}-talk-btn-recording,
+  &-talk-btn-recording#{&}-talk-btn-recording:hover {
+    background: #ff6b6b;
+  }
+
+  &-talk-btn-disabled#{&}-talk-btn-disabled,
+  &-talk-btn-disabled#{&}-talk-btn-disabled:hover {
+    background: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.25);
+    cursor: not-allowed;
+  }
+
+  &-talk-btn-disabled#{&}-talk-btn-disabled:active {
+    transform: none;
+  }
+
+  // 轻提示：底部浮层，成功 / 失败共用
+  &-tip {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 64px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  &-tip-visible {
+    opacity: 1;
+  }
+
+  &-tip-error {
+    background: rgba(255, 107, 107, 0.92);
+  }
+
+  // 抽屉实例定制：左右方向沿用原广播弹框的 400px 最大宽度
+  &-drawer {
+    --edrawer-max-width: 400px;
+  }
+
+  // 录音提示内容：波形 + 倒计时，纵向居中排布
+  &-recording-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &-recording-wave {
+    display: block;
+    width: 80px;
+    height: 40px;
+  }
+
+  &-recording-hint {
+    display: block;
+    padding: 0 12px;
+    font-size: 12px;
+    line-height: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+  }
+}
+
+// 录音提示：内容区上的 Message 实例，根节点 .emessage 带 .ebroadcast-recording。
+// 居中展示 120×120 的深色方块并隐藏类型图标；选择器以本控件类名限定，不影响宿主页面的其它 Message。
+.emessage.#{$broadcast-prefix-cls}-recording {
+  justify-content: center;
+  padding: 0;
+
+  .emessage-item {
+    flex-direction: column;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 16px;
+    background: rgba(44, 44, 44, 0.95);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .emessage-icon {
+    display: none;
+  }
+
+  .emessage-content {
+    flex: 0 0 auto;
+  }
+}
