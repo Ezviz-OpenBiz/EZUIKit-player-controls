@@ -93,7 +93,7 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
           generate_release_notes: true
-          prerelease: ${{ steps.determine_tag.outputs.tag != 'latest' }}
+          prerelease: false
           files: |
             ${{ steps.archive.outputs.archive_name }}.zip
             ${{ steps.archive.outputs.archive_name }}.tar.gz
