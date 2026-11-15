@@ -1,5 +1,5 @@
 /*
-* @ezuikit/control-core v0.0.1-beta.1
+* @ezuikit/control-core v0.0.1-beta.2
 * Copyright (c) 2026-11-15 16:43:07 Ezviz-OpenBiz
 * Released under the MIT License.
 */
