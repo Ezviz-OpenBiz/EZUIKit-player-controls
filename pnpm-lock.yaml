@@ -167,6 +167,18 @@ importers:
         specifier: 2.1.0
         version: 2.1.0
 
+  packages/Core:
+    dependencies:
+      '@ezuikit/utils-i18n':
+        specifier: ^2.0.1
+        version: 2.0.1
+      '@ezuikit/utils-logger':
+        specifier: 2.1.0
+        version: 2.1.0
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
+
   packages/DatePicker:
     dependencies:
       '@ezuikit/utils-i18n':

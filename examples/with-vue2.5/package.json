@@ -17,7 +17,7 @@
     "@ezuikit/control-talk": "^0.1.0-beta.3",
     "@ezuikit/control-time-line": "^2.0.0-beta.4",
     "@ezuikit/control-zoom": "^1.0.0-beta.3",
-    "@ezuikit/control-broadcast": "^0.1.0-beta.3"
+    "@ezuikit/control-broadcast": "^1.0.0-beta.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",

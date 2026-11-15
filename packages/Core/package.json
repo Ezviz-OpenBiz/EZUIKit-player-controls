@@ -1,0 +1,46 @@
+{
+  "name": "@ezuikit/control-core",
+  "version": "0.0.1-beta.1",
+  "description": "shared core for ezuikit controls: options, i18n, logger, device & token",
+  "title": "core",
+  "main": "dist/index.cjs",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "ezuikit",
+    "control",
+    "core",
+    "i18n",
+    "logger"
+  ],
+  "author": "Ezviz-OpenBiz",
+  "license": "MIT",
+  "dependencies": {
+    "@ezuikit/utils-i18n": "^2.0.1",
+    "deepmerge": "^4.3.1",
+    "@ezuikit/utils-logger": "2.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls/issues"
+  },
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme"
+}
