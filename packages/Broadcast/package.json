@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-broadcast",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "broadcast voice control",
   "title": "broadcast",
   "main": "dist/index.cjs",
@@ -28,10 +28,9 @@
   "author": "Ezviz-OpenBiz",
   "license": "",
   "dependencies": {
-    "@ezuikit/control-drawer": "0.0.1",
-    "@ezuikit/control-message": "0.0.1-beta.5",
-    "@ezuikit/utils-i18n": "^2.0.1",
-    "@ezuikit/utils-logger": "2.1.0"
+    "@ezuikit/control-core": "0.0.1-beta.2",
+    "@ezuikit/control-drawer": "0.0.2",
+    "@ezuikit/control-message": "0.0.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",

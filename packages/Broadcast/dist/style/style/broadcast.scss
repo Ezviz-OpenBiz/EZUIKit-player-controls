@@ -1,7 +1,15 @@
 /*
- * 广播内容区样式（抽屉骨架由 @ezuikit/control-drawer 提供，录音提示基于 @ezuikit/control-message）。
+ * 广播内容区样式（抽屉骨架由 @ezuikit/control-drawer 提供，底部轻提示基于 @ezuikit/control-message）。
  * 结构：.edrawer（根）> .edrawer-mask + .edrawer-panel > .edrawer-header + .edrawer-body
- * 本文件只负责注入到 .edrawer-body 内的广播内容（Tab / 列表 / 状态 / 底部按钮 / 轻提示 / 录音提示）。
+ * 本文件只负责注入到 .edrawer-body 内的广播内容：
+ *
+ *   .ebroadcast-content-root
+ *   ├── .ebroadcast-tabs > .ebroadcast-tab                 Tab
+ *   ├── .ebroadcast-content > .ebroadcast-voice-list       语音列表（滚动区）
+ *   ├── .ebroadcast-loading / -empty / -error              状态区（互斥展示）
+ *   ├── .ebroadcast-footer > .ebroadcast-talk-btn          录音按钮
+ *   ├── .ebroadcast-recording > .ebroadcast-recording-box  录音提示浮层（波形 + 倒计时）
+ *   └── .emessage.ebroadcast-tip                           底部轻提示（Message 实例）
  */
 
 // 类名前缀，需与 src/constant.ts 中的 _BROADCAST_PREFIX_CLS_ 保持一致
@@ -65,12 +73,13 @@ $broadcast-prefix-cls: 'ebroadcast';
     background: #4a9eff;
   }
 
-  // 内容区域（语音列表滚动区）
+  // 内容区域（语音列表滚动区）：浅灰底，语音项为其上的圆角卡片
   &-content {
     flex: 1;
     overflow-y: auto;
-    padding: 8px 0;
+    padding: 12px 16px;
     min-height: 0;
+    background: var(--ebroadcast-list-bg, #fff);
 
     &::-webkit-scrollbar {
       width: 4px;
@@ -82,56 +91,78 @@ $broadcast-prefix-cls: 'ebroadcast';
     }
   }
 
-  // 语音列表：扁平行 + 悬停高亮，与 AlarmMessage 的列表行一致
+  // 语音列表：纵向排列的圆角卡片，卡片之间留 10px 间距
+  // 外观可通过 --ebroadcast-* 变量按实例覆盖（设在 .ebroadcast-drawer 等祖先节点上）
   &-voice-list {
     display: flex;
     flex-direction: column;
+    gap: 10px;
   }
 
+  // 语音项：浅灰圆角卡片（高 42px），左侧黑色圆形喇叭图标，右侧单行语音名（超长省略）
   &-voice-item {
     display: flex;
     align-items: center;
-    padding: 10px 16px;
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 14px;
+    background: var(--ebroadcast-item-bg, #ececec);
     cursor: pointer;
     transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.03);
+      background: var(--ebroadcast-item-hover-bg, #e3e3e3);
+    }
+
+    &:active {
+      background: var(--ebroadcast-item-active-bg, #dcdcdc);
     }
   }
 
+  // 选中项：淡蓝底 + 蓝色图标与文字
   &-voice-item-selected,
-  &-voice-item-selected:hover {
-    background: rgba(74, 158, 255, 0.08);
+  &-voice-item-selected:hover,
+  &-voice-item-selected:active {
+    background: var(--ebroadcast-item-selected-bg, rgba(74, 158, 255, 0.12));
   }
 
+  // 图标：24px 黑色圆底 + 白色喇叭
   &-voice-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(0, 0, 0, 0.45);
-    background: rgba(0, 0, 0, 0.06);
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
     border-radius: 50%;
+    background: var(--ebroadcast-icon-bg, #1f1f1f);
+    color: var(--ebroadcast-icon-color, #ffffff);
     transition:
       background 0.2s,
       color 0.2s;
+
+    // 固定尺寸，不受宿主 `svg { width: 100%; ... }` 这类全局规则影响
+    svg {
+      display: block;
+      width: 14px;
+      height: 14px;
+      margin: 0;
+      max-width: none;
+    }
   }
 
   &-voice-item-selected &-voice-icon {
-    background: #4a9eff;
-    color: #ffffff;
+    background: var(--ebroadcast-primary, #4a9eff);
   }
 
   &-voice-text {
     flex: 1;
     min-width: 0;
     font-size: 13px;
-    color: rgba(0, 0, 0, 0.85);
     line-height: 20px;
+    color: var(--ebroadcast-item-color, #555555);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -139,7 +170,7 @@ $broadcast-prefix-cls: 'ebroadcast';
   }
 
   &-voice-item-selected &-voice-text {
-    color: #4a9eff;
+    color: var(--ebroadcast-primary, #4a9eff);
   }
 
   // 状态区：加载 / 空 / 错误，占满剩余高度并居中
@@ -237,49 +268,52 @@ $broadcast-prefix-cls: 'ebroadcast';
     transform: none;
   }
 
-  // 轻提示：底部浮层，成功 / 失败共用
-  &-tip {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 64px;
-    padding: 8px 12px;
-    border-radius: 6px;
-    background: rgba(0, 0, 0, 0.75);
-    color: #ffffff;
-    font-size: 12px;
-    line-height: 18px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    pointer-events: none;
-  }
-
-  &-tip-visible {
-    opacity: 1;
-  }
-
-  &-tip-error {
-    background: rgba(255, 107, 107, 0.92);
-  }
-
   // 抽屉实例定制：左右方向沿用原广播弹框的 400px 最大宽度
   &-drawer {
     --edrawer-max-width: 400px;
   }
 
-  // 录音提示内容：波形 + 倒计时，纵向居中排布
-  &-recording-content {
+  // 录音提示浮层：覆盖内容区、居中展示，不拦截指针事件（录音按钮仍可点击 / 松开）；
+  // 层级低于底部轻提示（TIP_Z_INDEX = 3），默认隐藏，展示时淡入。
+  &-recording {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  &-recording-visible {
+    display: flex;
+    animation: #{$broadcast-prefix-cls}-recording-fade-in 0.2s ease;
+  }
+
+  // 120×120 的深色方块：波形 + 倒计时纵向居中
+  &-recording-box {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 16px;
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    background: rgba(44, 44, 44, 0.95);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
+  // 波形：固定尺寸，不受宿主 `svg { width: 100%; margin: ...; max-width: ... }` 这类全局规则影响
   &-recording-wave {
     display: block;
     width: 80px;
     height: 40px;
+    margin: 0;
+    max-width: none;
   }
 
   &-recording-hint {
@@ -292,32 +326,23 @@ $broadcast-prefix-cls: 'ebroadcast';
   }
 }
 
-// 录音提示：内容区上的 Message 实例，根节点 .emessage 带 .ebroadcast-recording。
-// 居中展示 120×120 的深色方块并隐藏类型图标；选择器以本控件类名限定，不影响宿主页面的其它 Message。
-.emessage.#{$broadcast-prefix-cls}-recording {
-  justify-content: center;
-  padding: 0;
+// 底部轻提示：内容区上的 Message 实例，根节点 .emessage 带 .ebroadcast-tip。
+// 从底部弹出，留出录音按钮（页脚约 52px）的高度；选择器以本控件类名限定，不影响宿主页面的其它 Message。
+.emessage.#{$broadcast-prefix-cls}-tip {
+  padding-bottom: 64px;
 
   .emessage-item {
-    flex-direction: column;
-    justify-content: center;
-    width: 120px;
-    height: 120px;
-    max-width: none;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 16px;
-    background: rgba(44, 44, 44, 0.95);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    max-width: calc(100% - 32px);
   }
+}
 
-  .emessage-icon {
-    display: none;
+@keyframes #{$broadcast-prefix-cls}-recording-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
   }
-
-  .emessage-content {
-    flex: 0 0 auto;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
