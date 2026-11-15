@@ -158,8 +158,8 @@ importers:
         specifier: 0.0.1-beta.2
         version: 0.0.1-beta.2
       '@ezuikit/control-drawer':
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 0.0.3-beta.1
+        version: 0.0.3-beta.1
       '@ezuikit/control-message':
         specifier: 0.0.2
         version: 0.0.2
@@ -920,8 +920,8 @@ packages:
   '@ezuikit/control-core@0.0.1-beta.2':
     resolution: {integrity: sha512-6TlZJj6KuVmGR7s6dnty2E1ozskwTqMHlBebOY5MzQUmXaBrhoPvWsqZ3vzxbGf33LOIs2ij9bDR3dZZimLkLQ==}
 
-  '@ezuikit/control-drawer@0.0.2':
-    resolution: {integrity: sha512-6Md2QqvoWDZw4EH/cDNFsPaxFD67sTG67noZsEnj+2vB6beT8TAvyn6A6wTEzwZ6u0yN1/KxqPgjNWr/nmoqYw==}
+  '@ezuikit/control-drawer@0.0.3-beta.1':
+    resolution: {integrity: sha512-kL62WagdngqPVXBmRsPUUxic+Ke8MLpaPnJfljQZS5QFdxdH8qBBJ2W07T3gvJyksfu/1PrpJgUAemVADn7h5w==}
 
   '@ezuikit/control-message@0.0.2':
     resolution: {integrity: sha512-flBD10WN3sT3X/RZIfOapx3O+pKvuqEZame0gFWJNERPW3DFrQI6r0LNnLCsG91FOghBRQGMe378Uhsjb+VYHg==}
@@ -4596,7 +4596,7 @@ snapshots:
       '@ezuikit/utils-logger': 2.1.0
       deepmerge: 4.3.1
 
-  '@ezuikit/control-drawer@0.0.2': {}
+  '@ezuikit/control-drawer@0.0.3-beta.1': {}
 
   '@ezuikit/control-message@0.0.2': {}
 
