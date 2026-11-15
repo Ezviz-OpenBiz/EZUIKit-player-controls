@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.2
+
+### Added
+
+- 新增配置项 `showIcon`（默认 `true`）：为 `false` 时 `info` / `success` / `warn` / `error` 与 `full` 消息都不渲染图标（`.emessage-icon`），只显示文案，也不再展示 `Message.setIcons()` 设置的自定义图标；`notification` 始终没有图标。只对之后弹出的消息生效，可通过 `updateOptions({ showIcon })` 在运行期切换；只有显式传 `false` 才隐藏，显式传 `undefined` 视为缺省（展示）
+- 示例页新增 `showIcon` 开关（构造配置与运行期 `updateOptions` 切换，多 context 同样生效）与「showIcon 对比」按钮，说明 `full` 与 `Message.setIcons()` 在 `showIcon: false` 时的表现；窄屏下排版正常
+
 ## 0.0.1
 
 ### Feat
@@ -15,4 +22,5 @@ All notable changes to this project will be documented in this file.
 - 实例 API：`info` / `success` / `warn` / `error` / `notification` / `full` / `open`（均返回消息 id）、`close(id?)`、`clear()`、`updateOptions()`、`destroy()`、`Message.VERSION`
 - 消息内容支持字符串（按 HTML 解析，不可信内容请传 `HTMLElement`）与 `HTMLElement`
 - 外观定制：`className` 追加类名、`zIndex`、`--emessage-*` CSS 变量
+- 样式隔离：不依赖宿主页面的全局 `box-sizing`（只对本控件自己的元素声明 `border-box`，不影响用户传入的内容）；关闭按钮先 `all: unset` 清掉宿主对 `<button>` 的全局样式再重新声明，类名写两遍使特异性为 `(0,2,0)`，并保留键盘焦点环
 - 为各公开方法的 JSDoc 补充 `@example`，README 提供方法示例

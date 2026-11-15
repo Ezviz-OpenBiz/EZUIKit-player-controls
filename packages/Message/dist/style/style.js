@@ -1,6 +1,6 @@
 /*
-* @ezuikit/control-message v0.0.1-beta.5
-* Copyright (c) 2026-11-14 15:31:14 Ezviz-OpenBiz
+* @ezuikit/control-message v0.0.2
+* Copyright (c) 2026-11-15 22:50:30 Ezviz-OpenBiz
 * Released under the MIT License.
 */
 require("./style.css");

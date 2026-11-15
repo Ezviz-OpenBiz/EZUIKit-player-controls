@@ -2,15 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-
-## 0.0.2 (2026-11-15)
+## 0.0.2
 
 ### Added
 
 - 挂载在 `body` 上的抽屉（任意方向，如移动端底部弹层）打开时，给 `body` 加 `edrawer-body-noscroll` 禁止页面滚动；开始收起或打开态 `destroy()` 时移除。多个挂在 body 上的抽屉同时打开时按数量计数，最后一个关闭后才移除；iframe 内只锁定该 iframe 的 `body`。新增常量 `__DRAWER_BODY_NOSCROLL_CLS__`
 - 示例页支持移动端：新增「移动端 body 底部弹层」预设（底部 60%、带遮罩、锁定页面滚动），移动端模式按挂载方式区分扩展区与 body 弹层；显示 body 是否锁定滚动（含窄屏底部操作条），页面加长便于验证
 
-## 0.0.1 (2026-11-09)
+## 0.0.1
 
 ### Feat
 
@@ -21,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - 尺寸配置：`width` / `height`，左右方向应用宽度、上下方向应用高度，number 视为 px
 - 动画时长 `duration`（默认 300ms）：写入根节点 `--edrawer-duration`，使 CSS 过渡与 JS 定时器一致；非有限数 / 负数回退默认值
 - 外观定制：`className` 追加类名、`zIndex`、`--edrawer-*` CSS 变量（含 `--edrawer-max-width` / `--edrawer-max-height`）
+- 样式隔离：关闭按钮先 `all: unset` 清掉宿主页面对 `<button>` 的全局样式再重新声明，类名写两遍使特异性为 `(0,2,0)`，并保留键盘焦点环；不受 Bootstrap / Tailwind / Ant Design / Bulma 等的 `button` 全局规则影响。README 补充层级（`z-index`）与宿主库的对照说明
 - 实例 API：`open`（getter / setter）、`options`、`setTitle`、`setContent`、`updateOptions`、`destroy`、`Drawer.VERSION`；`updateOptions` 重建 DOM 并保持当前开合状态，不重播动画
 - 打开 / 关闭回调：`onOpenChange`，以及生命周期回调 `onOpenStart` / `onOpenEnd` / `onCloseStart` / `onCloseEnd`；反向切换、`updateOptions`、`destroy` 会取消未触发的结束回调，`destroy` 不触发任何回调；开始回调内再次设置 `open`、调用 `updateOptions()` 或 `destroy()` 时以最终状态为准
 - 继承：可作为基类扩展（AlarmMessage、Broadcast 即以子类方式复用），可重写 `open` 访问器；构造配置 `open: true` 仅对直接 `new Drawer()` 自动生效，子类在构造函数末尾调用受保护方法 `applyInitialOpen()`

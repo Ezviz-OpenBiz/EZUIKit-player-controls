@@ -244,3 +244,4 @@ open = false  →  onCloseStart → onOpenChange(false) → （duration 后）on
 挂载在播放器容器内（非 `body`）时，抽屉的层级只在该容器的层叠上下文内比较，通常不需要调整。
 
 **无障碍。** 面板带 `role="dialog"`，有头部时通过 `aria-labelledby` 关联标题；关闭按钮为 `<button type="button">`，带 `aria-label="close"`，内联 SVG 图标 `aria-hidden="true"`。未做焦点管理与焦点陷阱。
+

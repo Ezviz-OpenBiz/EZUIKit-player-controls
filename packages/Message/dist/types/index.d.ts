@@ -58,6 +58,11 @@ interface MessageOptions {
     zIndex?: number;
     /** 追加到根节点的自定义类名，多个用空格分隔 */
     className?: string;
+    /**
+     * 是否展示类型图标，默认 true。为 false 时 info / success / warn / error 与全屏消息都不渲染图标，只显示文案
+     * （`notification` 始终没有图标，不受影响）。对后续新消息生效，已显示的消息不变；`Message.setIcons()` 设置的图标同样不再展示
+     */
+    showIcon?: boolean;
     /** 消息打开回调 */
     onOpen?: (item: MessageItem) => void;
     /** 消息关闭回调 */
@@ -251,13 +256,16 @@ declare class Message {
      */
     clear(): void;
     /**
-     * 更新配置。duration / maxCount 对后续新消息生效，position / zIndex / className 立即生效。
+     * 更新配置。duration / maxCount / showIcon 对后续新消息生效，position / zIndex / className 立即生效。
      * @param options 新配置
      *
      * @example
      * ```ts
      * // 后续新消息 5 秒后关闭，且最多同时显示 3 条；弹出位置立即切换到底部
      * message.updateOptions({ duration: 5000, maxCount: 3, position: 'bottom' });
+     *
+     * // 后续新消息不再显示类型图标（已显示的消息不变）
+     * message.updateOptions({ showIcon: false });
      * ```
      */
     updateOptions(options: Partial<MessageOptions>): void;
