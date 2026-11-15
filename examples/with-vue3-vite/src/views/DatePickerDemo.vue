@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import { DatePicker, Calendar } from '@ezuikit/control-date-picker'
+import '@ezuikit/control-date-picker/dist/style'
 
 const pickerRef = ref<HTMLElement>()
 const calendarRef = ref<HTMLElement>()

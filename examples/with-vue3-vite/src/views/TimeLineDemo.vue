@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import { TimeLine, MobileTimeLine } from '@ezuikit/control-time-line'
+import '@ezuikit/control-time-line/dist/style'
 
 const pcRef = ref<HTMLElement>()
 const mobileRef = ref<HTMLElement>()

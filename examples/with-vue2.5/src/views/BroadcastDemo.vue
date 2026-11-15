@@ -4,6 +4,8 @@
     <div style="margin-bottom: 12px;">
       <button @click="open">打开</button>
       <button @click="close" style="margin-left: 8px;">关闭</button>
+      <button @click="reload" style="margin-left: 8px;">重新加载语音列表</button>
+      <span style="margin-left: 12px;">语音数量：{{ voiceCount }}</span>
     </div>
     <div ref="broadcastContainer" style="width: 400px; height: 500px; position: relative; background: #000;"></div>
   </div>
@@ -13,24 +15,22 @@
 import Broadcast from "@ezuikit/control-broadcast";
 import "@ezuikit/control-broadcast/dist/style/style.css";
 
-// 模拟宿主接口（实际项目中替换为 player.queryVoiceList / sendVoice / sendVoiceOnce）
-var mockVoiceList = [
-  { voiceName: "欢迎光临", fileUrl: "https://example.com/welcome.wav", duration: 3 },
-  { voiceName: "请勿靠近", fileUrl: "https://example.com/warning.wav", duration: 5 },
-];
-function mockRequest(data) {
+// 模拟宿主下发接口（实际项目中替换为真实的下发请求）
+function mockRequest() {
   return new Promise(function (resolve) {
-    setTimeout(function () {
-      resolve(data);
-    }, 500);
+    setTimeout(resolve, 500);
   });
 }
 
 export default {
   name: "BroadcastDemo",
+  data() {
+    return { voiceCount: 0 };
+  },
   mounted() {
+    var self = this;
     // 实例不放进 data，避免 Vue 2 对其做深度响应式代理
-    // 第一个参数是挂载容器，容器需为定位元素
+    // 第一个参数是挂载容器，非 body 容器需为定位元素
     var broadcast = new Broadcast(this.$refs.broadcastContainer, {
       deviceSerial: "your-device-serial",
       channelNo: 1,
@@ -43,24 +43,20 @@ export default {
       onClose: function () {
         console.log("Broadcast: 面板已关闭");
       },
+      // 语音列表由控件调用内置接口查询，加载完后通过该回调通知宿主
+      onVoiceListChange: function (list) {
+        self.voiceCount = list.length;
+      },
+      onApiResult: function (result) {
+        console.log("Broadcast: 内置接口结果", result);
+      },
       onRecordComplete: function (voiceFile) {
         console.log("Broadcast: 录音完成", voiceFile.size);
       },
-      onRecordError: function (e) {
-        console.log("Broadcast: 录音错误", e.msg);
+      onError: function (info) {
+        console.log("Broadcast: 错误", info.type, info.code, info.msg);
       },
-      // 查询语音列表：打开面板时没有语音列表，或调用 loadVoiceList() 时触发
-      onRequestQueryVoiceList: function (params) {
-        console.log("Broadcast: 请求语音列表", params);
-        mockRequest(mockVoiceList)
-          .then(function (list) {
-            broadcast.updateVoiceList(list || []);
-          })
-          .catch(function (error) {
-            broadcast.showError((error && error.message) || "语音列表加载失败");
-          });
-      },
-      // 下发默认语音：点击语音项时触发
+      // 配置后由宿主接管「下发默认语音」，下发后用 showSuccess / showError 回填结果
       onRequestSendVoice: function (data) {
         console.log("Broadcast: 下发语音", data.fileUrl, data.channelNo);
         mockRequest()
@@ -71,9 +67,9 @@ export default {
             broadcast.showError((error && error.message) || "语音下发失败");
           });
       },
-      // 下发临时语音：录音结束、得到有效录音时触发
+      // 配置后由宿主接管「下发临时语音」（录音结束时触发）
       onRequestSendVoiceOnce: function (data) {
-        console.log("Broadcast: 下发临时语音", data.voiceFile, data.channelNo);
+        console.log("Broadcast: 下发临时语音", data.voiceFile.size, data.channelNo);
         mockRequest()
           .then(function () {
             broadcast.showSuccess("临时语音下发成功");
@@ -97,6 +93,9 @@ export default {
     },
     close() {
       if (this.broadcast) this.broadcast.close();
+    },
+    reload() {
+      if (this.broadcast) this.broadcast.loadVoiceList();
     },
   },
 };

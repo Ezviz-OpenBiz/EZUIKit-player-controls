@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import { Ptz } from '@ezuikit/control-ptz'
+import '@ezuikit/control-ptz/dist/style'
 
 const containerRef = ref<HTMLElement>()
 let ptz: Ptz | null = null

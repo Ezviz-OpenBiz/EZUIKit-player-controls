@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import AIChat from '@ezuikit/control-aichat'
+import '@ezuikit/control-aichat/dist/style'
 
 const containerRef = ref<HTMLElement>()
 let aiChat: AIChat | null = null

@@ -1,6 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import Zoom from "@ezuikit/control-zoom";
 
+// 内联 SVG 示例图，不依赖外部图床
+const demoImage =
+  "data:image/svg+xml;utf8," +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1890ff"/><stop offset="1" stop-color="#722ed1"/></linearGradient></defs><rect width="600" height="400" fill="url(#g)"/><circle cx="300" cy="200" r="120" fill="none" stroke="#fff" stroke-width="4"/><text x="300" y="210" font-size="32" fill="#fff" text-anchor="middle">Zoom Demo</text></svg>'
+  );
+
 export default function ZoomDemo() {
   const containerRef = useRef<HTMLDivElement>(null);
   const zoomRef = useRef<Zoom | null>(null);
@@ -33,7 +40,7 @@ export default function ZoomDemo() {
         <button onClick={() => zoomRef.current?.reset()} style={{ marginLeft: 8 }}>重置</button>
       </div>
       <div ref={containerRef} style={{ width: 600, height: 400, border: "1px solid #ccc", overflow: "hidden" }}>
-        <img src="https://via.placeholder.com/600x400" alt="zoom demo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <img src={demoImage} alt="zoom demo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
       </div>
     </div>
   );
