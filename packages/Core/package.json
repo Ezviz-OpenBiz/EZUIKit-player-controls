@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/control-core",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "description": "shared core for ezuikit controls: options, i18n, logger, device & token",
   "title": "core",
   "main": "dist/index.cjs",
