@@ -34,7 +34,7 @@ interface DrawerOptions {
     duration?: number;
     /** 创建后是否立即打开，默认 false（仅构造时生效） */
     open?: boolean;
-    /** 根节点层级，缺省使用样式变量 `--edrawer-z-index`（默认 100） */
+    /** 根节点层级，缺省使用样式变量 `--edrawer-z-index`（默认 9999） */
     zIndex?: number;
     /** 追加到根节点的自定义类名，多个用空格分隔 */
     className?: string;
@@ -61,7 +61,8 @@ interface DrawerOptions {
  * 只负责抽屉的布局骨架，业务内容通过 `content` / {@link Drawer.setContent} 注入：
  * 1. 遮罩 + 从左 / 右 / 上 / 下滑出的面板，带开合过渡动画；
  * 2. 头部（标题 + 关闭按钮），支持点击遮罩、Esc 关闭；
- * 3. 默认相对挂载容器定位（容器需为定位元素），挂载到 document.body 时相对视口定位；
+ * 3. 默认相对挂载容器定位（容器需为定位元素），挂载到 document.body 时相对视口定位，打开期间给 body 加
+ *    `edrawer-body-noscroll` 类名禁止页面滚动；
  * 4. 支持通过 `getContainer` 在每次打开时动态解析挂载点（如移动端扩展区）。
  *
  * @example
@@ -101,6 +102,8 @@ declare class Drawer {
     private _openTimer;
     /** 当前注册了 Esc 监听的 document（容器可能在 iframe 等其它文档内，需与注册时一致才能正确移除） */
     private _keydownDoc;
+    /** 当前锁定了 body 滚动的 document（挂载在 body 上且处于打开态时非空） */
+    private _scrollLockDoc;
     /**
      * @param container 默认挂载容器，支持 CSS 选择器、元素 ID 或 HTMLElement，缺省或找不到时为 document.body。
      * 非 body 容器需为定位元素（position 非 static），抽屉相对它铺满定位。
@@ -241,6 +244,13 @@ declare class Drawer {
     private _bindEscape;
     /** 从注册时的文档上移除 Esc 监听（幂等） */
     private _unbindEscape;
+    /**
+     * 禁止页面滚动：给 body 加 `edrawer-body-noscroll`（按文档计数，幂等）
+     * @param doc 挂载点所属文档（容器可能在 iframe 等其它文档内）
+     */
+    private _lockBodyScroll;
+    /** 恢复页面滚动：本实例持有的锁释放后，该文档中没有其它打开的 body 抽屉时移除类名（幂等） */
+    private _unlockBodyScroll;
     /** 读取布局属性以强制浏览器回流 */
     private _reflow;
     private readonly _onCloseClick;

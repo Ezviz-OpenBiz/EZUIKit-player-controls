@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## 0.0.2 (2026-11-15)
+
+### Added
+
+- 挂载在 `body` 上的抽屉（任意方向，如移动端底部弹层）打开时，给 `body` 加 `edrawer-body-noscroll` 禁止页面滚动；开始收起或打开态 `destroy()` 时移除。多个挂在 body 上的抽屉同时打开时按数量计数，最后一个关闭后才移除；iframe 内只锁定该 iframe 的 `body`。新增常量 `__DRAWER_BODY_NOSCROLL_CLS__`
+- 示例页支持移动端：新增「移动端 body 底部弹层」预设（底部 60%、带遮罩、锁定页面滚动），移动端模式按挂载方式区分扩展区与 body 弹层；显示 body 是否锁定滚动（含窄屏底部操作条），页面加长便于验证
+
 ## 0.0.1 (2026-11-09)
 
 ### Feat

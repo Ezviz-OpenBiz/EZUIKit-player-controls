@@ -172,6 +172,7 @@ open = false  →  onCloseStart → onOpenChange(false) → （duration 后）on
 
 - 结构：`edrawer`（根）> `edrawer-mask` + `edrawer-panel` > `edrawer-header`（`edrawer-title`、`edrawer-close`）+ `edrawer-body`
 - 状态：`edrawer-left` / `-right` / `-top` / `-bottom`、`edrawer-open`、`edrawer-hidden`、`edrawer-fixed`（挂在 body 上）
+- 页面：`edrawer-body-noscroll`（加在 `body` 上：挂在 body 上的抽屉打开期间存在，`overflow: hidden` + `touch-action: none`，禁止页面滚动）
 
 外观通过 CSS 变量定制，可设在 `className` 对应的根节点上按实例覆盖：
 
@@ -196,7 +197,7 @@ open = false  →  onCloseStart → onOpenChange(false) → （duration 后）on
 
 ```css
 /* 例：告警消息面板在 PC 端最多占容器 80% 宽 */
-.ezuikit-alarm-message-drawer {
+.ealarm-message-drawer {
   --edrawer-max-width: 80%;
 }
 ```
@@ -217,8 +218,29 @@ open = false  →  onCloseStart → onOpenChange(false) → （duration 后）on
 
 **挂载到 `body` 判定为 `fixed`** 时，同样以挂载点自身所属文档的 `body` 为准，iframe 内挂到其 `body` 时也相对该 iframe 视口定位。
 
+**挂载在 `body` 上时锁定页面滚动。** 抽屉挂载在 `body` 上（任意方向，常见于移动端底部弹层）时，打开时给该文档的 `body` 加 `edrawer-body-noscroll`，开始收起（`open = false`）或打开态 `destroy()` 时移除；挂载在普通容器内时不加。同一文档中多个挂在 body 上的抽屉同时打开时按数量计数，最后一个关闭后才移除；iframe 内的抽屉只锁定该 iframe 的 `body`。抽屉内容区（`.edrawer-body`）自身仍可滚动。宿主不要自己增删这个类名，否则会与抽屉的计数冲突。`getContainer` 每次打开时按当次挂载点判断是否锁定。
+
 **`getContainer` 的调用时机。** 仅在 `open = true` 时调用（构造与 `updateOptions` 都不调用）；已打开状态下 `updateOptions` 沿用当前挂载点。返回空值回退到构造函数传入的 `container`；返回的元素与当前父节点相同时不移动 DOM。
 
 **事件冒泡。** 根节点拦截 `dblclick` 冒泡，避免在播放器容器内双击触发全屏切换；`click` 不拦截，点击遮罩关闭后事件仍会冒泡到宿主。关闭按钮的点击会阻止冒泡。
+
+**关闭按钮不受宿主 `button` 全局样式影响。** 关闭按钮（`.edrawer-close`）先 `all: unset` 清掉宿主页面对 `<button>` 的全局样式（`padding`、`margin`、`font`、`box-shadow`、`min-*`、`transform` 等），再重新声明自身样式，并补回键盘焦点环（`:focus-visible`）。类名写了两遍使选择器特异性为 `(0,2,0)`，足以压过 `button`、`[type='button']`、`.xxx button` 这类常见规则；宿主若用 id 选择器或 `!important` 命中按钮，仍会覆盖这里，需要宿主自行避免。
+
+**层级（`z-index`）。** 抽屉根节点默认 `z-index: 100`（`--edrawer-z-index` / `zIndex` 选项可改），低于常见 UI 库的浮层。挂载到 `document.body`（`position: fixed`）时，如果宿主页面有固定导航栏或自己的弹层，抽屉可能被盖住，请把层级调到高于它们。参考值：
+
+| 宿主库       | 常见层级                                                                               |
+| ------------ | -------------------------------------------------------------------------------------- |
+| Bootstrap 5  | 固定导航栏 1030、侧边栏 1045、遮罩 1050、模态框 1055、气泡 1070、提示 1080、Toast 1090 |
+| Ant Design 4 | 抽屉 / 模态框 1000、气泡 1030、下拉 1050、提示 1070                                    |
+| Element UI 2 | 弹层由 PopupManager 从 2000 起递增                                                     |
+
+```css
+/* 例：让抽屉盖过宿主的固定导航栏与模态框 */
+.my-drawer {
+  --edrawer-z-index: 2000;
+}
+```
+
+挂载在播放器容器内（非 `body`）时，抽屉的层级只在该容器的层叠上下文内比较，通常不需要调整。
 
 **无障碍。** 面板带 `role="dialog"`，有头部时通过 `aria-labelledby` 关联标题；关闭按钮为 `<button type="button">`，带 `aria-label="close"`，内联 SVG 图标 `aria-hidden="true"`。未做焦点管理与焦点陷阱。
